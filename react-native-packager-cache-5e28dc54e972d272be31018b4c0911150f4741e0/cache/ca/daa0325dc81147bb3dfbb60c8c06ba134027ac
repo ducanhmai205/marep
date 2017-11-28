@@ -1,0 +1,357 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Mare/screens/LoginScreen.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+var _reactNavigation = require('react-navigation');
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var _LoginFB = require('../screens/LoginFB');
+
+var _LoginFB2 = _interopRequireDefault(_LoginFB);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+  LoginScreen: {
+    displayName: 'LoginScreen'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/ducanh/Mare/screens/LoginScreen.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
+  _inherits(LoginScreen, _Component);
+
+  function LoginScreen(props) {
+    _classCallCheck(this, LoginScreen);
+
+    var _this = _possibleConstructorReturn(this, (LoginScreen.__proto__ || Object.getPrototypeOf(LoginScreen)).call(this, props));
+
+    _this.UserLoginFunction = function () {
+
+      fetch('http://192.168.1.28/Mare/User_Login.php', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+
+          email: _this.state.UserEmail,
+
+          password: _this.state.UserPassword
+
+        })
+
+      }).then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        if (responseJson === 'Data Matched') {
+          _this.props.navigation.navigate('WelcomeScreen', { Email: _this.state.UserEmail });
+        } else {
+
+          _reactNative.Alert.alert(responseJson);
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+
+    _this.state = {
+
+      UserEmail: '',
+      UserPassword: ''
+
+    };
+
+    return _this;
+  }
+
+  _createClass(LoginScreen, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var goBack = this.props.navigation.goBack;
+
+
+      return _react3.default.createElement(
+        _reactNative.View,
+        { style: styles.container, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 77
+          }
+        },
+        _react3.default.createElement(
+          _reactNative.Image,
+          { source: require('../img/user/login.png'), style: styles.backgroundImage, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 78
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.containerImage, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 79
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.textHeader, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 80
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 0.2 }, onPress: function onPress() {
+                    return goBack();
+                  }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 82
+                  }
+                },
+                _react3.default.createElement(_reactNative.Image, { source: require('../img/Xbutton.png'), style: { flex: 0.5, width: null, height: null, marginTop: 10 }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 83
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.fbButton, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 90
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 91
+                  }
+                },
+                _react3.default.createElement(
+                  _LoginFB2.default,
+                  {
+                    __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 92
+                    }
+                  },
+                  ' '
+                )
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.orButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 98
+              }
+            }),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.nameInput, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 104
+                }
+              },
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                underlineColorAndroid: 'transparent',
+                placeholder: 'E-mail',
+                placeholderTextColor: '#47E5B3',
+                onChangeText: function onChangeText(UserEmail) {
+                  return _this2.setState({ UserEmail: UserEmail });
+                },
+                keybroadType: 'email-address',
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 105
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.passwordInput, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 117
+                }
+              },
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                placeholderTextColor: '#47E5B3',
+                underlineColorAndroid: 'transparent',
+                placeholder: 'Password',
+                onChangeText: function onChangeText(UserPassword) {
+                  return _this2.setState({ UserPassword: UserPassword });
+                },
+                secureTextEntry: true,
+
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 118
+                }
+              }),
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { backgroundColor: 'rgba(0,0,0,0)' }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 127
+                  }
+                },
+                _react3.default.createElement(_vectorIcons.Ionicons, { name: 'ios-eye', size: 20, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 128
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.topButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 133
+              }
+            }),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.loginButton, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 136
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 }, onPress: this.UserLoginFunction, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 137
+                  }
+                },
+                _react3.default.createElement(_reactNative.Image, { source: require('../img/1loginbutton.png'), style: { flex: 1, width: null, height: null }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 138
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.forgotPass, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 145
+              }
+            }),
+            _react3.default.createElement(_reactNative.View, { style: styles.commit, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 151
+              }
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return LoginScreen;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  containerImage: {
+    flex: 1
+
+  },
+  textHeader: {
+    flex: 0.8,
+    flexDirection: 'row',
+
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingRight: 13
+  },
+  fbButton: {
+    flex: 0.45,
+
+    paddingBottom: _reactNative.Platform.OS === 'ios' ? 0 : 10,
+    paddingLeft: 26,
+    paddingRight: 23
+  },
+  orButton: {
+    flex: 0.9
+
+  },
+  nameInput: {
+    flex: 0.6,
+    paddingLeft: 25
+
+  },
+  passwordInput: {
+    flex: 0.6,
+    paddingLeft: 26,
+    paddingRight: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+
+  },
+  loginButton: {
+    flex: 0.5,
+    paddingHorizontal: 23,
+
+    marginTop: _reactNative.Platform.OS === 'ios' ? 1 : 20
+  },
+  forgotPass: {
+    flex: 0.4
+
+  },
+
+  commit: {
+    flex: 1.5
+
+  },
+  topButton: {
+    flex: 0.2
+
+  }
+});
+
+exports.default = LoginScreen;

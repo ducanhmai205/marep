@@ -1,0 +1,219 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _reactNavigation = require('react-navigation');
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var LoginScreen = function (_Component) {
+  babelHelpers.inherits(LoginScreen, _Component);
+
+  function LoginScreen(props) {
+    babelHelpers.classCallCheck(this, LoginScreen);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (LoginScreen.__proto__ || Object.getPrototypeOf(LoginScreen)).call(this, props));
+
+    _this.UserLoginFunction = function () {
+
+      fetch('http://192.168.100.29/Mare/User_Login.php', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+
+          email: _this.state.UserEmail,
+
+          password: _this.state.UserPassword
+
+        })
+
+      }).then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        if (responseJson === 'Data Matched') {
+          _this.props.navigation.navigate('LoginSuccess', { Email: _this.state.UserEmail });
+        } else {
+
+          _reactNative.Alert.alert(responseJson);
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+
+    _this.state = {
+
+      UserEmail: '',
+      UserPassword: ''
+
+    };
+
+    return _this;
+  }
+
+  babelHelpers.createClass(LoginScreen, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        _reactNative.View,
+        { style: styles.container },
+        _react2.default.createElement(
+          _reactNative.Image,
+          { source: require('../img/loginscreen.png'), style: styles.backgroundImage },
+          _react2.default.createElement(
+            _reactNative.View,
+            { style: styles.containerImage },
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.textHeader },
+              _react2.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 0.2 } },
+                _react2.default.createElement(_reactNative.Image, { source: require('../img/Xbutton.png'), style: { flex: 0.5, width: null, height: null, marginTop: 10 } })
+              )
+            ),
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.fbButton },
+              _react2.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 } },
+                _react2.default.createElement(_reactNative.Image, { source: require('../img/FBbutton.png'), style: { flex: 1, width: null, height: null } })
+              )
+            ),
+            _react2.default.createElement(_reactNative.View, { style: styles.orButton }),
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.nameInput },
+              _react2.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                underlineColorAndroid: 'transparent',
+                placeholder: 'E-mail',
+                placeholderTextColor: '#47E5B3',
+                onChangeText: function onChangeText(UserEmail) {
+                  return _this2.setState({ UserEmail: UserEmail });
+                },
+                keybroadType: 'email-address'
+              })
+            ),
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.passwordInput },
+              _react2.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                placeholderTextColor: '#47E5B3',
+                underlineColorAndroid: 'transparent',
+                placeholder: 'Password',
+                onChangeText: function onChangeText(UserPassword) {
+                  return _this2.setState({ UserPassword: UserPassword });
+                },
+                secureTextEntry: true
+
+              }),
+              _react2.default.createElement(
+                _reactNative.TouchableOpacity,
+                null,
+                _react2.default.createElement(_vectorIcons.Ionicons, { name: 'ios-eye', size: 20 })
+              )
+            ),
+            _react2.default.createElement(_reactNative.View, { style: styles.topButton }),
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.loginButton },
+              _react2.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 }, onPress: this.UserLoginFunction },
+                _react2.default.createElement(_reactNative.Image, { source: require('../img/1loginbutton.png'), style: { flex: 1, width: null, height: null } })
+              )
+            ),
+            _react2.default.createElement(_reactNative.View, { style: styles.forgotPass }),
+            _react2.default.createElement(_reactNative.View, { style: styles.commit })
+          )
+        )
+      );
+    }
+  }]);
+  return LoginScreen;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  containerImage: {
+    flex: 1
+
+  },
+  textHeader: {
+    flex: 0.8,
+    flexDirection: 'row',
+
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingRight: 13
+  },
+  fbButton: {
+    flex: 0.45,
+
+    paddingBottom: _reactNative.Platform.OS === 'ios' ? 0 : 10,
+    paddingLeft: 26,
+    paddingRight: 23
+  },
+  orButton: {
+    flex: 0.9
+
+  },
+  nameInput: {
+    flex: 0.6,
+    paddingLeft: 26
+
+  },
+  passwordInput: {
+    flex: 0.6,
+    paddingLeft: 26,
+    paddingRight: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+
+  },
+  loginButton: {
+    flex: 0.5,
+    paddingHorizontal: 23,
+
+    marginTop: _reactNative.Platform.OS === 'ios' ? 1 : 20
+  },
+  forgotPass: {
+    flex: 0.4
+
+  },
+
+  commit: {
+    flex: 1.5
+
+  },
+  topButton: {
+    flex: 0.2
+
+  }
+});
+
+exports.default = LoginScreen;

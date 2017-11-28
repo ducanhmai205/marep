@@ -1,0 +1,154 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _expo = require('expo');
+
+var TopScreen = function (_Component) {
+  babelHelpers.inherits(TopScreen, _Component);
+
+  function TopScreen() {
+    babelHelpers.classCallCheck(this, TopScreen);
+    return babelHelpers.possibleConstructorReturn(this, (TopScreen.__proto__ || Object.getPrototypeOf(TopScreen)).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(TopScreen, [{
+    key: 'render',
+    value: function render() {
+      var navigate = this.props.navigation.navigate;
+
+      var Backgrounds = {
+        Login: require('../img/topscreen.png')
+      };
+      return _react2.default.createElement(
+        _reactNative.View,
+        { style: styles.container },
+        _react2.default.createElement(
+          _reactNative.Image,
+          { source: Backgrounds.Login, style: styles.backgroundImage },
+          _react2.default.createElement(_reactNative.View, { style: styles.one }),
+          _react2.default.createElement(
+            _reactNative.View,
+            { style: styles.two },
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.two2 },
+              _react2.default.createElement(_reactNative.View, { style: styles.two4 }),
+              _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.two5 },
+                _react2.default.createElement(
+                  _reactNative.TouchableOpacity,
+                  { onPress: function onPress() {
+                      navigate('LoginScreen');
+                    }, style: { flex: 1 } },
+                  _react2.default.createElement(_reactNative.Image, { source: require('../img/loginbutton.png'), style: { flex: 1,
+                      width: null,
+                      height: null
+                    },
+                    resizeMode: 'contain' })
+                )
+              ),
+              _react2.default.createElement(_reactNative.View, { style: styles.two6 })
+            ),
+            _react2.default.createElement(
+              _reactNative.View,
+              { style: styles.two3 },
+              _react2.default.createElement(_reactNative.View, { style: styles.two7 }),
+              _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.two8 },
+                _react2.default.createElement(
+                  _reactNative.TouchableOpacity,
+                  {
+                    onPress: function onPress() {
+                      navigate('RegisterScreen');
+                    }, style: { flex: 1 } },
+                  _react2.default.createElement(_reactNative.Image, { source: require('../img/buttontop.png'), style: { flex: 1,
+                      width: null,
+                      height: null
+                    }
+                  })
+                )
+              ),
+              _react2.default.createElement(_reactNative.View, { style: styles.two9 })
+            )
+          ),
+          _react2.default.createElement(_reactNative.View, { style: styles.three })
+        )
+      );
+    }
+  }]);
+  return TopScreen;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+
+    width: null,
+    height: null
+  },
+  one: {
+    flex: 4
+
+  },
+  two: {
+    flex: 1.2
+  },
+  two2: {
+    flex: 1,
+
+    flexDirection: 'row'
+
+  },
+  two4: {
+    flex: 1
+  },
+  two5: {
+    flex: 2.3,
+    marginBottom: _reactNative.Platform.OS === 'ios' ? 18 : 0,
+    paddingRight: 12,
+    marginHorizontal: 3
+  },
+  two6: {
+    flex: 0.9
+  },
+  two7: {
+    flex: 1
+  },
+  two8: {
+    flex: 2.3,
+    marginBottom: _reactNative.Platform.OS === 'ios' ? 20 : 5,
+    marginTop: _reactNative.Platform.OS === 'ios' ? 0 : 11,
+    marginRight: 5
+
+  },
+  two9: {
+    flex: 0.9
+
+  },
+  two3: {
+    flex: 1,
+    flexDirection: 'row'
+
+  },
+  three: {
+    flex: 0.8
+
+  }
+
+});
+
+exports.default = TopScreen;

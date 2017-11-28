@@ -1,0 +1,239 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Mare/screens/SelectTrainer.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+  SelectTrainer: {
+    displayName: 'SelectTrainer'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/ducanh/Mare/screens/SelectTrainer.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var SelectTrainer = _wrapComponent('SelectTrainer')(function (_Component) {
+  _inherits(SelectTrainer, _Component);
+
+  function SelectTrainer(props) {
+    _classCallCheck(this, SelectTrainer);
+
+    var _this = _possibleConstructorReturn(this, (SelectTrainer.__proto__ || Object.getPrototypeOf(SelectTrainer)).call(this, props));
+
+    _this.state = {
+
+      mang: [{ key: '0', hoten: "guest 1" }, { key: '1', hoten: "guest 2" }, { key: '2', hoten: "guest 3" }, { key: '3', hoten: "guest 4" }, { key: '4', hoten: "guest 5" }, { key: '5', hoten: "guest 6" }, { key: '6', hoten: "guest 7" }, { key: '7', hoten: "guest 8" }, { key: '8', hoten: "guest 9" }]
+    };
+    return _this;
+  }
+
+  _createClass(SelectTrainer, [{
+    key: 'render',
+    value: function render() {
+      var navigate = this.props.navigation.navigate;
+
+      return _react3.default.createElement(
+        _reactNative.View,
+        { style: styles.container, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 39
+          }
+        },
+        _react3.default.createElement(
+          _reactNative.ImageBackground,
+          { source: require('../img/signin04_trainerscreen.png'), style: styles.backgroundImage, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 40
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.containerImage, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 41
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.flatList, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 42
+                }
+              },
+              _react3.default.createElement(_reactNative.FlatList, {
+                data: this.state.mang,
+                renderItem: function renderItem(_ref) {
+                  var item = _ref.item;
+                  return _react3.default.createElement(
+                    _reactNative.View,
+                    { style: styles.line, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 46
+                      }
+                    },
+                    _react3.default.createElement(
+                      _reactNative.Text,
+                      {
+                        __source: {
+                          fileName: _jsxFileName,
+                          lineNumber: 47
+                        }
+                      },
+                      item.key
+                    ),
+                    _react3.default.createElement(
+                      _reactNative.Text,
+                      {
+                        __source: {
+                          fileName: _jsxFileName,
+                          lineNumber: 48
+                        }
+                      },
+                      ' alo'
+                    ),
+                    _react3.default.createElement(
+                      _reactNative.Text,
+                      {
+                        __source: {
+                          fileName: _jsxFileName,
+                          lineNumber: 49
+                        }
+                      },
+                      item.hoten
+                    )
+                  );
+                },
+
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 43
+                }
+              })
+            )
+          ),
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.nextButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 59
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.TouchableOpacity,
+              { style: styles.TouchableOpacity, onPress: function onPress() {
+                  navigate('InformationUser');
+                }, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 60
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: { fontWeight: 'bold' }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 62
+                  }
+                },
+                ' NEXT ! '
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return SelectTrainer;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  nextButton: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    height: 70,
+    backgroundColor: 'white',
+    width: '100%'
+
+  },
+  TouchableOpacity: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  containerImage: {
+    flex: 1,
+
+    marginRight: 39,
+    marginLeft: 37,
+    marginTop: 95,
+    marginBottom: 65
+  },
+  line: {
+    borderBottomWidth: 1,
+    padding: 50,
+    borderBottomColor: '#6BF4B6',
+    flexDirection: 'row'
+
+  },
+  left: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  right: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  Avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50
+  }
+
+});
+
+exports.default = SelectTrainer;

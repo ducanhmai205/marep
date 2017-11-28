@@ -1,0 +1,279 @@
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Switch = undefined;
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../../react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _class,
+    _temp,
+    _jsxFileName = '/home/anh/newProject-master/node_modules/react-native-switch/lib/Switch.js';
+
+var _reactNative = require('react-native');
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+	Switch: {
+		displayName: 'Switch'
+	}
+};
+
+var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+	filename: '/home/anh/newProject-master/node_modules/react-native-switch/lib/Switch.js',
+	components: _components,
+	locals: [module],
+	imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+	return function (Component) {
+		return _reactTransformHmrLibIndexJs2(Component, id);
+	};
+}
+
+var Switch = exports.Switch = _wrapComponent('Switch')((_temp = _class = function (_Component) {
+	_inherits(Switch, _Component);
+
+	function Switch(props, context) {
+		_classCallCheck(this, Switch);
+
+		var _this = _possibleConstructorReturn(this, (Switch.__proto__ || Object.getPrototypeOf(Switch)).call(this, props, context));
+
+		_this.state = {
+			value: props.value,
+			transformSwitch: new _reactNative.Animated.Value(props.value ? props.circleSize / 2 : -props.circleSize / 2),
+			backgroundColor: new _reactNative.Animated.Value(props.value ? 75 : -75),
+			circleColor: new _reactNative.Animated.Value(props.value ? 75 : -75)
+		};
+
+		_this.handleSwitch = _this.handleSwitch.bind(_this);
+		_this.animateSwitch = _this.animateSwitch.bind(_this);
+		return _this;
+	}
+
+	_createClass(Switch, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			var disabled = this.props.disabled;
+
+			if (nextProps.value === this.props.value) {
+				return;
+			}
+			if (disabled) {
+				return;
+			}
+
+			this.animateSwitch(nextProps.value, function () {
+				_this2.setState({ value: nextProps.value });
+			});
+		}
+	}, {
+		key: 'handleSwitch',
+		value: function handleSwitch() {
+			var _this3 = this;
+
+			var value = this.state.value;
+			var _props = this.props,
+			    onValueChange = _props.onValueChange,
+			    disabled = _props.disabled;
+
+			if (disabled) {
+				return;
+			}
+
+			this.animateSwitch(!value, function () {
+				_this3.setState({ value: !value }, function () {
+					return onValueChange(_this3.state.value);
+				});
+			});
+		}
+	}, {
+		key: 'animateSwitch',
+		value: function animateSwitch(value) {
+			var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+
+			_reactNative.Animated.parallel([_reactNative.Animated.spring(this.state.transformSwitch, {
+				toValue: value ? this.props.circleSize / 2 : -this.props.circleSize / 2
+			}), _reactNative.Animated.timing(this.state.backgroundColor, {
+				toValue: value ? 75 : -75,
+				duration: 200
+			}), _reactNative.Animated.timing(this.state.circleColor, {
+				toValue: value ? 75 : -75,
+				duration: 200
+			})]).start(cb);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _state = this.state,
+			    transformSwitch = _state.transformSwitch,
+			    backgroundColor = _state.backgroundColor,
+			    circleColor = _state.circleColor;
+			var _props2 = this.props,
+			    backgroundActive = _props2.backgroundActive,
+			    backgroundInactive = _props2.backgroundInactive,
+			    circleActiveColor = _props2.circleActiveColor,
+			    circleInActiveColor = _props2.circleInActiveColor,
+			    activeText = _props2.activeText,
+			    inActiveText = _props2.inActiveText,
+			    circleSize = _props2.circleSize,
+			    containerStyle = _props2.containerStyle,
+			    activeTextStyle = _props2.activeTextStyle,
+			    inactiveTextStyle = _props2.inactiveTextStyle,
+			    barHeight = _props2.barHeight,
+			    circleBorderWidth = _props2.circleBorderWidth;
+
+
+			var interpolatedColorAnimation = backgroundColor.interpolate({
+				inputRange: [-75, 75],
+				outputRange: [backgroundInactive, backgroundActive]
+			});
+
+			var interpolatedCircleColor = circleColor.interpolate({
+				inputRange: [-75, 75],
+				outputRange: [circleInActiveColor, circleActiveColor]
+			});
+
+			return _react3.default.createElement(
+				_reactNative.TouchableWithoutFeedback,
+				{
+					onPress: this.handleSwitch,
+					__source: {
+						fileName: _jsxFileName,
+						lineNumber: 136
+					}
+				},
+				_react3.default.createElement(
+					_reactNative.Animated.View,
+					{
+						style: [styles.container, containerStyle, { backgroundColor: interpolatedColorAnimation, width: circleSize * 2, height: barHeight ? barHeight : circleSize, borderRadius: circleSize }],
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 139
+						}
+					},
+					_react3.default.createElement(
+						_reactNative.Animated.View,
+						{
+							style: [styles.animatedContainer, { left: transformSwitch, width: circleSize * 2 }],
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 146
+							}
+						},
+						_react3.default.createElement(
+							_reactNative.Text,
+							{ style: [styles.text, styles.paddingRight, activeTextStyle], __source: {
+									fileName: _jsxFileName,
+									lineNumber: 152
+								}
+							},
+							activeText
+						),
+						_react3.default.createElement(_reactNative.Animated.View, { style: [styles.circle, { borderWidth: circleBorderWidth, backgroundColor: interpolatedCircleColor, width: circleSize, height: circleSize, borderRadius: circleSize / 2 }], __source: {
+								fileName: _jsxFileName,
+								lineNumber: 155
+							}
+						}),
+						_react3.default.createElement(
+							_reactNative.Text,
+							{ style: [styles.text, styles.paddingLeft, inactiveTextStyle], __source: {
+									fileName: _jsxFileName,
+									lineNumber: 156
+								}
+							},
+							inActiveText
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return Switch;
+}(_react2.Component), _class.propTypes = {
+	onValueChange: _propTypes2.default.func,
+	disabled: _propTypes2.default.bool,
+	activeText: _propTypes2.default.string,
+	inActiveText: _propTypes2.default.string,
+	backgroundActive: _propTypes2.default.string,
+	backgroundInactive: _propTypes2.default.string,
+	value: _propTypes2.default.bool,
+	circleActiveColor: _propTypes2.default.string,
+	circleInActiveColor: _propTypes2.default.string,
+	circleSize: _propTypes2.default.number,
+	activeTextStyle: _reactNative.Text.propTypes.style,
+	inactiveTextStyle: _reactNative.Text.propTypes.style,
+	containerStyle: _reactNative.ViewPropTypes.style,
+	barHeight: _propTypes2.default.number,
+	circleBorderWidth: _propTypes2.default.number
+}, _class.defaultProps = {
+	value: false,
+	onValueChange: function onValueChange() {
+		return null;
+	},
+	disabled: false,
+	activeText: 'On',
+	inActiveText: 'Off',
+	backgroundActive: 'green',
+	backgroundInactive: 'gray',
+	circleActiveColor: 'white',
+	circleInActiveColor: 'white',
+	circleSize: 30,
+	barHeight: null,
+	circleBorderWidth: 1
+}, _temp));
+
+var styles = _reactNative.StyleSheet.create({
+	container: {
+		width: 71,
+		height: 30,
+		borderRadius: 30,
+		backgroundColor: 'black'
+	},
+	animatedContainer: {
+		flex: 1,
+		width: 78,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	circle: {
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		backgroundColor: 'white',
+		borderColor: 'rgb(100, 100, 100)'
+	},
+	text: {
+		color: 'white',
+		backgroundColor: 'transparent'
+	},
+	paddingRight: {
+		paddingRight: 5
+	},
+	paddingLeft: {
+		paddingLeft: 5
+	}
+});

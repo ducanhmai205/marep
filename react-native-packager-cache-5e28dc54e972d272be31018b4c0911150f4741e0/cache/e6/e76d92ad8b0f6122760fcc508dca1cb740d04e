@@ -1,0 +1,182 @@
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../../react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Mare/node_modules/react-native-flexi-radio-button/lib/radioButton.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactNative = require('react-native');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    RadioButton: {
+        displayName: 'RadioButton'
+    }
+};
+
+var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: '/home/ducanh/Mare/node_modules/react-native-flexi-radio-button/lib/radioButton.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+}
+
+var RadioButton = _wrapComponent('RadioButton')(function (_Component) {
+    _inherits(RadioButton, _Component);
+
+    function RadioButton(props, context) {
+        _classCallCheck(this, RadioButton);
+
+        return _possibleConstructorReturn(this, (RadioButton.__proto__ || Object.getPrototypeOf(RadioButton)).call(this, props, context));
+    }
+
+    _createClass(RadioButton, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            this.setState({
+                selectedIndex: nextProps.selectedIndex
+            });
+        }
+    }, {
+        key: 'getRadioStyle',
+        value: function getRadioStyle() {
+            return {
+                height: this.context.size,
+                width: this.context.size,
+                borderRadius: this.context.size / 2,
+                borderWidth: this.context.thickness,
+                borderColor: this.props.isSelected && this.props.activeColor ? this.props.activeColor : this.context.color
+            };
+        }
+    }, {
+        key: 'getRadioDotStyle',
+        value: function getRadioDotStyle() {
+            return {
+                height: this.context.size / 2,
+                width: this.context.size / 2,
+                borderRadius: this.context.size / 4,
+                backgroundColor: this.props.color || this.props.activeColor
+            };
+        }
+    }, {
+        key: 'isSelected',
+        value: function isSelected() {
+            if (this.props.isSelected) return _react3.default.createElement(_reactNative.View, { style: this.getRadioDotStyle(), __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 42
+                }
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var children = this.props.children;
+
+            return _react3.default.createElement(
+                _reactNative.View,
+                { style: { opacity: this.props.disabled ? 0.4 : 1 }, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 47
+                    }
+                },
+                _react3.default.createElement(
+                    _reactNative.TouchableWithoutFeedback,
+                    {
+                        disabled: this.props.disabled,
+                        onPress: function onPress() {
+                            return _this2.context.onSelect(_this2.props.index, _this2.props.value);
+                        },
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 48
+                        }
+                    },
+                    _react3.default.createElement(
+                        _reactNative.View,
+                        { style: [styles.container, this.props.style, this.props.isSelected ? { backgroundColor: this.context.highlightColor } : null], __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 52
+                            }
+                        },
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            { style: [styles.radio, this.getRadioStyle()], __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 53
+                                }
+                            },
+                            this.isSelected()
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            { style: styles.item, __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 56
+                                }
+                            },
+                            children
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RadioButton;
+}(_react2.Component));
+
+exports.default = RadioButton;
+
+
+RadioButton.contextTypes = {
+    onSelect: _propTypes2.default.func.isRequired,
+    size: _propTypes2.default.number.isRequired,
+    thickness: _propTypes2.default.number.isRequired,
+    color: _propTypes2.default.string.isRequired,
+    highlightColor: _propTypes2.default.string
+};
+
+var styles = _reactNative.StyleSheet.create({
+    container: {
+        flexGrow: 1,
+        flexDirection: 'row',
+        padding: 10
+    },
+    radio: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    item: {
+        marginLeft: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});

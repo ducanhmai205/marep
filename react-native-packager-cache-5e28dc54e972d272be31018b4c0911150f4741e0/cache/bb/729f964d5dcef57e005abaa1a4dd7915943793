@@ -1,0 +1,122 @@
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = babelHelpers.interopRequireDefault(_propTypes);
+
+var _reactNative = require('react-native');
+
+var RadioButton = function (_Component) {
+    babelHelpers.inherits(RadioButton, _Component);
+
+    function RadioButton(props, context) {
+        babelHelpers.classCallCheck(this, RadioButton);
+        return babelHelpers.possibleConstructorReturn(this, (RadioButton.__proto__ || Object.getPrototypeOf(RadioButton)).call(this, props, context));
+    }
+
+    babelHelpers.createClass(RadioButton, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            this.setState({
+                selectedIndex: nextProps.selectedIndex
+            });
+        }
+    }, {
+        key: 'getRadioStyle',
+        value: function getRadioStyle() {
+            return {
+                height: this.context.size,
+                width: this.context.size,
+                borderRadius: this.context.size / 2,
+                borderWidth: this.context.thickness,
+                borderColor: this.props.isSelected && this.props.activeColor ? this.props.activeColor : this.context.color
+            };
+        }
+    }, {
+        key: 'getRadioDotStyle',
+        value: function getRadioDotStyle() {
+            return {
+                height: this.context.size / 2,
+                width: this.context.size / 2,
+                borderRadius: this.context.size / 4,
+                backgroundColor: this.props.color || this.props.activeColor
+            };
+        }
+    }, {
+        key: 'isSelected',
+        value: function isSelected() {
+            if (this.props.isSelected) return _react2.default.createElement(_reactNative.View, { style: this.getRadioDotStyle() });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var children = this.props.children;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: { opacity: this.props.disabled ? 0.4 : 1 } },
+                _react2.default.createElement(
+                    _reactNative.TouchableWithoutFeedback,
+                    {
+                        disabled: this.props.disabled,
+                        onPress: function onPress() {
+                            return _this2.context.onSelect(_this2.props.index, _this2.props.value);
+                        }
+                    },
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: [styles.container, this.props.style, this.props.isSelected ? { backgroundColor: this.context.highlightColor } : null] },
+                        _react2.default.createElement(
+                            _reactNative.View,
+                            { style: [styles.radio, this.getRadioStyle()] },
+                            this.isSelected()
+                        ),
+                        _react2.default.createElement(
+                            _reactNative.View,
+                            { style: styles.item },
+                            children
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+    return RadioButton;
+}(_react.Component);
+
+exports.default = RadioButton;
+
+
+RadioButton.contextTypes = {
+    onSelect: _propTypes2.default.func.isRequired,
+    size: _propTypes2.default.number.isRequired,
+    thickness: _propTypes2.default.number.isRequired,
+    color: _propTypes2.default.string.isRequired,
+    highlightColor: _propTypes2.default.string
+};
+
+var styles = _reactNative.StyleSheet.create({
+    container: {
+        flexGrow: 1,
+        flexDirection: 'row',
+        padding: 10
+    },
+    radio: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    item: {
+        marginLeft: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});

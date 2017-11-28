@@ -1,0 +1,188 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Mare/screens/WelcomeScreen.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+  WelcomeScreen: {
+    displayName: 'WelcomeScreen'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/ducanh/Mare/screens/WelcomeScreen.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var WelcomeScreen = _wrapComponent('WelcomeScreen')(function (_Component) {
+  _inherits(WelcomeScreen, _Component);
+
+  function WelcomeScreen() {
+    _classCallCheck(this, WelcomeScreen);
+
+    return _possibleConstructorReturn(this, (WelcomeScreen.__proto__ || Object.getPrototypeOf(WelcomeScreen)).apply(this, arguments));
+  }
+
+  _createClass(WelcomeScreen, [{
+    key: 'render',
+    value: function render() {
+      var navigate = this.props.navigation.navigate;
+
+      return _react3.default.createElement(
+        _reactNative.View,
+        { style: styles.container, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 18
+          }
+        },
+        _react3.default.createElement(
+          _reactNative.ImageBackground,
+          { source: require('../img/signin02.png'), style: styles.backgroundImage, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 20
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.imageAvatar, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 21
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.Text,
+              { style: styles.text, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 23
+                }
+              },
+              ' \u3053\u3093\u306B\u3061\u306F ',
+              this.props.navigation.state.params.Email,
+              '  '
+            ),
+            _react3.default.createElement(
+              _reactNative.Text,
+              { style: styles.text2, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 24
+                }
+              },
+              '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088\u3046\u306B\u3084\u3063\u3066\u3044\uFF1F'
+            )
+          ),
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.nextButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 31
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.TouchableOpacity,
+              { style: styles.TouchableOpacity, onPress: function onPress() {
+                  navigate('TraineeTreatment');
+                }, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 32
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: { fontWeight: 'bold' }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 34
+                  }
+                },
+                ' START ! '
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return WelcomeScreen;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  imageAvatar: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 40
+  },
+  text: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    fontSize: 20,
+    color: 'black',
+    marginTop: 10,
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40
+  },
+  text2: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    fontSize: 15,
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nextButton: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    height: 70,
+    backgroundColor: 'white',
+    width: '100%'
+
+  },
+  TouchableOpacity: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
+
+exports.default = WelcomeScreen;

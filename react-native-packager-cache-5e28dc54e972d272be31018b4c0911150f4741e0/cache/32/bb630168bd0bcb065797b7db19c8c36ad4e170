@@ -1,0 +1,117 @@
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = babelHelpers.interopRequireDefault(_propTypes);
+
+var _reactNative = require('react-native');
+
+var _radioButton = require('./radioButton');
+
+var _radioButton2 = babelHelpers.interopRequireDefault(_radioButton);
+
+var defaultSize = 20;
+var defaultThickness = 1;
+var defaultColor = '#007AFF';
+
+var RadioGroup = function (_Component) {
+    babelHelpers.inherits(RadioGroup, _Component);
+
+    function RadioGroup(props, context) {
+        babelHelpers.classCallCheck(this, RadioGroup);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (RadioGroup.__proto__ || Object.getPrototypeOf(RadioGroup)).call(this, props, context));
+
+        _this.state = {
+            selectedIndex: _this.props.selectedIndex
+        };
+        _this.prevSelected = _this.props.selectedIndex;
+        _this.onSelect = _this.onSelect.bind(_this);
+        return _this;
+    }
+
+    babelHelpers.createClass(RadioGroup, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            if (nextProps.selectedIndex != this.prevSelected) {
+                this.prevSelected = nextProps.selectedIndex;
+                this.setState({
+                    selectedIndex: nextProps.selectedIndex
+                });
+            }
+        }
+    }, {
+        key: 'getChildContext',
+        value: function getChildContext() {
+            return {
+                onSelect: this.onSelect,
+                size: this.props.size,
+                thickness: this.props.thickness,
+                color: this.props.color,
+                highlightColor: this.props.highlightColor
+            };
+        }
+    }, {
+        key: 'onSelect',
+        value: function onSelect(index, value) {
+            this.setState({
+                selectedIndex: index
+            });
+            if (this.props.onSelect) this.props.onSelect(index, value);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var radioButtons = _react2.default.Children.map(this.props.children, function (radioButton, index) {
+                var isSelected = _this2.state.selectedIndex == index;
+                var color = isSelected && _this2.props.activeColor ? _this2.props.activeColor : _this2.props.color;
+                return _react2.default.createElement(
+                    _radioButton2.default,
+                    babelHelpers.extends({
+                        color: color,
+                        activeColor: _this2.props.activeColor
+                    }, radioButton.props, {
+                        index: index,
+                        isSelected: isSelected
+                    }),
+                    radioButton.props.children
+                );
+            });
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: this.props.style },
+                radioButtons
+            );
+        }
+    }]);
+    return RadioGroup;
+}(_react.Component);
+
+exports.default = RadioGroup;
+
+
+RadioGroup.childContextTypes = {
+    onSelect: _propTypes2.default.func.isRequired,
+    size: _propTypes2.default.number.isRequired,
+    thickness: _propTypes2.default.number.isRequired,
+    color: _propTypes2.default.string.isRequired,
+    activeColor: _propTypes2.default.string,
+    highlightColor: _propTypes2.default.string
+};
+
+RadioGroup.defaultProps = {
+    size: defaultSize,
+    thickness: defaultThickness,
+    color: defaultColor,
+    highlightColor: null
+};

@@ -1,0 +1,379 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Mare/screens/TraineeTreatment.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var _reactNativeFlexiRadioButton = require('react-native-flexi-radio-button');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+  TraineeTreatment: {
+    displayName: 'TraineeTreatment'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/ducanh/Mare/screens/TraineeTreatment.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var TraineeTreatment = _wrapComponent('TraineeTreatment')(function (_Component) {
+  _inherits(TraineeTreatment, _Component);
+
+  function TraineeTreatment() {
+    _classCallCheck(this, TraineeTreatment);
+
+    var _this = _possibleConstructorReturn(this, (TraineeTreatment.__proto__ || Object.getPrototypeOf(TraineeTreatment)).call(this));
+
+    _this.state = {
+      text: ''
+    };
+    _this.onSelect = _this.onSelect.bind(_this);
+    return _this;
+  }
+
+  _createClass(TraineeTreatment, [{
+    key: 'onSelect',
+    value: function onSelect(index, value) {
+      this.setState({
+        text: '' + value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var navigate = this.props.navigation.navigate;
+      var goBack = this.props.navigation.goBack;
+
+      return _react3.default.createElement(
+        _reactNative.ImageBackground,
+        { source: require('../img/signin03_trainerscreen.png'), style: styles.backgroundImage, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 32
+          }
+        },
+        _react3.default.createElement(
+          _reactNative.View,
+          { style: styles.icon, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 33
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.TouchableOpacity,
+            { onPress: function onPress() {
+                return goBack(null);
+              }, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 34
+              }
+            },
+            _react3.default.createElement(_vectorIcons.Ionicons, { name: 'ios-arrow-back-outline', size: 20, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 35
+              }
+            })
+          )
+        ),
+        _react3.default.createElement(
+          _reactNative.View,
+          { style: styles.center, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 38
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.Text,
+            { style: styles.text2, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 39
+              }
+            },
+            '\u3042\u306A\u305F\u306E\u60A9\u307F\u3092\u6559\u3048\u3066\u304F\u3060\u3055\u3044 '
+          ),
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.inside, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 40
+              }
+            },
+            _react3.default.createElement(
+              _reactNativeFlexiRadioButton.RadioGroup,
+              {
+                size: 15,
+                color: '#fafafa',
+
+                thickness: 8,
+                onSelect: function onSelect(index, value) {
+                  return _this2.onSelect(index, value);
+                }, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 41
+                }
+              },
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item1', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 49
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 50
+                    }
+                  },
+                  '\u30B7\u30A7\u30A4\u30D7\u30A2\u30C3\u30D7\u3057\u305F\u3044'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#80d8ff', value: 'item2', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 53
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 54
+                    }
+                  },
+                  this.state.text
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item3', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 57
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 58
+                    }
+                  },
+                  '\u80A9\u304C\u7591\u308B'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item4', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 61
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 62
+                    }
+                  },
+                  '\u8170\u75DB\u304C\u3042\u308B'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item5', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 65
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 66
+                    }
+                  },
+                  '\u4F53\u306E\u6B6A\u307F\u304C\u6C17\u306B\u306A\u308B'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#84ffff', value: 'item6', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 69
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 70
+                    }
+                  },
+                  '\u51B7\u3048\u6027\u304C\u6C17\u306B\u306A\u308B'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#80d8ff', value: 'item7', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 72
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 73
+                    }
+                  },
+                  '\u4FBF\u79D8\u304C\u6C17\u306B\u306A\u308B'
+                )
+              ),
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item8', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 75
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 76
+                    }
+                  },
+                  '\u3080\u304F\u307F\u304C\u6C17\u306B\u306A\u308B'
+                )
+              )
+            )
+          )
+        ),
+        _react3.default.createElement(
+          _reactNative.View,
+          { style: styles.nextButton, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 83
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.TouchableOpacity,
+            { style: styles.TouchableOpacity, onPress: function onPress() {
+                navigate('SelectTrainer');
+              }, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 84
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.Text,
+              { style: { fontWeight: 'bold' }, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 86
+                }
+              },
+              'NEXT ',
+              _react3.default.createElement(_vectorIcons.Ionicons, { name: 'ios-arrow-forward-outline', size: 15, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 87
+                }
+              })
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return TraineeTreatment;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  icon: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    marginTop: 40,
+    marginLeft: 30
+
+  },
+  center: {
+    flex: 1,
+    paddingTop: 60,
+    alignItems: 'center'
+
+  },
+  inside: {
+    paddingTop: 30
+  },
+  text2: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    fontSize: 15,
+
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text3: {
+    backgroundColor: 'rgba(0,0,0,0)',
+
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nextButton: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    height: 70,
+    backgroundColor: 'white',
+    width: '100%'
+
+  },
+  TouchableOpacity: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
+
+exports.default = TraineeTreatment;

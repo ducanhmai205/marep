@@ -1,0 +1,230 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var _reactNativeFlexiRadioButton = require('react-native-flexi-radio-button');
+
+var SelectTrainer = function (_Component) {
+  babelHelpers.inherits(SelectTrainer, _Component);
+
+  function SelectTrainer() {
+    babelHelpers.classCallCheck(this, SelectTrainer);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (SelectTrainer.__proto__ || Object.getPrototypeOf(SelectTrainer)).call(this));
+
+    _this.state = {
+      text: ''
+    };
+    _this.onSelect = _this.onSelect.bind(_this);
+    return _this;
+  }
+
+  babelHelpers.createClass(SelectTrainer, [{
+    key: 'onSelect',
+    value: function onSelect(index, value) {
+      this.setState({
+        text: 'Selected index: ' + index + ' , value: ' + value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var navigate = this.props.navigation.navigate;
+      var goBack = this.props.navigation.goBack;
+
+      return _react2.default.createElement(
+        _reactNative.ImageBackground,
+        { source: require('../img/signin03_trainerscreen.png'), style: styles.backgroundImage },
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: styles.icon },
+          _react2.default.createElement(
+            _reactNative.TouchableOpacity,
+            { onPress: function onPress() {
+                return goBack(null);
+              } },
+            _react2.default.createElement(_vectorIcons.Ionicons, { name: 'ios-arrow-back-outline', size: 20 })
+          )
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: styles.center },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: styles.text2 },
+            '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088\u3046\u306B\u3084\u3063\u3066\u3044\uFF1F '
+          ),
+          _react2.default.createElement(
+            _reactNative.View,
+            { style: styles.inside },
+            _react2.default.createElement(
+              _reactNativeFlexiRadioButton.RadioGroup,
+              {
+                size: 15,
+                color: '#fafafa',
+
+                thickness: 8,
+                onSelect: function onSelect(index, value) {
+                  return _this2.onSelect(index, value);
+                } },
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item1' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#80d8ff', value: 'item2' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item3' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item4' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item5' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#84ffff', value: 'item6' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', highlightColor: '#80d8ff', value: 'item7' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              ),
+              _react2.default.createElement(
+                _reactNativeFlexiRadioButton.RadioButton,
+                { activeColor: '#80d8ff', value: 'item8' },
+                _react2.default.createElement(
+                  _reactNative.Text,
+                  { style: styles.text3 },
+                  '\u3053\u3093\u306B\u3061\u306F\u4ECA\u65E5\u306F\u3069\u306E\u3088'
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: styles.nextButton },
+          _react2.default.createElement(
+            _reactNative.TouchableOpacity,
+            { style: styles.TouchableOpacity, onPress: function onPress() {
+                navigate('DisplayUserTrainer');
+              } },
+            _react2.default.createElement(
+              _reactNative.Text,
+              { style: { fontWeight: 'bold' } },
+              ' NEXT ! '
+            )
+          )
+        )
+      );
+    }
+  }]);
+  return SelectTrainer;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  icon: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    marginTop: 40,
+    marginLeft: 30
+
+  },
+  center: {
+    flex: 1,
+    paddingTop: 60,
+    alignItems: 'center'
+
+  },
+  inside: {
+    paddingTop: 30
+  },
+  text2: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    fontSize: 15,
+    color: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text3: {
+    backgroundColor: 'rgba(0,0,0,0)',
+
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nextButton: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    height: 70,
+    backgroundColor: 'white',
+    width: '100%'
+
+  },
+  TouchableOpacity: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
+
+exports.default = SelectTrainer;

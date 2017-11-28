@@ -1,0 +1,568 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/anh/newProject-master/screens/MenuTrainer.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+var _Dimensions = require('Dimensions');
+
+var _Dimensions2 = _interopRequireDefault(_Dimensions);
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var _reactNativeSwitch = require('react-native-switch');
+
+var _expo = require('expo');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+  MenuTrainer: {
+    displayName: 'MenuTrainer'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/anh/newProject-master/screens/MenuTrainer.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var MenuTrainer = _wrapComponent('MenuTrainer')(function (_Component) {
+  _inherits(MenuTrainer, _Component);
+
+  function MenuTrainer() {
+    _classCallCheck(this, MenuTrainer);
+
+    return _possibleConstructorReturn(this, (MenuTrainer.__proto__ || Object.getPrototypeOf(MenuTrainer)).apply(this, arguments));
+  }
+
+  _createClass(MenuTrainer, [{
+    key: 'render',
+    value: function render() {
+      return _react3.default.createElement(
+        _reactNative.Image,
+        { style: styles.backgroundImage, source: require('./img/user/menu_trainer.png'), __source: {
+            fileName: _jsxFileName,
+            lineNumber: 20
+          }
+        },
+        _react3.default.createElement(_reactNative.StatusBar, { hidden: true, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 21
+          }
+        }),
+        _react3.default.createElement(
+          _reactNative.View,
+          { style: styles.upcontainer, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 22
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.header, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 23
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.TouchableOpacity,
+              { style: { flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }, onPress: function onPress() {
+                  return goBack();
+                }, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 24
+                }
+              },
+              _react3.default.createElement(_vectorIcons.Feather, { name: 'x', size: 25, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 25
+                }
+              })
+            )
+          ),
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.contentUp, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 30
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.avatarPicker, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 31
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1, backgroundColor: 'white' }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 32
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.circle, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 33
+                    }
+                  },
+                  _react3.default.createElement(_vectorIcons.Entypo, { name: 'camera', size: 15, color: 'white', __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 34
+                    }
+                  })
+                )
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.selectOption, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 40
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.View,
+                { style: styles.name, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 41
+                  }
+                },
+                _react3.default.createElement(_reactNative.View, { style: styles.textName, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 42
+                  }
+                }),
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.pushButton, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 46
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: { color: 'gray', fontSize: 10 }, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 47
+                      }
+                    },
+                    ' PUSH \u901A\u77E5 '
+                  ),
+                  _react3.default.createElement(_reactNativeSwitch.Switch, {
+                    value: true,
+                    onValueChange: function onValueChange(val) {
+                      return console.log(val);
+                    },
+                    disabled: false,
+                    activeText: '',
+                    inActiveText: '',
+                    circleSize: 23,
+                    circleBorderColor: 'white',
+                    backgroundActive: '#00DDAB',
+                    backgroundInactive: 'gray',
+
+                    __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 48
+                    }
+                  })
+                )
+              ),
+              _react3.default.createElement(
+                _reactNative.View,
+                { style: styles.select, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 63
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.optionName, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 64
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 65
+                      }
+                    },
+                    ' \u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9 '
+                  ),
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 66
+                      }
+                    },
+                    ' aaa@aaa.com '
+                  )
+                ),
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.optionSelectNumberTrainee, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 69
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 70
+                      }
+                    },
+                    ' \u30C8\u30EC\u30FC\u30CB\u30F3\u30B0\u3067\u304D\u308B\u4EBA\u6570 '
+                  ),
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 71
+                      }
+                    },
+                    '5\u4EBA '
+                  )
+                ),
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.optionVersion, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 74
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 75
+                      }
+                    },
+                    ' \u5F97\u610F\u5206\u91CE '
+                  ),
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 76
+                      }
+                    },
+                    ' \u81EA\u5DF1\u7D39\u4ECB\u6587 '
+                  )
+                ),
+                _react3.default.createElement(
+                  _reactNative.View,
+                  { style: styles.optionInfomation, __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 79
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.textOption, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 80
+                      }
+                    },
+                    ' \u81EA\u5DF1\u7D39\u4ECB\u6587 '
+                  ),
+                  _react3.default.createElement(_vectorIcons.MaterialIcons, { name: 'keyboard-arrow-right', size: 13, color: '#432C71', __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 81
+                    }
+                  })
+                )
+              )
+            )
+          )
+        ),
+        _react3.default.createElement(
+          _reactNative.View,
+          { style: styles.downcontainer, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 88
+            }
+          },
+          _react3.default.createElement(_reactNative.View, { style: styles.graySpace, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 89
+            }
+          }),
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.bottomSelect, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 92
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.option, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 93
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: styles.textOption, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 94
+                  }
+                },
+                ' \u30D0\u30FC\u30B8\u30E7\u30F3\u60C5\u5831 '
+              ),
+              _react3.default.createElement(_vectorIcons.MaterialIcons, { name: 'keyboard-arrow-right', size: 13, color: '#432C71', __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 95
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.option, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 98
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: styles.textOption, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 99
+                  }
+                },
+                ' \u4F7F\u7528\u898F\u7D04 '
+              ),
+              _react3.default.createElement(_vectorIcons.MaterialIcons, { name: 'keyboard-arrow-right', size: 13, color: '#432C71', __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 100
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.option, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 103
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: styles.textOption, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 104
+                  }
+                },
+                ' \u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC '
+              ),
+              _react3.default.createElement(_vectorIcons.MaterialIcons, { name: 'keyboard-arrow-right', size: 13, color: '#432C71', __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 105
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.option, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 108
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: styles.textOption, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 109
+                  }
+                },
+                ' \u30D0\u30FC\u30B8\u30E7\u30F3\u60C5\u5831 '
+              ),
+              _react3.default.createElement(_vectorIcons.MaterialIcons, { name: 'keyboard-arrow-right', size: 13, color: '#432C71', __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 110
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.option, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 113
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                { style: styles.textOption, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 114
+                  }
+                },
+                ' \u30ED\u30B0\u30A2\u30A6\u30C8 '
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.space, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 117
+              }
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return MenuTrainer;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: _Dimensions2.default.get('window').width,
+    height: _Dimensions2.default.get('window').height,
+    resizeMode: 'stretch',
+    backgroundColor: 'rgba(0,0,0,0)'
+  },
+  upcontainer: {
+    flex: 0.59
+  },
+  header: {
+    flex: 1,
+    flexDirection: 'column-reverse',
+    backgroundColor: 'rgba(0,0,0,0)',
+    paddingRight: 15
+  },
+  contentUp: {
+    flex: 9
+  },
+  avatarPicker: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  circle: {
+    flex: 1,
+    width: 80,
+    height: 80,
+    borderRadius: 100 / 2,
+    backgroundColor: '#999',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  name: {
+    flex: 0.9
+
+  },
+  textName: {
+    flex: 0.8
+
+  },
+  pushButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 10,
+    paddingRight: 8
+
+  },
+  select: {
+    flex: 2,
+    paddingHorizontal: 30
+  },
+  optionName: {
+    flex: 1,
+
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+
+  },
+  textOption: {
+    fontSize: 10,
+    color: 'gray'
+  },
+  optionSelectNumberTrainee: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+
+  },
+  optionVersion: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  optionInfomation: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  selectOption: {
+    flex: 3
+
+  },
+  downcontainer: {
+    flex: 0.5
+  },
+  graySpace: {
+    flex: 1.2
+
+  },
+  bottomSelect: {
+    flex: 8,
+    paddingHorizontal: 30
+  },
+  option: {
+    flex: 1.1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+
+  },
+  space: {
+    flex: 1.5
+
+  }
+
+});
+
+exports.default = MenuTrainer;
