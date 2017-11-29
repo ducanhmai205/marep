@@ -69,7 +69,7 @@ var MenuTrainer = _wrapComponent('MenuTrainer')(function (_Component) {
     value: function render() {
       return _react3.default.createElement(
         _reactNative.Image,
-        { style: styles.backgroundImage, source: require('./img/user/menu_trainer.png'), __source: {
+        { style: styles.backgroundImage, source: require('../img/user/menu_trainer.png'), __source: {
             fileName: _jsxFileName,
             lineNumber: 20
           }

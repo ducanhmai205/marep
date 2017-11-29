@@ -15,61 +15,47 @@ class TopScreen extends Component {
   render() {
         const { navigate } = this.props.navigation;
         const Backgrounds = {
-          Login: require('../img/topscreen.png')
+        Login: require('../img/topscreen.png')
 };
-    return (
+  return (
       <View style={styles.container}>
         <Image  source={Backgrounds.Login} style={styles.backgroundImage}>
-             <View style={styles.one}>
+             <View style={styles.containerOne}>
                
              </View>
             
-              <View style={styles.two}>
-               <View style={styles.two2}>
-                  <View style={styles.two4}>
-
-                </View>
-                  <View style={styles.two5}>
+             <View style={styles.containerButton}>
+               <View style={styles.loginButton}>
+                  <View style={styles.rightSpace} /> 
+                  <View style={styles.mainButtonLogin}>
                       <TouchableOpacity onPress={ ()=> {navigate('LoginScreen')}} style={{flex: 1,}}>
-                      <Image source={require('../img/user/top3.png')} style={{flex:1,
-                        width: null,
-                      height: null,
-                    }}
-                    resizeMode="contain">
-                      </Image>
+                            <Image source={require('../img/user/top3.png')} style={styles.loginImage} resizeMode="contain">
+                            </Image>
+                      </TouchableOpacity>
+                  </View> 
 
-                     
-                </TouchableOpacity>
+                  <View style={styles.leftButton} />
+
+                    
+              </View>                                   
+                <View style={styles.registerButton}>
+                      <View style={styles.leftRegister} />
+
+                      <View style={styles.mainButtonRegister}>
+                            <TouchableOpacity onPress={ ()=> {navigate('RegisterScreen')}} style={{flex: 1,}}>
+                                <Image source={require('../img/buttontop.png')} style={styles.registerImage}>
+                                </Image>
+                            </TouchableOpacity>
+                      </View>
+
+                      <View style={styles.rightRegister} />
+
+                  
                 </View>
-                  <View style={styles.two6}>
+            </View>
+                  <View style={styles.bottom}>
 
-                </View>
-                </View>
-                <View style={styles.two3}>
-                      <View style={styles.two7}>
-
-                       </View>
-
-                       <View style={styles.two8}>
-                            <TouchableOpacity 
-                 onPress={ ()=> {navigate('RegisterScreen')}} style={{flex: 1,}}>
-                      <Image source={require('../img/buttontop.png')} style={{flex:1,
-                        width: null,
-                      height: null,
-                    }}
-                    >
-                      </Image>
-                         </TouchableOpacity>
-                       </View>
-
-                       <View style={styles.two9}>
-
-                        </View>
-                </View>
-              </View>
-                  <View style={styles.three}>
-
-                   </View>
+                  </View>
             
 
         </Image>
@@ -84,61 +70,67 @@ container:{
 },
 backgroundImage:{
   flex: 1,
-
-    width: null,
-    height: null,
+  width: null,
+  height: null,
 },
-one:{
+loginImage:{
+  flex:1,
+  width: null,
+  height: null,
+},
+registerImage:{
+  flex:1,
+  width: null,
+  height: null,
+},
+containerOne:{
   flex: 4,
-  
-  
-},
-two:{
-  flex: 1.2,
-},
-two2:{
-  flex: 1,
- 
-flexDirection: 'row',
 
 },
-two4:{
-  flex: 1,
+containerButton:{
+  flex: 1.2,
+ 
 },
-two5:{
+loginButton:{
+  flex: 1,
+  flexDirection: 'row',
+  
+},
+rightSpace:{
+  flex: 1,
+
+},
+mainButtonLogin:{
   flex: 2.3,
   marginBottom: (Platform.OS === 'ios') ? 18 : 0,
-paddingRight:12,
-marginHorizontal:3
+  paddingRight:12,
+  marginHorizontal:3,
+
+
 },
-two6:{
+leftButton:{
   flex: 0.9,
+
 },
-two7:{
+leftRegister:{
   flex: 1,
 },
-two8:{
+mainButtonRegister:{
   flex: 2.3,
   marginBottom: (Platform.OS === 'ios') ? 20 : 5,
   marginTop: (Platform.OS ==='ios') ? 0 : 11,
   marginRight:5
-
 },
-two9:{
+rightRegister:{
   flex: 0.9,
-  
-
-
 },
-two3:{
+registerButton:{
   flex: 1,
   flexDirection: 'row',
-
+  
 },
-three:{
+bottom:{
   flex:0.8,
-
-
 },
 
 });

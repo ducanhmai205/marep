@@ -15,6 +15,11 @@ import Dimensions from 'Dimensions';
 import { LinearGradient } from 'expo';
 import { Entypo } from '@expo/vector-icons';
 class TrainerProfile extends Component {
+   static navigationOptions = {
+    drawerLabel: 'TrainerProfile',
+    
+  };
+
   render() {
     return (
     
@@ -23,15 +28,19 @@ class TrainerProfile extends Component {
                           
                                 <View style={styles.header}>
                                   <View style={styles.iconrightHeader}>
-                                  <TouchableOpacity style={{flex: 1,marginTop:28, marginLeft:6,}}>
+                                  <TouchableOpacity style={{flex: 1,marginTop:28, marginLeft:6,}}
+                                  onPress={ () => { props.navigation.navigate('DrawerOpen') } }>
                                      <Entypo name="menu" size={34} color="#7CE7D6" />
+                                  
+                                  
                                   </TouchableOpacity>
                                   </View> 
                                     <View style={styles.spaceHeader}>
                                     </View>
                                   <View style={styles.iconleftHeader}>
-                                       
-                                        
+                                  <TouchableOpacity style={{flex:1}}>
+                                            <Image  source={require('../img/user/grp.png')} style={styles.picIcon} />
+                                    </TouchableOpacity>                                        
                                      
                            
                                   </View>
@@ -45,11 +54,14 @@ class TrainerProfile extends Component {
 
                                            <View style={styles.textName}>
                                               
-                                                  <Text style={styles.Name}>
-                                                    お名前お名前 {"\n"}
-                                                    シェイプアップ
-                                                  </Text>
-                                                     
+                                                  <View style={styles.Name}>
+                                                   
+                                                  </View>
+                                                  <View style={styles.busyButton} >
+                                                    <TouchableOpacity style={{flex:1,justifyContent: 'center',alignItems: 'center',}}>
+                                                         
+                                                    </TouchableOpacity>   
+                                                  </View>
                                            </View>
 
                                                   <View style={styles.selectShow}>
@@ -96,10 +108,29 @@ flexDirection:'row',
 iconrightHeader:{
   flex: 0.15,
   
-
+  backgroundColor:'rgba(0,0,0,0)',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor:'rgba(0,0,0,0)',
+  
+},
+iconleftHeader:{
+  flex: 0.2,
+  paddingTop: 20,
+  
+ justifyContent: 'center',
+ alignItems: 'center',
+},
+picIcon:{
+
+    height: 50,
+    width: 50,
+    
+    borderRadius: 50/2,
+resizeMode: 'cover',
+},
+spaceHeader:{
+  flex: 0.65,
+  
 },
 avatar:{
 flex: 1,
@@ -111,22 +142,25 @@ avatarImage:{
 width: 70,
 height: 70,
 borderRadius: 140/2,
-backgroundColor: 'red'
+
 },
 textName:{
 flex: (Platform.OS === 'ios') ? 1 : 0.9 ,
-justifyContent: 'center',
-alignItems: 'center',
-backgroundColor:'rgba(0,0,0,0)',
 },
 Name:{
-  color:'#5C4D82',
-  marginBottom: 45
+
+  flex: 0.5,
+},
+busyButton:{
+  flex: 0.4,
+
+
+ 
 },
 
-
 selectShow:{
-flex: 0.6,
+flex: 0.5,
+marginBottom: 20,
 
 
 },
@@ -136,7 +170,7 @@ dropDownMenu:{
 },
 
 flatlistHorizontal:{
-flex: (Platform.OS === 'ios') ? 2.2 : 2 ,
+flex: (Platform.OS === 'ios') ? 2.1 : 2 ,
 
 },
 onlineButton:{

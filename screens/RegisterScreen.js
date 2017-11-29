@@ -64,7 +64,7 @@ UserRegistrationFunction = () =>{
  const { jobID } = this.state;
  
  
-fetch('http://192.168.1.25/Mare/user_registration.php', {
+fetch('http://192.168.1.43/Mare/user_registration.php', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

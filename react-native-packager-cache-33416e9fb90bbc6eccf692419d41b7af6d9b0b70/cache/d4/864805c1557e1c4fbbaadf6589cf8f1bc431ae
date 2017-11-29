@@ -78,35 +78,35 @@ var TopScreen = _wrapComponent('TopScreen')(function (_Component) {
               lineNumber: 22
             }
           },
-          _react3.default.createElement(_reactNative.View, { style: styles.one, __source: {
+          _react3.default.createElement(_reactNative.View, { style: styles.containerOne, __source: {
               fileName: _jsxFileName,
               lineNumber: 23
             }
           }),
           _react3.default.createElement(
             _reactNative.View,
-            { style: styles.two, __source: {
+            { style: styles.containerButton, __source: {
                 fileName: _jsxFileName,
                 lineNumber: 27
               }
             },
             _react3.default.createElement(
               _reactNative.View,
-              { style: styles.two2, __source: {
+              { style: styles.loginButton, __source: {
                   fileName: _jsxFileName,
                   lineNumber: 28
                 }
               },
-              _react3.default.createElement(_reactNative.View, { style: styles.two4, __source: {
+              _react3.default.createElement(_reactNative.View, { style: styles.rightSpace, __source: {
                   fileName: _jsxFileName,
                   lineNumber: 29
                 }
               }),
               _react3.default.createElement(
                 _reactNative.View,
-                { style: styles.two5, __source: {
+                { style: styles.mainButtonLogin, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 32
+                    lineNumber: 30
                   }
                 },
                 _react3.default.createElement(
@@ -115,76 +115,67 @@ var TopScreen = _wrapComponent('TopScreen')(function (_Component) {
                       navigate('LoginScreen');
                     }, style: { flex: 1 }, __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 33
+                      lineNumber: 31
                     }
                   },
-                  _react3.default.createElement(_reactNative.Image, { source: require('../img/user/top3.png'), style: { flex: 1,
-                      width: null,
-                      height: null
-                    },
-                    resizeMode: 'contain', __source: {
+                  _react3.default.createElement(_reactNative.Image, { source: require('../img/user/top3.png'), style: styles.loginImage, resizeMode: 'contain', __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 34
+                      lineNumber: 32
                     }
                   })
                 )
               ),
-              _react3.default.createElement(_reactNative.View, { style: styles.two6, __source: {
+              _react3.default.createElement(_reactNative.View, { style: styles.leftButton, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 44
+                  lineNumber: 37
                 }
               })
             ),
             _react3.default.createElement(
               _reactNative.View,
-              { style: styles.two3, __source: {
+              { style: styles.registerButton, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 48
+                  lineNumber: 41
                 }
               },
-              _react3.default.createElement(_reactNative.View, { style: styles.two7, __source: {
+              _react3.default.createElement(_reactNative.View, { style: styles.leftRegister, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 49
+                  lineNumber: 42
                 }
               }),
               _react3.default.createElement(
                 _reactNative.View,
-                { style: styles.two8, __source: {
+                { style: styles.mainButtonRegister, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 53
+                    lineNumber: 44
                   }
                 },
                 _react3.default.createElement(
                   _reactNative.TouchableOpacity,
-                  {
-                    onPress: function onPress() {
+                  { onPress: function onPress() {
                       navigate('RegisterScreen');
                     }, style: { flex: 1 }, __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 54
+                      lineNumber: 45
                     }
                   },
-                  _react3.default.createElement(_reactNative.Image, { source: require('../img/buttontop.png'), style: { flex: 1,
-                      width: null,
-                      height: null
-                    },
-                    __source: {
+                  _react3.default.createElement(_reactNative.Image, { source: require('../img/buttontop.png'), style: styles.registerImage, __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 56
+                      lineNumber: 46
                     }
                   })
                 )
               ),
-              _react3.default.createElement(_reactNative.View, { style: styles.two9, __source: {
+              _react3.default.createElement(_reactNative.View, { style: styles.rightRegister, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 65
+                  lineNumber: 51
                 }
               })
             )
           ),
-          _react3.default.createElement(_reactNative.View, { style: styles.three, __source: {
+          _react3.default.createElement(_reactNative.View, { style: styles.bottom, __source: {
               fileName: _jsxFileName,
-              lineNumber: 70
+              lineNumber: 56
             }
           })
         )
@@ -201,57 +192,66 @@ var styles = _reactNative.StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-
     width: null,
     height: null
   },
-  one: {
+  loginImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  registerImage: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  containerOne: {
     flex: 4
 
   },
-  two: {
+  containerButton: {
     flex: 1.2
-  },
-  two2: {
-    flex: 1,
 
+  },
+  loginButton: {
+    flex: 1,
     flexDirection: 'row'
 
   },
-  two4: {
+  rightSpace: {
     flex: 1
+
   },
-  two5: {
+  mainButtonLogin: {
     flex: 2.3,
     marginBottom: _reactNative.Platform.OS === 'ios' ? 18 : 0,
     paddingRight: 12,
     marginHorizontal: 3
+
   },
-  two6: {
+  leftButton: {
     flex: 0.9
+
   },
-  two7: {
+  leftRegister: {
     flex: 1
   },
-  two8: {
+  mainButtonRegister: {
     flex: 2.3,
     marginBottom: _reactNative.Platform.OS === 'ios' ? 20 : 5,
     marginTop: _reactNative.Platform.OS === 'ios' ? 0 : 11,
     marginRight: 5
-
   },
-  two9: {
+  rightRegister: {
     flex: 0.9
-
   },
-  two3: {
+  registerButton: {
     flex: 1,
     flexDirection: 'row'
 
   },
-  three: {
+  bottom: {
     flex: 0.8
-
   }
 
 });

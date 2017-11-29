@@ -17,7 +17,7 @@ import { LinearGradient } from 'expo';
 class MenuTrainer extends Component {
   render() {
     return (
-      <Image style={styles.backgroundImage} source={require('./img/user/menu_trainer.png')}>
+      <Image style={styles.backgroundImage} source={require('../img/user/menu_trainer.png')}>
           <StatusBar hidden={true} />
           <View style={styles.upcontainer}>
               <View style={styles.header}>

@@ -67,13 +67,13 @@ var App = _wrapComponent('App')(function (_React$Component) {
         _reactNative.View,
         { style: styles.container, __source: {
             fileName: _jsxFileName,
-            lineNumber: 11
+            lineNumber: 12
           }
         },
         _react3.default.createElement(_RootNavigation2.default, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 12
+            lineNumber: 13
           }
         })
       );
