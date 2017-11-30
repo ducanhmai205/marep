@@ -16,7 +16,9 @@ import SelectTrainer from '../screens/SelectTrainer';
 import TraineeProfile from '../screens/TraineeProfile';
 import TrainerProfile from '../screens/TrainerProfile';
 
-
+import InfomationVersion from '../screens/Infomation/InfomationVersion';
+import Policy from '../screens/Infomation/Policy';
+import Term from '../screens/Infomation/Term';
 const RootNavigation = StackNavigator(
 {	
   	TopScreen: { screen: TopScreen },
@@ -29,7 +31,11 @@ const RootNavigation = StackNavigator(
  	SelectTrainee : { screen: SelectTrainee},
  	SelectTrainer : { screen: SelectTrainer},
  	TraineeProfile : { screen: TraineeProfile},
- 	TrainerProfile : { screen: TrainerProfile}
+ 	TrainerProfile : { screen: TrainerProfile},
+
+ 	InfomationVersion : { screen: InfomationVersion},
+ 	Policy : { screen: Policy},
+ 	Term : { screen: Term},
  
 },
 {

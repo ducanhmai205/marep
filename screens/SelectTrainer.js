@@ -9,8 +9,10 @@ import {
   FlatList,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import { Ionicons, FontAwesome,Foundation} from '@expo/vector-icons';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 class SelectTrainee extends Component {
@@ -137,8 +139,8 @@ container:{
 },
 backgroundImage:{
   flex: 1,
-  width: null,
-  height: null
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height,
 },
 nextButton:{
    flex: 1,
@@ -159,7 +161,7 @@ containerImage:{
   flex: 1,
 },
 header:{
-flex:0.15,
+flex:(Platform.OS === 'ios') ? 0.15 : 0.1,
 flexDirection: 'row' ,
 justifyContent: 'center',
 alignItems: 'center',
@@ -176,9 +178,10 @@ select:{
   backgroundColor:'rgba(0,0,0,0)',
 justifyContent: 'center',
 alignItems: 'center',
-   marginRight: 55,
-
-  marginLeft:43,
+backgroundColor: 'red',
+   marginRight: (Platform.OS === 'ios') ? 55 : 65,
+   paddingTop:(Platform.OS === 'ios') ? 0 : 15,
+  marginLeft:(Platform.OS === 'ios') ? 43 : 53,
 flex: 0.07,
 
 },

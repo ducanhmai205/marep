@@ -9,8 +9,10 @@ import {
   FlatList,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import { Ionicons, FontAwesome,Foundation} from '@expo/vector-icons';
 class SelectTrainee extends Component {
   constructor(props){
@@ -115,8 +117,8 @@ container:{
 },
 backgroundImage:{
   flex: 1,
-  width: null,
-  height: null
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height
 },
 nextButton:{
    flex: 1,
@@ -137,7 +139,7 @@ containerImage:{
   flex: 1,
 },
 header:{
-flex:0.15,
+flex:(Platform.OS === 'ios') ? 0.15 : 0.1,
 flexDirection: 'row' ,
 justifyContent: 'center',
 alignItems: 'center',
@@ -149,7 +151,7 @@ flatList:{
   flex: 0.9,
   marginRight: 45,
   marginLeft:43,
-
+  paddingTop:(Platform.OS === 'ios') ? 0 : 20,
  
 },
 line:{

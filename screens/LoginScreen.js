@@ -13,6 +13,7 @@ import {
   Platform,
   TouchableHighlight
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import { StackNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import LoginFB from '../screens/LoginFB';
@@ -32,7 +33,7 @@ managePasswordVisibility = () =>
   }
 
 UserLoginFunction = () =>{
- fetch('http://192.168.1.43/Mare/User_Login.php', {
+ fetch('http://192.168.1.57:8000/api/v1/customer/login', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -48,14 +49,45 @@ UserLoginFunction = () =>{
  
 }).then((response) => response.json())
       .then((responseJson) => {
-        if(responseJson === 'Data Matched')
-        {
-            this.props.navigation.navigate('WelcomeTrainer', { Email: this.state.UserEmail,  });
-        }
-        else{
-            Alert.alert(responseJson);
-        }
+       
  
+
+         if(responseJson.status === true)
+         {
+            if(responseJson.account.type === 'trainer'){
+              this.props.navigation.navigate('TrainerProfile', { Email: this.state.UserEmail,  });
+              }
+            if(responseJson.account.type === 'trainee'){
+              this.props.navigation.navigate('TraineeProfile', { Email: this.state.UserEmail,  });
+              }
+         }
+         else{
+           if(typeof(responseJson.message) === 'string'){
+                 
+                   Alert.alert(responseJson.message);
+           }
+            else{
+              var error_messEmail = '';
+              var error_messPassword = '';
+              if (responseJson.message.email) {
+               for (var i = 0, len = responseJson.message.email.length; i < len; i++) {
+                      error_messEmail += responseJson.message.email[i] + '!'
+                    }
+              }
+
+              if (responseJson.message.password) {
+               for (var i = 0, len = responseJson.message.password.length; i < len; i++) {
+                      error_messPassword += responseJson.message.password[i] + '!'
+
+                    }
+              }
+                  
+              Alert.alert(error_messEmail, error_messPassword);
+
+              
+            }
+           }
+       
       }).catch((error) => {
         console.error(error);
       });
@@ -135,13 +167,15 @@ UserLoginFunction = () =>{
                                 </View>
 
                                 <View style={{flex: 0.5,}}>
-                                <View style={{flex: 0.5,flexDirection: 'column-reverse' ,}}>
-                                </View>
-                                <View style={{flex: 0.5,justifyContent: 'center',alignItems: 'center',borderBottomWidth: 1}}>
-                                            <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('RegisterScreen');}}>
+                                  <View style={{flex: 0.5 }}>
+                                  </View>
 
-                                            </TouchableOpacity>
-                                </View>
+                                  <View style={{flex: 0.5 ,justifyContent: 'center',alignItems: 'center',}}>
+                                  <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
+                                        <Text style={styles.textGoRegister}> 会員登録 </Text>
+                                  </TouchableOpacity>
+                                  </View>
+                                
                                 </View>
 
                                 <View style={{flex: 0.5,}}>
@@ -161,8 +195,8 @@ container:{
 },
 backgroundImage:{
   flex: 1,
-  width:null,
-  height:null
+  width:Dimensions.get('window').width,
+  height:Dimensions.get('window').height,
 },
 containerImage:{
 flex: 1,
@@ -219,9 +253,16 @@ forgotPass:{
 
 goRegister:{
   flex: 1.5,
-  flexDirection:  'row'
+  flexDirection:  'row',
+  fontSize:10
 },
+textGoRegister:{
+backgroundColor:'rgba(0,0,0,0)',
+textDecorationLine:  'underline',
+fontWeight: 'bold',
+color:'#4e5a99'
 
+},
 topButton:{
     flex: 0.2,
    

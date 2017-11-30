@@ -9,7 +9,8 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
-  Picker
+  Picker,
+  Platform
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import { Feather , Entypo , MaterialIcons } from '@expo/vector-icons';
@@ -25,8 +26,9 @@ class MenuUser extends Component {
     };
   }
   render() {
+    const { navigate } = this.props.navigation;
     return (
-      <Image style={styles.backgroundImage} source={require('../img/user/menu_user.png')}>
+      <Image style={styles.backgroundImage} source={require('../img/user/menu_userbg.png')}>
            <StatusBar hidden={true} />
            <View style={styles.containerUp}>
               <View style={styles.xButton}> 
@@ -95,7 +97,7 @@ class MenuUser extends Component {
 
 
            <View style={styles.containerDown}>
-              <TouchableOpacity style={{flex: 1,}}>
+              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('InfomationVersion')}}>
                 <View style={styles.optionDown}>
                  
                      <Text style={styles.textOption}> バージョン情報 </Text>
@@ -104,7 +106,7 @@ class MenuUser extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1,}}>
+              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('Policy')}}>
                 <View style={styles.optionDown}>
 
                       <Text style={styles.textOption}> 使用規約 </Text>
@@ -112,7 +114,7 @@ class MenuUser extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1,}}>
+              <TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('Term')}}>
                 <View style={styles.optionDown}>
                       <Text style={styles.textOption}> プライバシーポリシー </Text>
                       <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
@@ -152,7 +154,8 @@ xButton:{
     flex: 0.15,
     flexDirection: 'column-reverse' ,
     backgroundColor:'rgba(0,0,0,0)',
-    paddingRight:15
+    paddingRight:15,
+
 },
 avatarPicker:{
     flex: 0.35,
@@ -161,8 +164,8 @@ avatarPicker:{
 },
 circle:{
 
-    width: 80,
-    height: 80,
+    width: (Platform.OS === 'ios') ? 80 : 75,
+    height: (Platform.OS === 'ios') ? 80 : 75 ,
     borderRadius: 180/2,
     backgroundColor: '#999',
     justifyContent: 'center',
@@ -184,7 +187,7 @@ justifyContent: 'center',
 },
 mainOption:{
 flex: 0.9,
-marginHorizontal: 30,
+marginHorizontal: (Platform.OS === 'ios') ? 30 : 38 ,
 
 },
 optionMail:{
@@ -211,7 +214,7 @@ containerGraySpace:{
 },
 containerDown:{
 flex: 0.55,
-marginHorizontal: 30
+marginHorizontal: (Platform.OS === 'ios') ? 30 : 38 ,
 },
 optionDown:{
   flex: 1,

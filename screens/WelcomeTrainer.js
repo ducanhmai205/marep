@@ -21,7 +21,7 @@ class WelcomeTrainer extends Component {
               <View style={styles.imageAvatar}>
                        <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
                        </Image>
-                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Email}  </Text>
+                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Name}  </Text>
                       <Text style={styles.text2}> 
                                  こんにちは今日はどのようにやってい？
                        </Text>
@@ -31,7 +31,7 @@ class WelcomeTrainer extends Component {
 
           <View style={styles.nextButton}>
                 <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                navigate('TrainerSpecialize');}}>
+                navigate('TrainerSpecialize',{New:this.props.navigation.state.params.Name});}}>
                     <Text style={{fontWeight: 'bold'}}> START ! </Text> 
              </TouchableOpacity> 
               

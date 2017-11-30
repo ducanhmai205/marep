@@ -64,7 +64,7 @@ UserRegistrationFunction = () =>{
  const { jobID } = this.state;
  
  
-fetch('http://192.168.1.43/Mare/user_registration.php', {
+fetch('http://192.168.1.57:8000/api/v1/customer/register', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -84,23 +84,73 @@ fetch('http://192.168.1.43/Mare/user_registration.php', {
  
 }).then((response) => response.json())
       .then((responseJson) => {
- 
- if(responseJson === 'trainee')
+  if(responseJson.status === true){
+ if(responseJson.account.type === 'trainee')
         {
- 
-            this.props.navigation.navigate('WelcomeTrainee', { Email: this.state.UserEmail });
+ console.log("name",responseJson.account.trainee.name)
+            this.props.navigation.navigate('WelcomeTrainee', {Name: responseJson.account.trainee.name });
  
         }
-        else if(responseJson === 'trainer')
+        else if(responseJson.account.type === 'trainer')
         {
- 
-            this.props.navigation.navigate('WelcomeTrainer', { Email: this.state.UserEmail });
+ console.log("trainer",responseJson.account.trainer.name)
+            this.props.navigation.navigate('WelcomeTrainer', { Name: responseJson.account.trainer.name });
  
         }
+      }
         else{
- 
-          Alert.alert(responseJson);
-        }
+           if(typeof(responseJson.message) === 'string'){
+                 
+                   Alert.alert(responseJson.message);
+           }
+           else{
+            var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
+            console.log("test", error_object[0]);
+            Object.keys(responseJson.message)[0];
+              var error_messEmail = '';
+              var error_messPassword = '';
+              var error_messName = '';
+              var error_messJob = '';
+              if (responseJson.message.name) {
+               for (var i = 0, len = responseJson.message.name.length; i < len; i++) {
+                      error_messName += responseJson.message.name[i] + '!'
+                    }
+              }
+              if (responseJson.message.email) {
+               for (var i = 0, len = responseJson.message.email.length; i < len; i++) {
+                      error_messEmail += responseJson.message.email[i] + '!'
+                    }
+              }
+
+              if (responseJson.message.password) {
+               for (var i = 0, len = responseJson.message.password.length; i < len; i++) {
+                      error_messPassword += responseJson.message.password[i] + '!'
+
+                    }
+              }
+               if (responseJson.message.job) {
+               for (var i = 0, len = responseJson.message.job.length; i < len; i++) {
+                      error_messJob += responseJson.message.job[i] + '!'
+
+                    }
+              }
+                  
+              Alert.alert(error_object[0] );
+              //if(error_messPassword,error_messEmail){
+              //   console.log("loi",responseJson.message.password)
+              //      Alert.alert(error_messPassword,error_messEmail);
+              //}
+              //else if (error_messName,error_messJob){
+              //   console.log("loi",responseJson.message.name)
+              //      Alert.alert(error_messName,error_messJob);
+              //}
+              //else if (error_messName,error_messPassword){
+              //   console.log("loi",responseJson.message.name)
+              //      Alert.alert(error_messName,error_messPassword//);
+              //}
+
+            }
+         }
  
         
  

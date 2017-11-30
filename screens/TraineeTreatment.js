@@ -7,9 +7,11 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
-  Text
+  Text,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Dimensions from 'Dimensions';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 class TraineeTreatment extends Component {
   constructor(){
@@ -102,8 +104,8 @@ class TraineeTreatment extends Component {
 const styles = StyleSheet.create({
 backgroundImage:{
 	flex: 1,
-	width: null,
-	height: null,
+	width: Dimensions.get('window').width,
+	height: Dimensions.get('window').height,
   backgroundColor: 'white',
 },
 icon:{
@@ -140,7 +142,7 @@ nextButton:{
    flexDirection: 'row' , 
    position:'absolute',
    bottom: 0,
-   height: 70,
+   height: (Platform.OS === 'ios') ? 70 : 55,
    backgroundColor:'white',
    width: '100%',
   

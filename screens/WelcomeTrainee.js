@@ -21,7 +21,7 @@ class WelcomeTrainee extends Component {
               <View style={styles.imageAvatar}>
                        <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
                        </Image>
-                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Email}  </Text>
+                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Name}  </Text>
                       <Text style={styles.text2}> 
                                  こんにちは今日はどのようにやってい？
                        </Text>
