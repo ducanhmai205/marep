@@ -1,0 +1,106 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _reactNavigation = require('react-navigation');
+
+var _TopScreen = require('../screens/TopScreen');
+
+var _TopScreen2 = _interopRequireDefault(_TopScreen);
+
+var _RegisterScreen = require('../screens/RegisterScreen');
+
+var _RegisterScreen2 = _interopRequireDefault(_RegisterScreen);
+
+var _LoginFB = require('../screens/LoginFB');
+
+var _LoginFB2 = _interopRequireDefault(_LoginFB);
+
+var _LoginScreen = require('../screens/LoginScreen.js');
+
+var _LoginScreen2 = _interopRequireDefault(_LoginScreen);
+
+var _ForgotPassword = require('../screens/ForgotPassword');
+
+var _ForgotPassword2 = _interopRequireDefault(_ForgotPassword);
+
+var _WelcomeTrainee = require('../screens/WelcomeTrainee');
+
+var _WelcomeTrainee2 = _interopRequireDefault(_WelcomeTrainee);
+
+var _WelcomeTrainer = require('../screens/WelcomeTrainer');
+
+var _WelcomeTrainer2 = _interopRequireDefault(_WelcomeTrainer);
+
+var _TrainerSpecialize = require('../screens/TrainerSpecialize');
+
+var _TrainerSpecialize2 = _interopRequireDefault(_TrainerSpecialize);
+
+var _TraineeTreatment = require('../screens/TraineeTreatment');
+
+var _TraineeTreatment2 = _interopRequireDefault(_TraineeTreatment);
+
+var _SelectTrainee = require('../screens/SelectTrainee');
+
+var _SelectTrainee2 = _interopRequireDefault(_SelectTrainee);
+
+var _SelectTrainer = require('../screens/SelectTrainer');
+
+var _SelectTrainer2 = _interopRequireDefault(_SelectTrainer);
+
+var _TraineeProfile = require('../screens/TraineeProfile');
+
+var _TraineeProfile2 = _interopRequireDefault(_TraineeProfile);
+
+var _TrainerProfile = require('../screens/TrainerProfile');
+
+var _TrainerProfile2 = _interopRequireDefault(_TrainerProfile);
+
+var _DetailTrainer = require('../screens/DetailTrainer');
+
+var _DetailTrainer2 = _interopRequireDefault(_DetailTrainer);
+
+var _InfomationVersion = require('../screens/Infomation/InfomationVersion');
+
+var _InfomationVersion2 = _interopRequireDefault(_InfomationVersion);
+
+var _Policy = require('../screens/Infomation/Policy');
+
+var _Policy2 = _interopRequireDefault(_Policy);
+
+var _Term = require('../screens/Infomation/Term');
+
+var _Term2 = _interopRequireDefault(_Term);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RootNavigation = (0, _reactNavigation.StackNavigator)({
+  TopScreen: { screen: _TopScreen2.default },
+  RegisterScreen: { screen: _RegisterScreen2.default },
+  LoginScreen: { screen: _LoginScreen2.default },
+  ForgotPassword: { screen: _ForgotPassword2.default },
+  WelcomeTrainee: { screen: _WelcomeTrainee2.default },
+  WelcomeTrainer: { screen: _WelcomeTrainer2.default },
+  TrainerSpecialize: { screen: _TrainerSpecialize2.default },
+  TraineeTreatment: { screen: _TraineeTreatment2.default },
+  SelectTrainee: { screen: _SelectTrainee2.default },
+  SelectTrainer: { screen: _SelectTrainer2.default },
+  TraineeProfile: { screen: _TraineeProfile2.default },
+  TrainerProfile: { screen: _TrainerProfile2.default },
+  DetailTrainer: { screen: _DetailTrainer2.default },
+
+  InfomationVersion: { screen: _InfomationVersion2.default },
+  Policy: { screen: _Policy2.default },
+  Term: { screen: _Term2.default }
+
+}, {
+  headerMode: 'none'
+});
+
+exports.default = RootNavigation;

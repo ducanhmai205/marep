@@ -104,7 +104,7 @@ const {goBack} = this.props.navigation;
 
                                           </View>
                                           <View style={styles.arrow}>
-                                          <TouchableOpacity style={{}}>
+                                          <TouchableOpacity style={{}}  onPress={ ()=> {navigate('DetailTrainer')}}>
                                               <Ionicons name="ios-arrow-forward" size={25} style={{ color: '#00E4BA',}} />
                                           </TouchableOpacity>
 
@@ -123,7 +123,7 @@ const {goBack} = this.props.navigation;
             </View>
             <View style={styles.nextButton}>
                           <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                          navigate('InformationUser');}}>
+                          navigate('TraineeProfile',{Account: this.props.navigation.state.params.Account})}}>
                               <Text style={{fontWeight: 'bold'}}> FINISH <Ionicons  name="ios-arrow-forward" size={15}  /> </Text> 
                         </TouchableOpacity> 
                         </View>
@@ -178,7 +178,7 @@ select:{
   backgroundColor:'rgba(0,0,0,0)',
 justifyContent: 'center',
 alignItems: 'center',
-backgroundColor: 'red',
+
    marginRight: (Platform.OS === 'ios') ? 55 : 65,
    paddingTop:(Platform.OS === 'ios') ? 0 : 15,
   marginLeft:(Platform.OS === 'ios') ? 43 : 53,
@@ -218,6 +218,7 @@ flex: 1.5,
 justifyContent: 'center',
 alignItems: 'center',
 paddingTop:15,
+
 flexDirection: 'row' ,
 paddingRight:6
  },

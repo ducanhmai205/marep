@@ -8,16 +8,22 @@ import {
   ImageBackground,
   TouchableOpacity,
   Text,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Dimensions from 'Dimensions';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 class TrainerSpecialize extends Component {
   constructor(){
         super()
         this.state = {
-            text: ''
+            text: '',
+            Data:'',
+            type:'',
+            id:'',
+            access_token:'',
+            customer_issue:''
         }
         this.onSelect = this.onSelect.bind(this)
     }
@@ -27,11 +33,107 @@ class TrainerSpecialize extends Component {
     text: `${value}`
   })
 }
+sendIssuesTrainer = () =>{
+ console.log("ok",this.state.value)
+fetch('http://35.185.68.16/api/v1/trainer/storeTrainerSpecializes', {
+
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+
+  body: JSON.stringify({
+ 
+  type  : this.props.navigation.state.params.Account.type,
+    id  : this.props.navigation.state.params.Account.trainer.id,
+  access_token  : this.props.navigation.state.params.Account.trainer.access_token,
+
+    trainer_specializes: this.state.value,
+    
+  })
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+  if(responseJson.status === true){
+  this.props.navigation.navigate('SelectTrainee',{Account: this.props.navigation.state.params.Account });
+      }
+        else{
+          
+           if(typeof(responseJson.message) === 'string'){
+                 
+                   Alert.alert(responseJson.message);
+           }
+           else{
+            console.log("abc",responseJson.message)
+            var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
+            
+            Object.keys(responseJson.message)[0];
+             
+                  
+              Alert.alert(error_object[0] );
+             
+            }
+         }
+ 
+        
+ 
+      }).catch((error) => {
+        console.error(error);
+      });
+ 
+ 
+  }
+
+  componentWillMount() {
+let formdata = new FormData();
+
+formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+formdata.append("type", this.props.navigation.state.params.Account.type);
+formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+
+    fetch('http://35.185.68.16/api/v1/trainer/getSpecializes', {
+  method: 'post',
+  headers: {
+      'Content-Type': 'multipart/form-data',
+  },
+  body: formdata
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+        // var rawData = Object.values(responseJson.trainer_specializes);
+        var rawData = responseJson.trainer_specializes;
+        console.log('raw data', rawData);
+
+        var data = Object.keys(responseJson.trainer_specializes).map(function(data){
+          // return [data,responseJson.trainer_specializes[data]];
+          return {
+            label: responseJson.trainer_specializes[data],
+            value: data
+          }
+        });
+        // var data = rawData.map((item, index) => {
+        //   return {
+        //     label: item,
+        //     value: index
+        //   }
+        // });
+
+        console.log("data",data);  
+        this.setState({
+          Data:data 
+        })
+       
+      
+      })
+
+
+}
   render() {
   	const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
     return (
-            		 <ImageBackground  source={require('../img/signin03_trainerscreen.png')} style={styles.backgroundImage}>
+            		 <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
                   <View style={styles.icon}>
                 <TouchableOpacity onPress={ () => goBack(null)  }>
                       <Ionicons  name="ios-arrow-back-outline" size={20}  />
@@ -40,49 +142,23 @@ class TrainerSpecialize extends Component {
                 <View style={styles.center}>
               <Text style={styles.text2}>あなたの得意分野を教えてください </Text>
                  <View style={styles.inside}>
-                  <RadioGroup
-                  size={15}
-                  color='#fafafa'
-                  
-                  
-                  thickness={8}
-                     onSelect = {(index, value) => this.onSelect(index, value)}>
-                   
-                     <RadioButton  activeColor='#80d8ff' value={'item1'} >
-                       <Text style={styles.text3}>シェイプアップ</Text>
-                                  </RadioButton>
-                    
-                     <RadioButton activeColor='#80d8ff' highlightColor='#80d8ff' value={'item2'}>
-                       <Text style={styles.text3}>筋肉強化</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#80d8ff' value={'item3'}>
-                       <Text style={styles.text3}>体の痛みを取る</Text>
-                     </RadioButton>
+                              
+        <RadioForm
+            style={{flex: 1, }}
+          radio_props={this.state.Data}
+          buttonColor={'#50C900'}
+          onPress={(value) => {
+            var issues = [];
+            issues.push(value);
+            console.log("test_press",value)
+            this.setState({value:issues})}}>    
+        </RadioForm>
 
-                     <RadioButton activeColor='#80d8ff' value={'item4'}>
-                       <Text style={styles.text3}>体の歪みをとる</Text>
-                                  </RadioButton>
-              
-                     <RadioButton activeColor='#80d8ff' value={'item5'}>
-                       <Text style={styles.text3}>冷え性改善</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#80d8ff' highlightColor='#84ffff' value={'item6'}>
-                       <Text style={styles.text3}>便秘改善</Text>
-                     </RadioButton>
-                     <RadioButton activeColor='#80d8ff' highlightColor='#80d8ff' value={'item7'}>
-                       <Text style={styles.text3}>むくみを取る</Text>
-                     </RadioButton>
-                     
-                   </RadioGroup>             
-                    
 
                  </View>   
             </View>
             		           <View style={styles.nextButton}>
-                					<TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                					navigate('SelectTrainee');}}>
+                					<TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssuesTrainer}>
                 					    <Text style={{fontWeight: 'bold'}}> 
                               NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
 
@@ -115,6 +191,7 @@ paddingTop: 60,
 },
 inside:{
   paddingTop:30,
+  backgroundColor:'rgba(0,0,0,0)',
 },
 text2:{
   backgroundColor:'rgba(0,0,0,0)',

@@ -21,9 +21,12 @@ class WelcomeTrainer extends Component {
               <View style={styles.imageAvatar}>
                        <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
                        </Image>
-                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Name}  </Text>
+                      <Text style={styles.text}> ようこそ、 {this.props.navigation.state.params.Account.trainer.name} さん !  </Text>
                       <Text style={styles.text2}> 
-                                 こんにちは今日はどのようにやってい？
+                                 トレーニングの効果を出す為に
+                       </Text>
+                       <Text style={styles.text2}> 
+                                  もう少しあなたの事を教えてください
                        </Text>
                     </View>
 
@@ -31,7 +34,7 @@ class WelcomeTrainer extends Component {
 
           <View style={styles.nextButton}>
                 <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                navigate('TrainerSpecialize',{New:this.props.navigation.state.params.Name});}}>
+                navigate('TrainerSpecialize',{Account: this.props.navigation.state.params.Account });}}>
                     <Text style={{fontWeight: 'bold'}}> START ! </Text> 
              </TouchableOpacity> 
               
@@ -67,7 +70,7 @@ avtImage:{
 text:{
    backgroundColor:'rgba(0,0,0,0)',
   fontSize: 20,
-  color: 'black',
+  color: '#402677',
   
   marginBottom: 15,
   justifyContent: 'center',
@@ -77,7 +80,8 @@ text:{
 text2:{
   backgroundColor:'rgba(0,0,0,0)',
   fontSize: 15,
-  color: 'black',
+   marginBottom: 5,
+  color: '#402677',
  justifyContent: 'center',
  alignItems: 'center',
 },

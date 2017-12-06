@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   StatusBar,
   Picker,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import { Feather , Entypo , MaterialIcons } from '@expo/vector-icons';
@@ -23,30 +24,101 @@ class MenuUser extends Component {
   
     this.state = {
       sex: '性別',
+      type:'',
+      id:'',
+      access_token:''
     };
   }
+
+  logoutUser = () => {
+
+    var type = 
+
+  console.log('new',this.props.navigation.state.params.Account.type)
+  console.log('id',this.props.navigation.state.params.Account.customer.id)
+  console.log('token',this.props.navigation.state.params.Account.customer.access_token)
+fetch('http://35.185.68.16/api/v1/customer/logout', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+ type  : this.props.navigation.state.params.Account.type,
+    id  : this.props.navigation.state.params.Account.customer.id,
+  access_token  : this.props.navigation.state.params.Account.customer.access_token,
+  })
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+        console.log('token2',this.props.navigation.state.params.Account.customer.access_token)
+ 
+
+         if(responseJson.status === true)
+         {
+          
+          this.props.navigation.navigate('LoginScreen');
+         }
+         else{
+           
+             
+                  
+               Alert.alert('ok');
+
+            
+           }
+       
+      }).catch((error) => {
+        console.error(error);
+      });
+ 
+  }
+   confirm = () => {
+  Alert.alert(
+    
+    // This is Alert Dialog Title
+    '本当にログアウトしますか？',
+ 
+    // This is Alert Dialog Message. 
+    '',
+    [
+      // First Text Button in Alert Dialog.
+      
+ 
+      // Second Cancel Button in Alert Dialog.
+      // {text: 'Cancel', onPress: () => this.props.navigation.navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account  })},
+       {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+      // Third OK Button in Alert Dialog
+      {text: 'OK',  onPress: () => this.logoutUser()},
+      
+    ],
+   { cancelable: false }
+  )
+ }
   render() {
     const { navigate } = this.props.navigation;
+    const {goBack} = this.props.navigation;
     return (
       <Image style={styles.backgroundImage} source={require('../img/user/menu_userbg.png')}>
            <StatusBar hidden={true} />
            <View style={styles.containerUp}>
-              <View style={styles.xButton}> 
-                    <TouchableOpacity  style={{flex: 1,flexDirection: 'row' ,justifyContent: 'flex-end',alignItems: 'center',}} onPress={() => goBack()}>
-                                   <Feather name="x" size={25}  />
-                    </TouchableOpacity>
-              </View>
-
+              
               <View style={styles.avatarPicker}>
-                  <TouchableOpacity  style={{flex: 1,backgroundColor: 'white',}}>
+                  <View style={styles.leftSpace}>
+                  </View>
+                  <TouchableOpacity  style={{flex: 1,backgroundColor: 'white',alignItems: 'center',paddingTop: 5}}>
                                     <View style={styles.circle}>
                                           <Entypo name="camera" size={15} color='white' />
                                     </View>
                   </TouchableOpacity>
+
+                   <TouchableOpacity  style={{flex: 1,justifyContent: 'space-around',alignItems: 'flex-end',paddingBottom: 40,paddingRight:10}} onPress={() => goBack()}>
+                                   <Feather name="x" size={25}  />
+                    </TouchableOpacity>
               </View>
 
               <View style={styles.textName}>
-                  <Text style={{flex:1,fontSize: 15,color:'#665586'}}> お名前お名前 </Text>
+                  <Text style={{flex:1,fontSize: 15,paddingTop:10,color:'#665586'}}>{this.props.navigation.state.params.Account.customer.name} </Text>
               </View>
 
               <View style={styles.pushButton}>
@@ -67,9 +139,16 @@ class MenuUser extends Component {
 
               <View style={styles.mainOption}>
                   <View style={styles.optionMail}>
-                      <Text style={styles.textOption}> 得意分野 </Text>
-                      <Text style={styles.textOption}> aaa@aaa.com </Text>
+                      <Text style={styles.textOption}> メールアドレス </Text>
+                      <Text style={styles.textOption}>{this.props.navigation.state.params.Account.customer.email}</Text>
                   </View>
+<TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('UpdatePassword', { Account: this.props.navigation.state.params.Account  })}}>
+                    <View style={styles.option}>
+                    
+                      <Text style={styles.textOption}> パスワード変更 </Text>
+                    <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
+                     </View>
+                       </TouchableOpacity>
 
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 性別 </Text>
@@ -128,7 +207,7 @@ class MenuUser extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1.4,}}>
+              <TouchableOpacity style={{flex: 1.4,}} onPress={this.confirm}>
                 <View style={styles.optionLogout}>
                        <Text style={styles.textOption}> ログアウト </Text>
                 </View>
@@ -150,17 +229,15 @@ backgroundImage: {
 containerUp:{
     flex: 1,
 },
-xButton:{
-    flex: 0.15,
-    flexDirection: 'column-reverse' ,
-    backgroundColor:'rgba(0,0,0,0)',
-    paddingRight:15,
-
+leftSpace:{
+  flex: 1,
 },
 avatarPicker:{
-    flex: 0.35,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 0.45,
+   flexDirection: 'row',
+    marginBottom: 5,
+      justifyContent: 'center',
+     alignItems: 'stretch',
 },
 circle:{
 
@@ -173,20 +250,25 @@ circle:{
 
 },
 textName:{
-    flex: 0.1,
+    flex: 0.15,
+ 
     justifyContent: 'center',
     alignItems: 'center',
+    
 },
 pushButton:{
-flex: 0.15,
+flex: 0.05,
+
+paddingTop:10,
 justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'row' ,
-    paddingBottom: 5,
+   
   paddingRight:12,
 },
 mainOption:{
-flex: 0.9,
+flex: 1.2,
+
 marginHorizontal: (Platform.OS === 'ios') ? 30 : 38 ,
 
 },

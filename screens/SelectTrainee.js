@@ -101,7 +101,7 @@ const {goBack} = this.props.navigation;
             </View>
             <View style={styles.nextButton}>
                           <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                          navigate('InformationUser');}}>
+                          navigate('TrainerProfile',{Account: this.props.navigation.state.params.Account });}}>
                               <Text style={{fontWeight: 'bold'}}> FINISH <Ionicons  name="ios-arrow-forward" size={15}  /> </Text> 
                         </TouchableOpacity> 
                         </View>

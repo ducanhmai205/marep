@@ -11,7 +11,7 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import { StackNavigator } from 'react-navigation';
@@ -33,7 +33,7 @@ managePasswordVisibility = () =>
   }
 
 UserLoginFunction = () =>{
- fetch('http://192.168.1.57:8000/api/v1/customer/login', {
+ fetch('http://35.185.68.16/api/v1/customer/login', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -55,10 +55,12 @@ UserLoginFunction = () =>{
          if(responseJson.status === true)
          {
             if(responseJson.account.type === 'trainer'){
-              this.props.navigation.navigate('TrainerProfile', { Email: this.state.UserEmail,  });
+              this.props.navigation.navigate('TrainerProfile', { Account: responseJson.account  });
+              console.log('2',responseJson.account)
               }
-            if(responseJson.account.type === 'trainee'){
-              this.props.navigation.navigate('TraineeProfile', { Email: this.state.UserEmail,  });
+            if(responseJson.account.type === 'customer'){
+              this.props.navigation.navigate('TraineeProfile', { Account: responseJson.account  });
+              console.log('1',responseJson.account)
               }
          }
          else{
@@ -99,11 +101,12 @@ UserLoginFunction = () =>{
 
     return (
       <View style={styles.container}>
-            <Image  source={require('../img/user/loginbg.png')} style={styles.backgroundImage}>
+            <Image  source={require('../img/user/loginbgg.png')} style={styles.backgroundImage}>
                   <View style={styles.containerImage}>
                         <View style={styles.textHeader}>
                                 
-                            <TouchableOpacity  style={{flex: 0.2,}} onPress={() => goBack()}>
+                            <TouchableOpacity  style={{flex: 0.2,}} onPress={()=> {
+                          navigate('TopScreen');}}>
                                   <Image  source={require('../img/Xbutton.png')} style={styles.xButton}>
                                   </Image>
                             </TouchableOpacity>
@@ -123,6 +126,8 @@ UserLoginFunction = () =>{
                                   style={{flex: 1,paddingLeft: 40}}
                                   underlineColorAndroid='transparent'
                                   placeholder="E-mail"
+                                  autoCapitalize="none"
+
                                   placeholderTextColor = "#47E5B3"
                                   onChangeText={UserEmail => this.setState({UserEmail})}
                                   keybroadType="email-address"
@@ -135,6 +140,8 @@ UserLoginFunction = () =>{
                                   placeholderTextColor = "#47E5B3"
                                   underlineColorAndroid='transparent'
                                   placeholder="Password"
+                                  autoCapitalize="none"
+
                                   onChangeText={UserPassword => this.setState({UserPassword})}
                                   secureTextEntry = { this.state.hidePassword }
                             />   
@@ -149,7 +156,7 @@ UserLoginFunction = () =>{
                         </View> 
                         <View style={styles.loginButton}>
                               <TouchableOpacity  style={{flex: 1,}} onPress={this.UserLoginFunction}>
-                                    <Image  source={require('../img/1loginbutton.png')} style={{flex: 1,width:null,height:null}}>
+                                    <Image  source={require('../img/buttonlogin.png')} style={{flex: 1,width:null,height:null}}>
                                     </Image>
                               </TouchableOpacity>
 
@@ -157,8 +164,9 @@ UserLoginFunction = () =>{
                         </View>
 
                         <View style={styles.forgotPass}>
-                        
-
+                         <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',flexDirection: 'row'  }} onPress={ ()=> {navigate('ForgotPassword')}}>
+                            <Text style={{fontSize:13, color:'#524a5e'}}>Passwordをお忘れは</Text><Text style={{fontSize:13, color:'#524a5e',textDecorationLine:  'underline',}}>こちら</Text>
+                          </TouchableOpacity>
 
                         </View>
 
@@ -171,8 +179,8 @@ UserLoginFunction = () =>{
                                   </View>
 
                                   <View style={{flex: 0.5 ,justifyContent: 'center',alignItems: 'center',}}>
-                                  <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
-                                        <Text style={styles.textGoRegister}> 会員登録 </Text>
+                                  <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',}} onPress={ ()=> {navigate('RegisterScreen')}}>
+                                        <Text style={styles.textGoRegister}> 会 員 登 録 </Text>
                                   </TouchableOpacity>
                                   </View>
                                 
@@ -247,21 +255,27 @@ loginButton:{
 },
 forgotPass:{
   flex: 0.4,
+justifyContent: 'center',
+alignItems: 'center',
+flexDirection: 'row' ,
+backgroundColor:'rgba(0,0,0,0)',
+marginHorizontal: 40,
+paddingHorizontal: 20,
 
-
+paddingBottom: 5
 },
 
 goRegister:{
   flex: 1.5,
   flexDirection:  'row',
-  fontSize:10
+
 },
 textGoRegister:{
 backgroundColor:'rgba(0,0,0,0)',
 textDecorationLine:  'underline',
 fontWeight: 'bold',
-color:'#4e5a99'
-
+color:'#4e5a99',
+paddingBottom:12
 },
 topButton:{
     flex: 0.2,
