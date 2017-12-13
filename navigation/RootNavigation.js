@@ -24,6 +24,7 @@ import Policy from '../screens/Infomation/Policy';
 import Term from '../screens/Infomation/Term';
 import UpdatePassword from '../screens/UpdatePassword';
 import UpdatePassTrainer from '../screens/UpdatePassTrainer';
+import UpdatePr from '../screens/UpdatePr';
 const RootNavigation = StackNavigator(
 {	
   	TopScreen: { screen: TopScreen },
@@ -46,6 +47,7 @@ const RootNavigation = StackNavigator(
  	Term : { screen: Term},
  	UpdatePassword : { screen: UpdatePassword},
  	UpdatePassTrainer : { screen: UpdatePassTrainer},
+ 	UpdatePr : { screen: UpdatePr},
  
 },
 {

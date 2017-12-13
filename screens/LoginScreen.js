@@ -98,16 +98,21 @@ UserLoginFunction = () =>{
   render() {
         const {goBack} = this.props.navigation;
         const { navigate } = this.props.navigation;
+        const Backgrounds = {
+        background: require('../img/user/loginbgg.png'),
+        xButton: require('../img//Xbutton.png'),
+        loginButton: require('../img/buttonlogin.png')
+};
 
     return (
       <View style={styles.container}>
-            <Image  source={require('../img/user/loginbgg.png')} style={styles.backgroundImage}>
+            <Image  source={Backgrounds.background} style={styles.backgroundImage}>
                   <View style={styles.containerImage}>
                         <View style={styles.textHeader}>
                                 
                             <TouchableOpacity  style={{flex: 0.2,}} onPress={()=> {
                           navigate('TopScreen');}}>
-                                  <Image  source={require('../img/Xbutton.png')} style={styles.xButton}>
+                                  <Image  source={Backgrounds.xButton} style={styles.xButton}>
                                   </Image>
                             </TouchableOpacity>
                         </View>
@@ -127,7 +132,6 @@ UserLoginFunction = () =>{
                                   underlineColorAndroid='transparent'
                                   placeholder="E-mail"
                                   autoCapitalize="none"
-
                                   placeholderTextColor = "#47E5B3"
                                   onChangeText={UserEmail => this.setState({UserEmail})}
                                   keybroadType="email-address"
@@ -141,7 +145,6 @@ UserLoginFunction = () =>{
                                   underlineColorAndroid='transparent'
                                   placeholder="Password"
                                   autoCapitalize="none"
-
                                   onChangeText={UserPassword => this.setState({UserPassword})}
                                   secureTextEntry = { this.state.hidePassword }
                             />   
@@ -156,7 +159,7 @@ UserLoginFunction = () =>{
                         </View> 
                         <View style={styles.loginButton}>
                               <TouchableOpacity  style={{flex: 1,}} onPress={this.UserLoginFunction}>
-                                    <Image  source={require('../img/buttonlogin.png')} style={{flex: 1,width:null,height:null}}>
+                                    <Image  source={Backgrounds.loginButton} style={{flex: 1,width:null,height:null}}>
                                     </Image>
                               </TouchableOpacity>
 
@@ -164,24 +167,23 @@ UserLoginFunction = () =>{
                         </View>
 
                         <View style={styles.forgotPass}>
-                         <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',flexDirection: 'row'  }} onPress={ ()=> {navigate('ForgotPassword')}}>
-                            <Text style={{fontSize:13, color:'#524a5e'}}>Passwordをお忘れは</Text><Text style={{fontSize:13, color:'#524a5e',textDecorationLine:  'underline',}}>こちら</Text>
-                          </TouchableOpacity>
-
+                                                <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',flexDirection: 'row'  }} onPress={ ()=> {navigate('ForgotPassword')}}>
+                                                   <Text style={{fontSize:13, color:'#524a5e'}}>Passwordを忘れの方はこちら</Text><Text style={{fontSize:13, color:'#524a5e',textDecorationLine:  'underline',}}>こちら</Text>
+                                                 </TouchableOpacity>
                         </View>
 
-                  <View style={styles.goRegister}>
+                         <View style={styles.goRegister}>
                                 <View style={{flex: 0.5,}}>
                                 </View>
 
-                                <View style={{flex: 0.5,}}>
-                                  <View style={{flex: 0.5 }}>
-                                  </View>
+                                  <View style={{flex: 0.5,}}>
+                                              <View style={{flex: 0.5 }}>
+                                              </View>
 
                                   <View style={{flex: 0.5 ,justifyContent: 'center',alignItems: 'center',}}>
-                                  <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',}} onPress={ ()=> {navigate('RegisterScreen')}}>
-                                        <Text style={styles.textGoRegister}> 会 員 登 録 </Text>
-                                  </TouchableOpacity>
+                                              <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',}} onPress={ ()=> {navigate('RegisterScreen')}}>
+                                                    <Text style={styles.textGoRegister}> 会 員 登 録 </Text>
+                                              </TouchableOpacity>
                                   </View>
                                 
                                 </View>

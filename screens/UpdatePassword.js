@@ -91,7 +91,7 @@ fetch('http://35.185.68.16/api/v1/customer/changePassword', {
 }).then((response) => response.json())
       .then((responseJson) => {
   if(responseJson.status === true){
-       this.props.navigation.navigate('MenuUser', { Account: this.props.navigation.state.params.Account  });
+       this.props.navigation.navigate('TraineeProfile', { Account: this.props.navigation.state.params.Account  });
       }
         else{
           

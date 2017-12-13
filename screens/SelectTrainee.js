@@ -49,9 +49,7 @@ const {goBack} = this.props.navigation;
            <ImageBackground  source={require('../img/signin04_trainerscreen.png')} style={styles.backgroundImage}>
             <View style={styles.containerImage}>
                 <View style={styles.header}>
-                <TouchableOpacity style={{flex: 0.3}} onPress={() => goBack()}>
-                       <Ionicons name="ios-arrow-back" size={20} style={{ backgroundColor:'rgba(0,0,0,0)'}} />
-                </TouchableOpacity>
+               
                 <Text style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',paddingTop:15}}> お悩みを解決できそうな
                 {"\n"}
                  
@@ -140,7 +138,7 @@ containerImage:{
 },
 header:{
 flex:(Platform.OS === 'ios') ? 0.15 : 0.1,
-flexDirection: 'row' ,
+
 justifyContent: 'center',
 alignItems: 'center',
 marginHorizontal: 25,

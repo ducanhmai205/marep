@@ -56,7 +56,8 @@ const {goBack} = this.props.navigation;
                                     <View style={styles.spaceHeader}>
                                     </View>
                                   <View style={styles.iconleftHeader}>
-                                  <TouchableOpacity style={{flex:1}}>
+                                  <TouchableOpacity style={{flex:1}}  onPress={()=> {
+                          navigate('TrainerSpecialize',{ Account: this.props.navigation.state.params.Account  });}}>
                                             <Image  source={require('../img/user/grp.png')} style={styles.picIcon} />
                                     </TouchableOpacity>                                        
                                      

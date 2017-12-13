@@ -24,10 +24,11 @@ class TraineeProfile extends Component {
           {key:'3',hoten:"guest 4"},
           {key:'4',hoten:"guest 5"},
           ]
-
+       
         }
       }
   render() {
+    var base64Icon =  this.props.navigation.state.params.Account.avatar;
     const { navigate } = this.props.navigation;
 const {goBack} = this.props.navigation;
     return (
@@ -46,7 +47,8 @@ const {goBack} = this.props.navigation;
               <View style={styles.spaceHeader}>
                </View>
                <View style={styles.iconleftHeader}>
-                                  <TouchableOpacity style={{flex:1}}>
+                                  <TouchableOpacity style={{flex:1}} onPress={()=> {
+                          navigate('SelectTrainer',{ Account: this.props.navigation.state.params.Account  });}}>
                                             <Image  source={require('../img/user/grp.png')} style={styles.round} />
                                     </TouchableOpacity>                                        
                                      
@@ -59,7 +61,7 @@ const {goBack} = this.props.navigation;
        <View style={styles.avatar}>
                      <View style={styles.avatarImage}>
                          <Image   resizeMode="cover" source={require('../img/profile/circle.png')} style={styles.picIcon}>
-
+                          <Image style={{width: null, height: null,  resizeMode:"cover", }} source={{uri: base64Icon}}/>
                          </Image>
                      </View>
          </View>
@@ -121,6 +123,7 @@ iconleftHeader:{
 },
 picIcon:{
  height: 130,
+ flex: 1,
     width: 130,
     justifyContent: 'center',
     alignItems: 'center',
@@ -152,6 +155,7 @@ avatar:{
 avatarImage:{
 height: null,
 width: null,
+
 },
 pic1:{
 flex: 1,

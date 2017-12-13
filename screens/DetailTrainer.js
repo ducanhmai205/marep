@@ -25,6 +25,7 @@ class DetailTrainer extends Component {
   pressIcon = () =>
   {
      this.setState({ pressIcon: !this.state.pressIcon });
+     console.log("testtrainer",this.props.navigation.state.params.Account)
   }
   onStarRatingPress(rating) {
     this.setState({

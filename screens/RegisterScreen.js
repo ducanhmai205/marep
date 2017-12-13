@@ -48,9 +48,11 @@ class RegisterScreen extends Component {
   managePasswordVisibility = () =>
   {
      this.setState({ hidePassword: !this.state.hidePassword });
+     
   }
   onSelect(index,value){
     console.log("value",value)
+
   this.setState({
 
     jobID: `${value}`
@@ -66,8 +68,8 @@ UserRegistrationFunction = () =>{
  const { UserEmail }  = this.state ;
  const { UserPassword }  = this.state ;
  const { jobID } = this.state;
- 
- console.log("test",jobID)
+
+
 fetch('http://35.185.68.16/api/v1/customer/register', {
   method: 'POST',
   headers: {
@@ -90,6 +92,7 @@ fetch('http://35.185.68.16/api/v1/customer/register', {
       .then((responseJson) => {
   if(responseJson.status === true){
     console.log("user",responseJson.account.type)
+    
       if(responseJson.account.type === 'customer')
         {
 console.log("user",responseJson.account)
@@ -110,7 +113,7 @@ console.log("user",responseJson.account)
                    Alert.alert(responseJson.message);
            }
            else{
-            console.log("abc",responseJson.message)
+     
             var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
             
             Object.keys(responseJson.message)[0];
@@ -143,18 +146,7 @@ console.log("user",responseJson.account)
               }
                   
               Alert.alert(error_object[0] );
-              //if(error_messPassword,error_messEmail){
-              //   console.log("loi",responseJson.message.password)
-              //      Alert.alert(error_messPassword,error_messEmail);
-              //}
-              //else if (error_messName,error_messJob){
-              //   console.log("loi",responseJson.message.name)
-              //      Alert.alert(error_messName,error_messJob);
-              //}
-              //else if (error_messName,error_messPassword){
-              //   console.log("loi",responseJson.message.name)
-              //      Alert.alert(error_messName,error_messPassword//);
-              //}
+             
 
             }
          }
@@ -232,7 +224,9 @@ console.log("user",responseJson.account)
                                                     placeholder="Password"
                                                     returnKeyType="next"
                                                     autoCapitalize="none"
-                                                  autoCorrect={false} 
+                                                    autoCorrect={false} 
+
+
                                                     clearTextOnFocus={false}
                                                     placeholderTextColor = "#47E5B3"
                                                     onChangeText={UserPassword => this.setState({UserPassword})}
@@ -279,7 +273,10 @@ console.log("user",responseJson.account)
                                               </View>
 
                                                   <View style={styles.loginButton}>
-                                                        
+                                                        <TouchableOpacity  style={{flex: 1, flexDirection: 'row' ,justifyContent: 'center',alignItems: 'center',}} onPress={ ()=> {navigate('LoginScreen')}} > 
+                                                          <Text style={{color:'#432F6F',fontWeight: 'bold',}}> すでに登録された方 </Text>
+                                                          <Text style={{color:'#432F6F',fontWeight: 'bold',textDecorationLine:  'underline',}}> LOG IN </Text>
+                                                    </TouchableOpacity>
                                                   </View>
           </View>                                     
         </Image>
@@ -353,13 +350,13 @@ loginButton:{
 flex: 1.2,
 
 justifyContent: 'center',
-backgroundColor: 'rgba(0,0,0,0)',
+  backgroundColor:'rgba(0,0,0,0)',
 paddingLeft:20
 },
 text3:{
   backgroundColor:'rgba(0,0,0,0)',
-  
-  color: 'black',
+  color:'#432F6F',
+ 
  justifyContent: 'center',
  alignItems: 'center',
 },

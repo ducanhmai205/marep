@@ -9,11 +9,13 @@ import {
   TouchableOpacity,
   Text,
   Platform,
-  Alert
+  Alert,
+  FlatList
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+
 import Dimensions from 'Dimensions';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import CheckBox from 'react-native-check-box'
 class TrainerSpecialize extends Component {
   constructor(){
         super()
@@ -22,6 +24,7 @@ class TrainerSpecialize extends Component {
             Data:'',
             type:'',
             id:'',
+            value :false,
             access_token:'',
             customer_issue:''
         }
@@ -34,7 +37,19 @@ class TrainerSpecialize extends Component {
   })
 }
 sendIssuesTrainer = () =>{
- console.log("ok",this.state.value)
+
+   let items = this.state.Data;
+   let selectedItems = [];
+
+
+   //Lay ra nhung id co gia tri checked = true
+
+    items.forEach(function(item) {
+          if(item.checked) {
+            selectedItems.push(item.id);
+          }
+    });
+
 fetch('http://35.185.68.16/api/v1/trainer/storeTrainerSpecializes', {
 
   method: 'POST',
@@ -49,7 +64,7 @@ fetch('http://35.185.68.16/api/v1/trainer/storeTrainerSpecializes', {
     id  : this.props.navigation.state.params.Account.trainer.id,
   access_token  : this.props.navigation.state.params.Account.trainer.access_token,
 
-    trainer_specializes: this.state.value,
+    trainer_specializes: selectedItems,
     
   })
  
@@ -112,16 +127,21 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
             value: data
           }
         });
-        // var data = rawData.map((item, index) => {
-        //   return {
-        //     label: item,
-        //     value: index
-        //   }
-        // });
+        var testData = [];
+         Object.keys(responseJson.trainer_specializes).forEach(function(item){
+          var raw = {
+            name: responseJson.trainer_specializes[item],
+            id: item,
+            checked:false
+          }
 
-        console.log("data",data);  
+          testData.push(raw);
+        });
+
+
+       
         this.setState({
-          Data:data 
+          Data:testData 
         })
        
       
@@ -135,25 +155,28 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
     return (
             		 <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
                   <View style={styles.icon}>
-                <TouchableOpacity onPress={ () => goBack(null)  }>
-                      <Ionicons  name="ios-arrow-back-outline" size={20}  />
-                </TouchableOpacity>
+                
             </View>
                 <View style={styles.center}>
               <Text style={styles.text2}>あなたの得意分野を教えてください </Text>
                  <View style={styles.inside}>
                               
-        <RadioForm
-            style={{flex: 1, }}
-          radio_props={this.state.Data}
-          buttonColor={'#50C900'}
-          onPress={(value) => {
-            var issues = [];
-            issues.push(value);
-            console.log("test_press",value)
-            this.setState({value:issues})}}>    
-        </RadioForm>
-
+                    <FlatList
+                          data={this.state.Data}
+                          keyExtractor={item => item.id}
+                          renderItem={({item}) => 
+                                <CheckBox
+                                      style={{flex: 1,paddingTop:10}}
+                                      isChecked={item.checked}
+                                      onClick={()=>{
+                                      item.checked = !item.checked; 
+                                      }}
+                                      rightText={item.name}
+                                    checkedImage=  {<MaterialCommunityIcons name="checkbox-marked-circle" size={20} color="green" />}
+                                    unCheckedImage= {<MaterialCommunityIcons name="checkbox-blank-circle" size={20} color="white" />}
+                                />
+                                    }
+                    />
 
                  </View>   
             </View>
@@ -185,18 +208,19 @@ marginLeft:30,
 },
 center:{
   flex: 1,
-paddingTop: 60,
-  alignItems: 'center',
-  
+paddingTop: 40,
+ paddingLeft:100
 },
 inside:{
   paddingTop:30,
+
   backgroundColor:'rgba(0,0,0,0)',
 },
 text2:{
   backgroundColor:'rgba(0,0,0,0)',
   fontSize: 15,
   
+   paddingRight:20,
  justifyContent: 'center',
  alignItems: 'center',
 },
