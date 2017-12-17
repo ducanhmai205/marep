@@ -12,12 +12,14 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 class InfomationVersion extends Component {
   render() {
+      const { navigate } = this.props.navigation;
+    const {goBack} = this.props.navigation;
     return (
       <View style={styles.container}>
        <StatusBar hidden />
 
           <View style={styles.header}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={ () => goBack(null)  }>
                 <Ionicons name="ios-arrow-back" size={20} color="#493E6A" style={styles.icon} />
               </TouchableOpacity>
             <View style={styles.textHeader}>

@@ -8,146 +8,240 @@ import {
   ImageBackground,
   TouchableOpacity,
   Text,
-  Platform
+  Alert,
+  FlatList
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Dimensions from 'Dimensions';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import CheckBox from 'react-native-check-box'
+
 class TraineeTreatment extends Component {
   constructor(){
-        super()
-        this.state = {
-            text: ''
-        }
-        this.onSelect = this.onSelect.bind(this)
+    super()
+    this.state = {
+      text: '',
+      hideSelect:false,
+      Data:'',
+      type:'',
+      id:'',
+       value :false,
+      access_token:'',
+      customer_issues:''
     }
+    
+  }
+handleOnChange(val) {
+    this.setState({ value: val })
+  }
+ 
+  sendIssues = () =>{
+   let items = this.state.Data;
+   let selectedItems = [];
 
-  onSelect(index, value){
-  this.setState({
-    text: `${value}`
+
+   //Lay ra nhung id co gia tri checked = true
+
+    items.forEach(function(item) {
+          if(item.checked) {
+            selectedItems.push(item.id);
+          }
+    });
+
+fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
+
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+
+  body: JSON.stringify({
+
+    type  : this.props.navigation.state.params.Account.type,
+    id  : this.props.navigation.state.params.Account.customer.id,
+    access_token  : this.props.navigation.state.params.Account.customer.access_token,
+
+    customer_issue: selectedItems,
+    
   })
-}
-  render() {
-  	const { navigate } = this.props.navigation;
-    const {goBack} = this.props.navigation;
-    return (
-            		 <ImageBackground  source={require('../img/signin03_trainerscreen.png')} style={styles.backgroundImage}>
-                  <View style={styles.icon}>
-                <TouchableOpacity onPress={ () => goBack(null)  }>
-                      <Ionicons  name="ios-arrow-back-outline" size={20}  />
-                </TouchableOpacity>
-            </View>
-                <View style={styles.center}>
-              <Text style={styles.text2}>あなたの悩みを教えてください{"\n"}（2つまで選択可能です）</Text>
 
-                 <View style={styles.inside}>
-                  <RadioGroup
-                  size={15}
-                 
-                  color='#FFFEFF'
-                 
-                  
+}).then((response) => response.json())
+.then((responseJson) => {
+  if(responseJson.status === true){
+    this.props.navigation.state.params.Account.myIssues = selectedItems;
+    
+    this.props.navigation.navigate('SelectTrainer',{Account: this.props.navigation.state.params.Account});
+  }
+  else{
 
-                     onSelect = {( value) => this.onSelect( value)}>
-                   
-                     <RadioButton  activeColor='#B4FFE3' highlightColor='#B4FFE3'    value={'item1'} >
-                       <Text style={styles.text3}>シェイプアップしたい</Text>
-                                  </RadioButton>
-                    
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item2'}>
-                       <Text style={styles.text3}>筋肉強化したい</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item3'}>
-                       <Text style={styles.text3}>肩が疑る</Text>
-                     </RadioButton>
+   if(typeof(responseJson.message) === 'string'){
 
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item4'}>
-                       <Text style={styles.text3}>腰痛がある</Text>
-                                  </RadioButton>
-              
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF'  value={'item5'}>
-                       <Text style={styles.text3}>体の歪みが気になる</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item6'}>
-                       <Text style={styles.text3}>冷え性が気になる</Text>
-                     </RadioButton>
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item7'}>
-                       <Text style={styles.text3}>便秘が気になる</Text>
-                     </RadioButton>
+     Alert.alert(responseJson.message);
+   }
+   else{
+    var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
 
-                     <RadioButton activeColor='#FFFEFF' highlightColor='#FFFEFF' value={'item7'}>
-                       <Text style={styles.text3}>むくみが気になる</Text>
-                     </RadioButton>
-                     
-                   </RadioGroup>             
-                    
+    Object.keys(responseJson.message)[0];
 
-                 </View>   
-            </View>
-            		           <View style={styles.nextButton}>
-                					<TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                					navigate('SelectTrainer');}}>
-                					    <Text style={{fontWeight: 'bold'}}> 
-                              NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
 
-                               </Text> 
-            					 	</TouchableOpacity> 
-            					 	</View>
-              					
-            		</ImageBackground>
-    );
+    Alert.alert(error_object[0] );
+
   }
 }
 
-const styles = StyleSheet.create({
-backgroundImage:{
-	flex: 1,
-	width: Dimensions.get('window').width,
-	height: Dimensions.get('window').height,
-  backgroundColor: 'white',
-},
-icon:{
-backgroundColor:'rgba(0,0,0,0)',
-marginTop:40,
-marginLeft:30,
 
-},
-center:{
-  flex: 1,
-paddingTop: 60,
-  alignItems: 'center',
+
+}).catch((error) => {
+  console.error(error);
+});
+
+
+}
+
+componentWillMount() {
+  let formdata = new FormData();
+
+  formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+  formdata.append("type", this.props.navigation.state.params.Account.type);
+  formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+
+  fetch('http://35.185.68.16/api/v1/customer/getIssue', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: formdata
+
+  }).then((response) => response.json())
+  .then((responseJson) => {
+         // var rawData = Object.values(responseJson.trainer_specializes);
+         var rawData = responseJson.customer_issues;
+
+        //  var data = Object.keys(responseJson.customer_issues).map(function(data){
+        //   // return [data,responseJson.trainer_specializes[data]];
+        //   return {
+        //     label: responseJson.customer_issues[data],
+        //     value: data
+        //   }
+        // });
+
+         var testData = [];
+         Object.keys(responseJson.customer_issues).forEach(function(item){
+          var raw = {
+            name: responseJson.customer_issues[item],
+            id: item,
+            checked:false
+          }
+console.log('ducanh raw data',raw)
+          testData.push(raw);
+        });
+
+         this.setState({
+          Data:testData 
+        })
+console.log('ducanh data array',this.state.Data)
+
+       })
+
+
+}
+render() {
+  const { navigate } = this.props.navigation;
+  const {goBack} = this.props.navigation;
+  return (
+   <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
+   <View style={styles.icon}>
+   
+   </View>
+   <View style={styles.center}>
+   <Text style={styles.text2}>あなたの悩みを教えてください </Text>
+   <Text style={styles.text2}>（2つまで選択可能です）</Text>
+   <View style={styles.inside}>
   
-},
-inside:{
-  paddingTop:30,
-},
-text2:{
-  backgroundColor:'rgba(0,0,0,0)',
-  fontSize: 15,
+ <FlatList
+  data={this.state.Data}
+     keyExtractor={item => item.id}
+  renderItem={({item}) => 
+  <CheckBox
+     style={{flex: 1,paddingTop:10}}
+      isChecked={item.checked}
+      onClick={()=>{
+         item.checked = !item.checked; 
+     }}
+     rightText={item.name}
+   checkedImage=  {<MaterialCommunityIcons name="checkbox-marked-circle" size={20} color="green" />}
+   unCheckedImage= {<MaterialCommunityIcons name="checkbox-blank-circle" size={20} color="white" />}
+ />
+}
+/>
+
   
- justifyContent: 'center',
- alignItems: 'center',
-},
-text3:{
-  backgroundColor:'rgba(0,0,0,0)',
-  
-  color: 'black',
- justifyContent: 'center',
- alignItems: 'center',
-},
-nextButton:{
+     
+
+
+        </View>   
+        </View>
+        <View style={styles.nextButton}>
+        <TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssues }>
+        <Text style={{fontWeight: 'bold'}}> 
+        NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
+
+        </Text> 
+        </TouchableOpacity> 
+        </View>
+
+        </ImageBackground>
+        );
+}
+}
+
+const styles = StyleSheet.create({
+  backgroundImage:{
+    flex: 1,
+    width: null,
+    height: null,
+  },
+  icon:{
+    backgroundColor:'rgba(0,0,0,0)',
+    marginTop:40,
+    marginLeft:30,
+
+  },
+  center:{
+    flex: 1,
+    paddingTop: 40,
+    paddingLeft:100
+
+  },
+  inside:{
+    flex: 1,
+    paddingTop:30,
+
+
+  },
+  text2:{
+    backgroundColor:'rgba(0,0,0,0)',
+    fontSize: 15,
+
+   paddingRight:20
+  },
+  text3:{
+    backgroundColor:'rgba(0,0,0,0)',
+
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nextButton:{
    flex: 1,
    flexDirection: 'row' , 
    position:'absolute',
    bottom: 0,
-   height: (Platform.OS === 'ios') ? 70 : 55,
+   height: 70,
    backgroundColor:'white',
    width: '100%',
-  
-},
-TouchableOpacity:{
+
+ },
+ TouchableOpacity:{
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',

@@ -39,7 +39,7 @@ class RegisterScreen extends Component {
       UserEmail: '',
       UserPassword: '',
       value: '',
-      jobID: ''
+      jobID: '',
       }
         this.onSelect = this.onSelect.bind(this);
         
@@ -48,10 +48,16 @@ class RegisterScreen extends Component {
   managePasswordVisibility = () =>
   {
      this.setState({ hidePassword: !this.state.hidePassword });
+     
   }
-  onSelect(value){
+  onSelect(index,value){
+    console.log("value",value)
+
   this.setState({
+
     jobID: `${value}`
+    
+
   })
 }
  
@@ -62,9 +68,9 @@ UserRegistrationFunction = () =>{
  const { UserEmail }  = this.state ;
  const { UserPassword }  = this.state ;
  const { jobID } = this.state;
- 
- 
-fetch('http://192.168.1.57:8000/api/v1/customer/register', {
+
+
+fetch('http://35.185.68.16/api/v1/customer/register', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -78,34 +84,38 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
  
     password: UserPassword,
 
-    job: jobID,
+    type: jobID,
     
   })
  
 }).then((response) => response.json())
       .then((responseJson) => {
   if(responseJson.status === true){
- if(responseJson.account.type === 'trainee')
+    console.log("user",responseJson.account.type)
+    
+      if(responseJson.account.type === 'customer')
         {
- console.log("name",responseJson.account.trainee.name)
-            this.props.navigation.navigate('WelcomeTrainee', {Name: responseJson.account.trainee.name });
+console.log("user",responseJson.account)
+            this.props.navigation.navigate('WelcomeTrainee', { Account: responseJson.account  });
  
         }
         else if(responseJson.account.type === 'trainer')
         {
- console.log("trainer",responseJson.account.trainer.name)
-            this.props.navigation.navigate('WelcomeTrainer', { Name: responseJson.account.trainer.name });
- 
+ console.log("trainer",responseJson.account)
+            this.props.navigation.navigate('WelcomeTrainer', { Account: responseJson.account  });
+    
         }
       }
         else{
+          
            if(typeof(responseJson.message) === 'string'){
                  
                    Alert.alert(responseJson.message);
            }
            else{
+     
             var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
-            console.log("test", error_object[0]);
+            
             Object.keys(responseJson.message)[0];
               var error_messEmail = '';
               var error_messPassword = '';
@@ -136,18 +146,7 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
               }
                   
               Alert.alert(error_object[0] );
-              //if(error_messPassword,error_messEmail){
-              //   console.log("loi",responseJson.message.password)
-              //      Alert.alert(error_messPassword,error_messEmail);
-              //}
-              //else if (error_messName,error_messJob){
-              //   console.log("loi",responseJson.message.name)
-              //      Alert.alert(error_messName,error_messJob);
-              //}
-              //else if (error_messName,error_messPassword){
-              //   console.log("loi",responseJson.message.name)
-              //      Alert.alert(error_messName,error_messPassword//);
-              //}
+             
 
             }
          }
@@ -162,14 +161,16 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Image  source={require('../img/signin1.png')} style={styles.backgroundImage}>
+        <Image  source={require('../img/signinbg.png')} style={styles.backgroundImage}>
           <View style={styles.containerImage}>
               <View style={styles.textHeader}>
               
-                            <TouchableOpacity  style={{flex: 0.2,}}  onPress={() => goBack()}>
+                            <TouchableOpacity  style={{flex: 0.2,}}  onPress={()=> {
+                          navigate('TopScreen');}}>
                                   <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
                              
                                   </Image>
@@ -192,6 +193,9 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
                                     <TextInput
                                           style={{flex: 1,paddingLeft: 40}}
                                           underlineColorAndroid='transparent'
+                                          returnKeyType="next"
+                                          autoCapitalize="none"
+                                        
                                                       placeholder="Name"
                                                       placeholderTextColor = "#47E5B3"
                                           onChangeText={UserName => this.setState({UserName})}
@@ -204,6 +208,9 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
                                                     style={{flex: 1,paddingLeft: 40}}
                                                     underlineColorAndroid='transparent'
                                                     keyboardType= 'email-address'
+                                                     returnKeyType="next"
+                                                 autoCapitalize="none"
+                                                  autoCorrect={false} 
                                                                 placeholder="E-mail"
                                                                 placeholderTextColor = "#47E5B3"
                                                                 onChangeText={UserEmail => this.setState({UserEmail})}
@@ -214,10 +221,16 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
                                             <TextInput
                                                     style={{flex: 1,paddingLeft: 5}}
                                                     underlineColorAndroid='transparent'
-                                                                placeholder="Password"
-                                                                placeholderTextColor = "#47E5B3"
-                                                                onChangeText={UserPassword => this.setState({UserPassword})}
-                                                                secureTextEntry= { this.state.hidePassword } 
+                                                    placeholder="Password"
+                                                    returnKeyType="next"
+                                                    autoCapitalize="none"
+                                                    autoCorrect={false} 
+
+
+                                                    clearTextOnFocus={false}
+                                                    placeholderTextColor = "#47E5B3"
+                                                    onChangeText={UserPassword => this.setState({UserPassword})}
+                                                    secureTextEntry= { this.state.hidePassword } 
                                                                  />
 
                                                              
@@ -238,13 +251,13 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
                                               style={{flexDirection: 'row'}}
                                               color='#59CEBA'
                                              
-                                              onSelect = {( value) => this.onSelect( value)}>
+                                              onSelect = {(index,value) => this.onSelect(index, value)}>
 
-                                                 <RadioButton  activeColor='#80d8ff' value={'0'} >
+                                                 <RadioButton  activeColor='#80d8ff' value={'customer'} >
                                                         <Text style={styles.text3}>ユーザー</Text>
                                                  </RadioButton>
                     
-                                                 <RadioButton activeColor='#80d8ff'  value={'1'}>
+                                                 <RadioButton activeColor='#80d8ff'  value={'trainer'}>
                                                          <Text style={styles.text3}>トレーナー</Text>
                                                  </RadioButton>
 
@@ -260,7 +273,10 @@ fetch('http://192.168.1.57:8000/api/v1/customer/register', {
                                               </View>
 
                                                   <View style={styles.loginButton}>
-                                                        
+                                                        <TouchableOpacity  style={{flex: 1, flexDirection: 'row' ,justifyContent: 'center',alignItems: 'center',}} onPress={ ()=> {navigate('LoginScreen')}} > 
+                                                          <Text style={{color:'#432F6F',fontWeight: 'bold',}}> すでに登録された方 </Text>
+                                                          <Text style={{color:'#432F6F',fontWeight: 'bold',textDecorationLine:  'underline',}}> LOG IN </Text>
+                                                    </TouchableOpacity>
                                                   </View>
           </View>                                     
         </Image>
@@ -334,13 +350,13 @@ loginButton:{
 flex: 1.2,
 
 justifyContent: 'center',
-backgroundColor: 'rgba(0,0,0,0)',
+  backgroundColor:'rgba(0,0,0,0)',
 paddingLeft:20
 },
 text3:{
   backgroundColor:'rgba(0,0,0,0)',
-  
-  color: 'black',
+  color:'#432F6F',
+ 
  justifyContent: 'center',
  alignItems: 'center',
 },

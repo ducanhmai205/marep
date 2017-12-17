@@ -15,12 +15,13 @@ import {
 import Dimensions from 'Dimensions';
 import { Ionicons, FontAwesome,Foundation} from '@expo/vector-icons';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
-class SelectTrainee extends Component {
+class SelectTrainer extends Component {
   constructor(props){
     super(props);
     this.state={
          text: '',
-
+         id:'',
+         data:'',
          mang:[
           {key:'0',hoten:"guest 1"},
           {key:'1',hoten:"guest 2"},
@@ -45,6 +46,55 @@ class SelectTrainee extends Component {
         text: `${value}`
         })
     }
+
+    componentWillMount() {
+
+  let formdata = new FormData();
+
+  formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+  formdata.append("type", this.props.navigation.state.params.Account.type);
+  formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+
+  fetch('http://35.185.68.16/api/v1/customer/listTrainer', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: formdata
+
+  }).then((response) => response.json())
+  .then((responseJson) => {
+    var rawdata = responseJson;
+  
+    let trainers = responseJson.trainers;
+    var arrayData = [];
+    Object.keys(trainers).forEach(function(key){
+      let name =  trainers[key].trainer.name;
+      let avatar = trainers[key].avatar;
+      let issue = trainers[key].rawMySpecializes;
+      let id = trainers[key].trainer.id;
+      var raw = {
+        key: key,
+        name : name,
+        avatar :avatar,
+        issue : issue,
+        id : id
+
+      }
+      arrayData.push(raw);
+      console.log("id",arrayData)
+    });
+
+    this.setState({
+      data : arrayData,
+    })
+    if(responseJson.trainers === null){
+      Alert.alert("You need chose issue")
+    }
+  })
+
+
+}
   render() {
 const { navigate } = this.props.navigation;
 const {goBack} = this.props.navigation;
@@ -53,9 +103,7 @@ const {goBack} = this.props.navigation;
            <ImageBackground  source={require('../img/signin04_trainerscreen.png')} style={styles.backgroundImage}>
             <View style={styles.containerImage}>
                 <View style={styles.header}>
-                <TouchableOpacity style={{flex: 0.3}} onPress={() => goBack()}>
-                       <Ionicons name="ios-arrow-back" size={20} style={{ backgroundColor:'rgba(0,0,0,0)'}} />
-                </TouchableOpacity>
+                
                 <Text style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',paddingTop:15}}> お悩みを解決できそうな
                 {"\n"}
                  
@@ -80,31 +128,35 @@ const {goBack} = this.props.navigation;
                 </View>
                 <View style={styles.flatList}>
                   <FlatList
-                    data={this.state.mang}
+                    data={this.state.data}
                     renderItem={({item}) =>
                                   <View style={styles.line}>
+
+                              
                                           <View style={styles.avatar}>
-                                              
+                                          <TouchableOpacity onPress={ ()=> {navigate('DetailTrainer',{Account: this.props.navigation.state.params.Account,id: item.id})}}>
+                                               <Image source={{uri:item.avatar}} style={{ width: 60, height: 60,borderRadius: 60/2, }} resizeMode="stretch" />
+                                          </TouchableOpacity>
                                           </View>
                                             
                                           <View style={styles.text}>
-                                            <Text> namename </Text>
-                                              <Text style={{paddingTop:5,fontSize: 9}}> シェイプアップ,腰痛 </Text>
-
+                                            <TouchableOpacity  onPress={ ()=> {navigate('DetailTrainer',{Account: this.props.navigation.state.params.Account,id: item.id})}}>
+                                            <Text>  {item.name} </Text>
+                                              <Text style={{paddingTop:5,fontSize: 9}}> {item.issue}</Text>
+                                            </TouchableOpacity>
                                           </View>
-
+                                
                                           <View style={styles.icon}>
-                                          <TouchableOpacity>
+                                   
                                               <FontAwesome name="handshake-o" size={25} style={{ color: '#00E4BA',paddingRight:5 }} />
-                                          </TouchableOpacity>
-                                          <TouchableOpacity>
-                                              <Foundation name="heart" size={25} style={{ color: '#00E4BA',paddingTop:3,paddingLeft:7}} />
-                                          </TouchableOpacity>
+                                        
+                                              <Foundation name="heart" size={25} style={{ color: '#00E4BA',paddingTop:5}} />
+                                        
                                           
 
                                           </View>
                                           <View style={styles.arrow}>
-                                          <TouchableOpacity style={{}}>
+                                          <TouchableOpacity style={{}}  onPress={ ()=> {navigate('DetailTrainer',{Account: this.props.navigation.state.params.Account})}}>
                                               <Ionicons name="ios-arrow-forward" size={25} style={{ color: '#00E4BA',}} />
                                           </TouchableOpacity>
 
@@ -123,7 +175,7 @@ const {goBack} = this.props.navigation;
             </View>
             <View style={styles.nextButton}>
                           <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                          navigate('InformationUser');}}>
+                          navigate('TraineeProfile',{Account: this.props.navigation.state.params.Account})}}>
                               <Text style={{fontWeight: 'bold'}}> FINISH <Ionicons  name="ios-arrow-forward" size={15}  /> </Text> 
                         </TouchableOpacity> 
                         </View>
@@ -162,11 +214,11 @@ containerImage:{
 },
 header:{
 flex:(Platform.OS === 'ios') ? 0.15 : 0.1,
-flexDirection: 'row' ,
+
 justifyContent: 'center',
 alignItems: 'center',
 marginHorizontal: 25,
-
+marginTop:20
 
 },
 flatList:{
@@ -178,7 +230,7 @@ select:{
   backgroundColor:'rgba(0,0,0,0)',
 justifyContent: 'center',
 alignItems: 'center',
-backgroundColor: 'red',
+
    marginRight: (Platform.OS === 'ios') ? 55 : 65,
    paddingTop:(Platform.OS === 'ios') ? 0 : 15,
   marginLeft:(Platform.OS === 'ios') ? 43 : 53,
@@ -203,7 +255,7 @@ flex: 1,
 width: 60, 
 height: 60, 
 borderRadius: 120/2,
-backgroundColor: 'pink',
+
 
 
  },
@@ -214,16 +266,17 @@ paddingLeft:3,
 
  },
  icon:{
-flex: 1.5,
+flex: 1,
 justifyContent: 'center',
 alignItems: 'center',
-paddingTop:15,
+paddingTop:10,
+
 flexDirection: 'row' ,
-paddingRight:6
+
  },
  arrow:{
 flex: 0.2,
-paddingTop:17,
+paddingTop:10,
 
 justifyContent: 'center',
 alignItems: 'center',
@@ -236,4 +289,4 @@ alignItems: 'center',
 });
 
 
-export default SelectTrainee;
+export default SelectTrainer;

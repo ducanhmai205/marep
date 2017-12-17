@@ -1,0 +1,529 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/ducanh/Documents/mare/screens/RegisterScreen.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+var _expo = require('expo');
+
+var _vectorIcons = require('@expo/vector-icons');
+
+var _reactNativeFlexiRadioButton = require('react-native-flexi-radio-button');
+
+var _LoginFB = require('../screens/LoginFB');
+
+var _LoginFB2 = _interopRequireDefault(_LoginFB);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var regeneratorRuntime = require('regenerator-runtime');
+
+var _components = {
+  RegisterScreen: {
+    displayName: 'RegisterScreen'
+  }
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+  filename: '/home/ducanh/Documents/mare/screens/RegisterScreen.js',
+  components: _components,
+  locals: [module],
+  imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+  return function (Component) {
+    return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+  };
+}
+
+var RegisterScreen = _wrapComponent('RegisterScreen')(function (_Component) {
+  _inherits(RegisterScreen, _Component);
+
+  _createClass(RegisterScreen, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      return regeneratorRuntime.async(function componentDidMount$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return regeneratorRuntime.awrap(_expo.Font.loadAsync({
+                'pomeranian': require('../assets/fonts/pomeranian.ttf')
+              }));
+
+            case 2:
+
+              this.setState({ fontLoaded: true });
+
+            case 3:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    }
+  }]);
+
+  function RegisterScreen(props) {
+    _classCallCheck(this, RegisterScreen);
+
+    var _this = _possibleConstructorReturn(this, (RegisterScreen.__proto__ || Object.getPrototypeOf(RegisterScreen)).call(this, props));
+
+    _this.state = {
+      fontLoaded: false
+    };
+
+    _this.managePasswordVisibility = function () {
+      _this.setState({ hidePassword: !_this.state.hidePassword });
+    };
+
+    _this.UserRegistrationFunction = function () {
+      var UserName = _this.state.UserName;
+      var UserEmail = _this.state.UserEmail;
+      var UserPassword = _this.state.UserPassword;
+      var jobID = _this.state.jobID;
+
+
+      fetch('http://192.168.1.57:8000/api/v1/customer/register', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+
+          name: UserName,
+
+          email: UserEmail,
+
+          password: UserPassword,
+
+          job: jobID
+
+        })
+
+      }).then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        if (responseJson.status === true) {
+          if (responseJson.account.type === 'trainee') {
+            console.log("name", responseJson.account.trainee.name);
+            _this.props.navigation.navigate('WelcomeTrainee', { Name: responseJson.account.trainee.name });
+          } else if (responseJson.account.type === 'trainer') {
+            console.log("trainer", responseJson.account.trainer.name);
+            _this.props.navigation.navigate('WelcomeTrainer', { Name: responseJson.account.trainer.name });
+          }
+        } else {
+          if (typeof responseJson.message === 'string') {
+
+            _reactNative.Alert.alert(responseJson.message);
+          } else {
+            var error_object = responseJson.message[Object.keys(responseJson.message)[0]];
+            console.log("test", error_object[0]);
+            Object.keys(responseJson.message)[0];
+            var error_messEmail = '';
+            var error_messPassword = '';
+            var error_messName = '';
+            var error_messJob = '';
+            if (responseJson.message.name) {
+              for (var i = 0, len = responseJson.message.name.length; i < len; i++) {
+                error_messName += responseJson.message.name[i] + '!';
+              }
+            }
+            if (responseJson.message.email) {
+              for (var i = 0, len = responseJson.message.email.length; i < len; i++) {
+                error_messEmail += responseJson.message.email[i] + '!';
+              }
+            }
+
+            if (responseJson.message.password) {
+              for (var i = 0, len = responseJson.message.password.length; i < len; i++) {
+                error_messPassword += responseJson.message.password[i] + '!';
+              }
+            }
+            if (responseJson.message.job) {
+              for (var i = 0, len = responseJson.message.job.length; i < len; i++) {
+                error_messJob += responseJson.message.job[i] + '!';
+              }
+            }
+
+            _reactNative.Alert.alert(error_object[0]);
+          }
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+
+    _this.state = {
+
+      hidePassword: true,
+      UserName: '',
+      UserEmail: '',
+      UserPassword: '',
+      value: '',
+      jobID: ''
+    };
+    _this.onSelect = _this.onSelect.bind(_this);
+
+    return _this;
+  }
+
+  _createClass(RegisterScreen, [{
+    key: 'onSelect',
+    value: function onSelect(value) {
+      this.setState({
+        jobID: '' + value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var goBack = this.props.navigation.goBack;
+
+      return _react3.default.createElement(
+        _reactNative.View,
+        { style: styles.container, __source: {
+            fileName: _jsxFileName,
+            lineNumber: 167
+          }
+        },
+        _react3.default.createElement(
+          _reactNative.Image,
+          { source: require('../img/signin1.png'), style: styles.backgroundImage, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 168
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            { style: styles.containerImage, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 169
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.textHeader, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 170
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 0.2 }, onPress: function onPress() {
+                    return goBack();
+                  }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 172
+                  }
+                },
+                _react3.default.createElement(_reactNative.Image, { source: require('../img/Xbutton.png'), style: { flex: 0.5, width: null, height: null, marginTop: 10 }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 173
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.fbButton, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 181
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 182
+                  }
+                },
+                _react3.default.createElement(
+                  _LoginFB2.default,
+                  {
+                    __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 183
+                    }
+                  },
+                  ' '
+                )
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.orButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 187
+              }
+            }),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.nameInput, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 191
+                }
+              },
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                underlineColorAndroid: 'transparent',
+                placeholder: 'Name',
+                placeholderTextColor: '#47E5B3',
+                onChangeText: function onChangeText(UserName) {
+                  return _this2.setState({ UserName: UserName });
+                },
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 192
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.emailInput, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 202
+                }
+              },
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 40 },
+                underlineColorAndroid: 'transparent',
+                keyboardType: 'email-address',
+                placeholder: 'E-mail',
+                placeholderTextColor: '#47E5B3',
+                onChangeText: function onChangeText(UserEmail) {
+                  return _this2.setState({ UserEmail: UserEmail });
+                },
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 203
+                }
+              })
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.passwordInput, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 213
+                }
+              },
+              _react3.default.createElement(_reactNative.TextInput, {
+                style: { flex: 1, paddingLeft: 5 },
+                underlineColorAndroid: 'transparent',
+                placeholder: 'Password',
+                placeholderTextColor: '#47E5B3',
+                onChangeText: function onChangeText(UserPassword) {
+                  return _this2.setState({ UserPassword: UserPassword });
+                },
+                secureTextEntry: this.state.hidePassword,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 214
+                }
+              }),
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { onPress: this.managePasswordVisibility, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 226
+                  }
+                },
+                _react3.default.createElement(_vectorIcons.Ionicons, { name: 'ios-eye', size: 20, color: this.state.hidePassword ? 'black' : '#dcdcdd', __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 227
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.checkBox, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 235
+                }
+              },
+              _react3.default.createElement(
+                _reactNativeFlexiRadioButton.RadioGroup,
+                {
+                  size: 15,
+                  style: { flexDirection: 'row' },
+                  color: '#59CEBA',
+
+                  onSelect: function onSelect(value) {
+                    return _this2.onSelect(value);
+                  }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 236
+                  }
+                },
+                _react3.default.createElement(
+                  _reactNativeFlexiRadioButton.RadioButton,
+                  { activeColor: '#80d8ff', value: '0', __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 243
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text3, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 244
+                      }
+                    },
+                    '\u30E6\u30FC\u30B6\u30FC'
+                  )
+                ),
+                _react3.default.createElement(
+                  _reactNativeFlexiRadioButton.RadioButton,
+                  { activeColor: '#80d8ff', value: '1', __source: {
+                      fileName: _jsxFileName,
+                      lineNumber: 247
+                    }
+                  },
+                  _react3.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text3, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 248
+                      }
+                    },
+                    '\u30C8\u30EC\u30FC\u30CA\u30FC'
+                  )
+                )
+              )
+            ),
+            _react3.default.createElement(
+              _reactNative.View,
+              { style: styles.registerButton, __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 255
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.TouchableOpacity,
+                { style: { flex: 1 }, onPress: this.UserRegistrationFunction, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 256
+                  }
+                },
+                _react3.default.createElement(_reactNative.Image, { source: require('../img/signinbutton.png'), style: { flex: 1, width: null, height: null }, __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 257
+                  }
+                })
+              )
+            ),
+            _react3.default.createElement(_reactNative.View, { style: styles.loginButton, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 262
+              }
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return RegisterScreen;
+}(_react2.Component));
+
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+  backgroundImage: {
+    flex: 1,
+    height: null,
+    width: null
+
+  },
+  containerImage: {
+    flex: 1
+
+  },
+  textHeader: {
+    flex: 1.1,
+    flexDirection: 'row',
+    paddingHorizontal: 23,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+
+  },
+  fbButton: {
+    flex: 0.85,
+    marginLeft: 3,
+    paddingTop: 2,
+    paddingHorizontal: 23
+  },
+  orButton: {
+    flex: 1.3
+
+  },
+  nameInput: {
+    flex: 0.9,
+    paddingHorizontal: 23
+  },
+  emailInput: {
+    flex: 0.9,
+    paddingHorizontal: 23
+  },
+  passwordInput: {
+    flex: 0.9,
+    flexDirection: 'row',
+    paddingHorizontal: 58,
+
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  checkBox: {
+    flex: 1.2,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 23
+  },
+  registerButton: {
+    flex: 0.7,
+    paddingHorizontal: 18,
+    marginLeft: 5
+  },
+  loginButton: {
+    flex: 1.2,
+
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+    paddingLeft: 20
+  },
+  text3: {
+    backgroundColor: 'rgba(0,0,0,0)',
+
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
+
+exports.default = RegisterScreen;

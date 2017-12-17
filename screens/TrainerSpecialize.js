@@ -8,16 +8,25 @@ import {
   ImageBackground,
   TouchableOpacity,
   Text,
-  Platform
+  Platform,
+  Alert,
+  FlatList
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+
 import Dimensions from 'Dimensions';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import CheckBox from 'react-native-check-box'
 class TrainerSpecialize extends Component {
   constructor(){
         super()
         this.state = {
-            text: ''
+            text: '',
+            Data:'',
+            type:'',
+            id:'',
+            value :false,
+            access_token:'',
+            customer_issue:''
         }
         this.onSelect = this.onSelect.bind(this)
     }
@@ -27,62 +36,155 @@ class TrainerSpecialize extends Component {
     text: `${value}`
   })
 }
+sendIssuesTrainer = () =>{
+
+   let items = this.state.Data;
+   let selectedItems = [];
+
+
+   //Lay ra nhung id co gia tri checked = true
+
+    items.forEach(function(item) {
+          if(item.checked) {
+            selectedItems.push(item.id);
+          }
+    });
+
+fetch('http://35.185.68.16/api/v1/trainer/storeTrainerSpecializes', {
+
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+
+  body: JSON.stringify({
+ 
+  type  : this.props.navigation.state.params.Account.type,
+    id  : this.props.navigation.state.params.Account.trainer.id,
+  access_token  : this.props.navigation.state.params.Account.trainer.access_token,
+
+    trainer_specializes: selectedItems,
+    
+  })
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+  if(responseJson.status === true){
+        this.props.navigation.state.params.Account.mySpecializes = selectedItems;
+  this.props.navigation.navigate('SelectTrainee',{Account: this.props.navigation.state.params.Account });
+
+      }
+        else{
+          
+           if(typeof(responseJson.message) === 'string'){
+                 
+                   Alert.alert(responseJson.message);
+           }
+           else{
+            console.log("abc",responseJson.message)
+            var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
+            
+            Object.keys(responseJson.message)[0];
+             
+                  
+              Alert.alert(error_object[0] );
+             
+            }
+         }
+ 
+        
+ 
+      }).catch((error) => {
+        console.error(error);
+      });
+ 
+ 
+  }
+
+  componentWillMount() {
+let formdata = new FormData();
+
+formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+formdata.append("type", this.props.navigation.state.params.Account.type);
+formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+
+    fetch('http://35.185.68.16/api/v1/trainer/getSpecializes', {
+  method: 'post',
+  headers: {
+      'Content-Type': 'multipart/form-data',
+  },
+  body: formdata
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+        // var rawData = Object.values(responseJson.trainer_specializes);
+        var rawData = responseJson.trainer_specializes;
+
+
+        // var data = Object.keys(responseJson.trainer_specializes).map(function(data){
+        //   // return [data,responseJson.trainer_specializes[data]];
+        //   return {
+        //     label: responseJson.trainer_specializes[data],
+        //     value: data
+        //   }
+        // });
+        var testData = [];
+         Object.keys(responseJson.trainer_specializes).forEach(function(item){
+          var raw = {
+            name: responseJson.trainer_specializes[item],
+            id: item,
+            checked:false
+          }
+// console.log('ducanh raw data',raw)
+          testData.push(raw);
+          console.log('ducanh raw data',testData)
+        });
+
+
+       
+        this.setState({
+          Data:testData 
+        })
+      // console.log('ducanh data array',this.state.Data) 
+      
+      })
+
+
+}
   render() {
   	const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
     return (
-            		 <ImageBackground  source={require('../img/signin03_trainerscreen.png')} style={styles.backgroundImage}>
+            		 <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
                   <View style={styles.icon}>
-                <TouchableOpacity onPress={ () => goBack(null)  }>
-                      <Ionicons  name="ios-arrow-back-outline" size={20}  />
-                </TouchableOpacity>
+                
             </View>
                 <View style={styles.center}>
               <Text style={styles.text2}>あなたの得意分野を教えてください </Text>
                  <View style={styles.inside}>
-                  <RadioGroup
-                  size={15}
-                  color='#fafafa'
-                  
-                  
-                  thickness={8}
-                     onSelect = {(index, value) => this.onSelect(index, value)}>
-                   
-                     <RadioButton  activeColor='#80d8ff' value={'item1'} >
-                       <Text style={styles.text3}>シェイプアップ</Text>
-                                  </RadioButton>
-                    
-                     <RadioButton activeColor='#80d8ff' highlightColor='#80d8ff' value={'item2'}>
-                       <Text style={styles.text3}>筋肉強化</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#80d8ff' value={'item3'}>
-                       <Text style={styles.text3}>体の痛みを取る</Text>
-                     </RadioButton>
-
-                     <RadioButton activeColor='#80d8ff' value={'item4'}>
-                       <Text style={styles.text3}>体の歪みをとる</Text>
-                                  </RadioButton>
-              
-                     <RadioButton activeColor='#80d8ff' value={'item5'}>
-                       <Text style={styles.text3}>冷え性改善</Text>
-                     </RadioButton>
- 
-                     <RadioButton activeColor='#80d8ff' highlightColor='#84ffff' value={'item6'}>
-                       <Text style={styles.text3}>便秘改善</Text>
-                     </RadioButton>
-                     <RadioButton activeColor='#80d8ff' highlightColor='#80d8ff' value={'item7'}>
-                       <Text style={styles.text3}>むくみを取る</Text>
-                     </RadioButton>
-                     
-                   </RadioGroup>             
-                    
+                              
+                    <FlatList
+                          data={this.state.Data}
+                          keyExtractor={item => item.id}
+                          renderItem={({item}) => 
+                                <CheckBox
+                                      style={{flex: 1,paddingTop:10}}
+                                      isChecked={item.checked}
+                                      onClick={()=>{
+                                      item.checked = !item.checked; 
+                                      }}
+                                      rightText={item.name}
+                                    checkedImage=  {<MaterialCommunityIcons name="checkbox-marked-circle" size={20} color="green" />}
+                                    unCheckedImage= {<MaterialCommunityIcons name="checkbox-blank-circle" size={20} color="white" />}
+                                />
+                                    }
+                    />
 
                  </View>   
             </View>
             		           <View style={styles.nextButton}>
-                					<TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                					navigate('SelectTrainee');}}>
+                					<TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssuesTrainer}>
                 					    <Text style={{fontWeight: 'bold'}}> 
                               NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
 
@@ -109,17 +211,19 @@ marginLeft:30,
 },
 center:{
   flex: 1,
-paddingTop: 60,
-  alignItems: 'center',
-  
+paddingTop: 40,
+ paddingLeft:100
 },
 inside:{
   paddingTop:30,
+
+  backgroundColor:'rgba(0,0,0,0)',
 },
 text2:{
   backgroundColor:'rgba(0,0,0,0)',
   fontSize: 15,
   
+   paddingRight:20,
  justifyContent: 'center',
  alignItems: 'center',
 },

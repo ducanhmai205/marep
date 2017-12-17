@@ -12,7 +12,16 @@ import {
 } from 'react-native';
 
 class WelcomeTrainee extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+       image: `${this.props.navigation.state.params.Account.avatar}`,
+    };
+  }
+
   render() {
+        const { image } = this.state;
         const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -20,10 +29,16 @@ class WelcomeTrainee extends Component {
           <ImageBackground  source={require('../img/signin02.png')} style={styles.backgroundImage}>
               <View style={styles.imageAvatar}>
                        <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
+                          {image &&
+                          <Image source={{ uri: this.state.image }} style={{ width: 90, height: 90,borderRadius: 90/2, }} resizeMode="stretch" />}
                        </Image>
-                      <Text style={styles.text}> こんにちは {this.props.navigation.state.params.Name}  </Text>
+                      <Text style={styles.text}> ようこそ、{this.props.navigation.state.params.Account.customer.name} さん ! </Text>
                       <Text style={styles.text2}> 
-                                 こんにちは今日はどのようにやってい？
+                           トレーニングの効果を出す為に
+                       </Text>
+                       <Text style={styles.text2}> 
+                           もう少しあなたの事を教えてください
+
                        </Text>
                     </View>
 
@@ -31,8 +46,10 @@ class WelcomeTrainee extends Component {
 
           <View style={styles.nextButton}>
                 <TouchableOpacity style={styles.TouchableOpacity} onPress={ ()=> {
-                navigate('TraineeTreatment');}}>
-                    <Text style={{fontWeight: 'bold'}}> START ! </Text> 
+
+                navigate('TraineeTreatment',{ Account: this.props.navigation.state.params.Account  });}}>
+
+                    <Text style={{fontWeight: 'bold',color:'#3C2C6C'}}> START ! </Text> 
              </TouchableOpacity> 
               
 
@@ -64,12 +81,16 @@ imageAvatar:{
 avtImage:{
   flex: 0.6,
   width: 150,
-  marginTop: 60
+  marginTop: 60,
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingRight: 5,
+  paddingBottom: 4
 },
 text:{
   backgroundColor:'rgba(0,0,0,0)',
   fontSize: 20,
-  color: 'black',
+  color: '#402677',
 
   marginBottom: 15,
   justifyContent: 'center',
@@ -79,7 +100,8 @@ text:{
 text2:{
   backgroundColor:'rgba(0,0,0,0)',
   fontSize: 15,
-  color: 'black',
+    marginBottom: 5,
+  color: '#402677',
  justifyContent: 'center',
  alignItems: 'center',
 },
