@@ -4526,6 +4526,12 @@ react-native-checkbox-group@^1.0.3:
   dependencies:
     react-native-vector-icons "^3.0.0"
 
+react-native-checkbox-heaven@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-checkbox-heaven/-/react-native-checkbox-heaven-0.1.4.tgz#8e90cd01369f38acb4f1ec2174074c6a29d11576"
+  dependencies:
+    react-native-vector-icons "^4.0.0"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -4573,6 +4579,10 @@ react-native-modal-picker@0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-modal-picker/-/react-native-modal-picker-0.0.16.tgz#c9324d880a3bb8f36b772f378164977e2f431cbc"
 
+react-native-picker@^4.3.1:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-picker/-/react-native-picker-4.3.2.tgz#dce7ee1a85d69045a217e3e654fad55702cc3ef8"
+
 react-native-safe-module@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-module/-/react-native-safe-module-1.2.0.tgz#a23824ca24edc2901913694a76646475113d570d"
@@ -4598,6 +4608,12 @@ react-native-scripts@1.7.0:
     qrcode-terminal "^0.11.0"
     rimraf "^2.6.1"
     xdl "46.0.1"
+
+react-native-simple-picker@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-simple-picker/-/react-native-simple-picker-1.4.3.tgz#06cc2a436ab1026fbc509f388adcfd09e997f320"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-simple-radio-button@^2.7.0:
   version "2.7.0"
