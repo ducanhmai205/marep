@@ -17,7 +17,10 @@ import Dimensions from 'Dimensions';
 import { StackNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import LoginFB from '../screens/LoginFB';
+
+ var navigation;
 class LoginScreen extends Component {
+ 
   constructor(props) {
     super(props)
     this.state = {
@@ -25,7 +28,25 @@ class LoginScreen extends Component {
       UserEmail: '',
       UserPassword: ''
     }
+    navigation = this.props.navigation;
   }
+
+onNavigate(data){
+      console.log('name',data);
+
+ 
+            if(data.type === 'customer'){      
+              navigation.navigate('WelcomeTrainee', { Account: data  });
+              }
+            if(data.type === 'trainer'){
+            navigation.navigate('WelcomeTrainer', { Account: data  });
+              }
+             if(typeof(data.message) === 'string'){
+                 
+                   Alert.alert(data.message);
+           }
+ }
+
 
 managePasswordVisibility = () =>
   {
@@ -119,7 +140,7 @@ UserLoginFunction = () =>{
 
                         <View style={styles.fbButton}>
                                     <TouchableOpacity  style={{flex: 1,}}>
-                                          <LoginFB> </LoginFB>
+                                          <LoginFB loginProp = {this.onNavigate} > </LoginFB>
                                     </TouchableOpacity>
                         </View>
 

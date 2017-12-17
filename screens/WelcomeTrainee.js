@@ -12,8 +12,16 @@ import {
 } from 'react-native';
 
 class WelcomeTrainee extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+       image: `${this.props.navigation.state.params.Account.avatar}`,
+    };
+  }
 
   render() {
+        const { image } = this.state;
         const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -21,6 +29,8 @@ class WelcomeTrainee extends Component {
           <ImageBackground  source={require('../img/signin02.png')} style={styles.backgroundImage}>
               <View style={styles.imageAvatar}>
                        <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
+                          {image &&
+                          <Image source={{ uri: this.state.image }} style={{ width: 90, height: 90,borderRadius: 90/2, }} resizeMode="stretch" />}
                        </Image>
                       <Text style={styles.text}> ようこそ、{this.props.navigation.state.params.Account.customer.name} さん ! </Text>
                       <Text style={styles.text2}> 
@@ -71,7 +81,11 @@ imageAvatar:{
 avtImage:{
   flex: 0.6,
   width: 150,
-  marginTop: 60
+  marginTop: 60,
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingRight: 5,
+  paddingBottom: 4
 },
 text:{
   backgroundColor:'rgba(0,0,0,0)',

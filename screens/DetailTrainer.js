@@ -20,6 +20,11 @@ class DetailTrainer extends Component {
     this.state = {
       starCount: 3.5,
       pressIcon: true,
+      issue : '',
+      id :`${this.props.navigation.state.params.Account.customer.id}`,
+      type: `${this.props.navigation.state.params.Account.type}`,
+      access_token :`${this.props.navigation.state.params.Account.customer.access_token}`,
+      trainerId: `${this.props.navigation.state.params.id}`,
     };
   }
   pressIcon = () =>
@@ -32,9 +37,86 @@ class DetailTrainer extends Component {
       starCount: rating
     });
   }
+//   componentWillMount() {
+//   let formdata = new FormData();
+//   formdata.append("access_token", this.state.access_token);
+//   formdata.append("type", this.state.type);
+//   formdata.append("id", this.state.id);
+
+// //   console.log('id2',this.props.navigation.state.params.Account.customer.id)
+// //   console.log('token2',this.props.navigation.state.params.Account.customer.access_token)
+//   fetch('http://35.185.68.16/api/v1/trainer/getPRDetail', {
+//     method: 'post',
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//     },
+//     body: formdata
+
+//   }).then((response) => response.json())
+//   .then((responseJson) => {
+
+    
+
+
+//     var content = responseJson.data.pr_content;
+//   console.log('content',content)
+    
+//     this.setState({
+     
+//   content : content
+ 
+//     })
+   
+  
+//    })
+
+
+// }
+componentWillMount() {
+
+
+  let formdata = new FormData();
+  formdata.append("access_token", this.state.access_token);
+  formdata.append("type", this.state.type);
+  formdata.append("id", this.state.id);
+  formdata.append("trainerId", this.state.trainerId);
+
+
+  fetch('http://35.185.68.16/api/v1/trainer/detail', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: formdata
+
+  }).then((response) => response.json())
+  .then((responseJson) => {
+   
+    
+
+
+    var content = responseJson;
+
+     console.log("issue",content)
+    this.setState({
+     
+  content : content,
+  image: content.avatar,
+  name: content.data.name,
+  issue: content.rawSpecializes,
+  prContent: content.data.pr_content,
+
+    })
+   console.log("issue",this.state.image)
+  
+   })
+
+
+}
   render() {
     const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
+    const  image  = this.state;
     return (
       
            <ImageBackground  source={require('../img/trainer_detailscreen.png')} style={styles.backgroundImage}>
@@ -56,20 +138,8 @@ class DetailTrainer extends Component {
 
                   <View style={styles.content}>
                       <View style={styles.swiper}>
-                            <Swiper style={styles.wrapperSwiper}>
-                              <View style={styles.slide1}>
-                                <Image  source={require('../img/1.png')} style={styles.imageswiper}>
-                                </Image>
-                                </View>
-                              <View style={styles.slide2}>
-                                <Image  source={require('../img/2.png')} style={styles.imageswiper}>
-                                </Image>
-                              </View>
-                              <View style={styles.slide3}>
-                                 <Image  source={require('../img/2.png')} style={styles.imageswiper}>
-                               </Image>
-                              </View>
-                            </Swiper>                     
+                          <Image  source={{uri: this.state.image }} resizeMode="stretch" style={styles.imageswiper}>
+                           </Image>                   
 
                       </View>
 
@@ -77,8 +147,8 @@ class DetailTrainer extends Component {
                             
                                  <View style={styles.namecontent}>
                                     <View style={styles.textName}>
-                                     <Text style={{fontSize:17,fontWeight: 'bold',paddingTop:5}}> 元気ですかすかか </Text>
-                                     <Text style={{fontSize:11,paddingTop:5}}> 元気ですか </Text>
+                                     <Text style={{fontSize:17,fontWeight: 'bold',paddingTop:5}}> {this.state.name} </Text>
+                                     <Text style={{fontSize:11,paddingTop:5}}> {this.state.issue} </Text>
                                     </View>
 
                                     <View style={styles.ratingcontent}>
@@ -143,7 +213,7 @@ class DetailTrainer extends Component {
 
                                  <View style={styles.infocontent}>
                                     <View style={{flex: 2,}}>
-                                        <Text style={{fontSize:13}}> 元気ですか 元気ですか 元気ですか 元気ですか 元気ですか元気ですか元気ですか元気ですか元気ですか元気ですか元気ですか元気ですか元気ですか </Text>
+                                        <Text style={{fontSize:13}}> {this.state.prContent}</Text>
                                     </View>
 
                                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
@@ -175,6 +245,8 @@ backgroundImage:{
 imageswiper:{
  borderTopRightRadius: 20,
   borderTopLeftRadius: 20,
+  height: null,
+  width: null,
 flex: 1,
 overflow: 'hidden',
 },

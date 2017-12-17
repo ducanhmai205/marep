@@ -19,28 +19,55 @@ import { ImagePicker } from 'expo';
 
 import SimplePicker from 'react-native-simple-picker';
 
-const options = ['1', '2','3','4','5','7','8'];
+const options = [];
+
+
+for (var i = 1; i <= 8; i++) {
+    options.push(i.toString());
+}
 class MenuTrainer extends Component {
   constructor(props) {
     super(props);
+    console.log("DucNT",options);
+     var pushStatus = `${this.props.navigation.state.params.Account.trainer.push_status}`;
+    let defaultSwitch = this.getSwitchDefaultValue();
   
     this.state = {
      optionUserCare:`${this.props.navigation.state.params.Account.trainer.max_customer_training}`,
      value:'',
-       image: `${this.props.navigation.state.params.Account.avatar}`,
-       size:15,
-       name:`${this.props.navigation.state.params.Account.trainer.name}`,
+      image: `${this.props.navigation.state.params.Account.avatar}`,
+      size:15,
+      issue:'',
+      SwitchOnValueHolder : defaultSwitch ,
+      name:`${this.props.navigation.state.params.Account.trainer.name}`,
+      email:`${this.props.navigation.state.params.Account.trainer.email}`,
+      push:`${this.props.navigation.state.params.Account.trainer.push_status}`,
+      trainerSpecialize : `${this.props.navigation.state.params.Account.rawMySpecializes}`,
     };
   }
 
+getSwitchDefaultValue = ()=>{
+  let pushStatus = this.props.navigation.state.params.Account.trainer.push_status;
+  if(pushStatus === 'on') return true;
+  return false;
+}
+ShowAlert = (isSelected) =>{
+  this.setState({ 
+    SwitchOnValueHolder: isSelected
+  })
+ 
+}
+getPushValue=()=>{
+    let isSwitchSelected = this.state.SwitchOnValueHolder;
+  if(isSwitchSelected) return 'on';
+  return 'off';
+}
 
   logout = () => {
 
     var type = 
 
-  // console.log('new',this.props.navigation.state.params.Account.type)
-  // console.log('id',this.props.navigation.state.params.Account.trainer.id)
-  // console.log('token',this.props.navigation.state.params.Account.trainer.access_token)
+
 fetch('http://35.185.68.16/api/v1/customer/logout', {
   method: 'POST',
   headers: {
@@ -83,19 +110,15 @@ fetch('http://35.185.68.16/api/v1/customer/logout', {
   confirm = () => {
   Alert.alert(
     
-    // This is Alert Dialog Title
+
     '本当にログアウトしますか？',
  
-    // This is Alert Dialog Message. 
+   
     '',
     [
-      // First Text Button in Alert Dialog.
-      
- 
-      // Second Cancel Button in Alert Dialog.
-      // {text: 'Cancel', onPress: () => this.props.navigation.navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account  })},
+    
        {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-      // Third OK Button in Alert Dialog
+
       {text: 'OK',  onPress: () => this.logout()},
       
     ],
@@ -103,27 +126,7 @@ fetch('http://35.185.68.16/api/v1/customer/logout', {
   )
  }
 
-  ShowAlert = (value) =>{
-
-  this.setState({
  
-    SwitchOnValueHolder: value
-  })
- 
-  if(value == true)
-  {
- 
-   this.setState({ value : 'on'})
-   console.log("swtich",value)
-  }
-  else{
- 
-   
- this.setState({ value : 'off' })
-   console.log("swtich2",value)
-  }
- 
-}
 
 _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -138,7 +141,7 @@ _pickImage = async () => {
       this.setState({ image: result.uri, });
       console.log("ducanhpic",result.uri);
     }else {
-      Alert.alert('need image now ')
+     console.log("ducanhpic",result.uri);
     }
   };
 
@@ -147,14 +150,15 @@ TrainerUpdate = () =>{
  
 
   let formdata = new FormData();
-let push = this.state.value;
+let push =  this.getPushValue();
 let training = this.state.optionUserCare;
 let name = this.state.name;
+let email = this.state.email;
 
   formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
-  formdata.append("email", this.props.navigation.state.params.Account.trainer.email);
+  formdata.append("email", email);
   formdata.append("push_status", push);
   formdata.append("max_customer_training", training);
   formdata.append("gender", this.props.navigation.state.params.Account.trainer.gender);
@@ -168,7 +172,7 @@ fetch('http://35.185.68.16/api/v1/trainer/updateProfile', {
   headers: {
         'Content-Type': 'multipart/form-data',
     'Accept': 'application/json',
-    // 'Content-Type': 'application/json',
+  
   },
    body: formdata,
 
@@ -180,7 +184,7 @@ fetch('http://35.185.68.16/api/v1/trainer/updateProfile', {
          console.log("newdata",responseJson);
        if(responseJson.status === true){
 
-          Alert.alert('Update Success');
+       
              this.props.navigation.navigate('TrainerProfile',{Account: responseJson.account});
        }
       else{
@@ -242,6 +246,46 @@ fetch('http://35.185.68.16/api/v1/trainer/updateProfile', {
  
  
   }
+
+  getMaxtrainingundefired(){
+  let max = this.state.optionUserCare;
+  if(max === 'undefined') return '0';
+  return max
+}
+
+componentWillMount() {
+  let formdata = new FormData();
+  formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+  formdata.append("type", this.props.navigation.state.params.Account.type);
+  formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+
+  fetch('http://35.185.68.16/api/v1/trainer/getProfile', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: formdata
+
+  }).then((response) => response.json())
+  .then((responseJson) => {
+
+
+  
+    var issue = responseJson.account.rawMySpecializes;
+  
+    
+    this.setState({
+     
+      issue : issue,
+      
+ 
+    })
+   
+  
+   })
+
+
+}
 render() {
   const { image } = this.state;
         const { navigate } = this.props.navigation;
@@ -290,7 +334,7 @@ render() {
                                 <View style={styles.pushButton}>
                                    <Text style={{color:'gray',fontSize: 10}}> PUSH 通知 </Text>
                                   <Switch
-                                      onValueChange={(value) => this.ShowAlert(value)}
+                                      onValueChange={(push) => this.ShowAlert(push)}
                                       value={this.state.SwitchOnValueHolder} />
     
                                   
@@ -301,7 +345,15 @@ render() {
                            
                                   <View style={styles.optionName}>
                                       <Text style={styles.textOption}>メールアドレス</Text>
-                                       <Text style={styles.textOption}>{this.props.navigation.state.params.Account.trainer.email}  </Text>
+                                        <TextInput
+                
+                                          style={styles.textOption} 
+                                          underlineColorAndroid='transparent'
+                                          returnKeyType="next"
+                                          autoCapitalize="none"
+                                          placeholder= {this.props.navigation.state.params.Account.trainer.email}
+                                          onChangeText={email => this.setState({email})}
+                                    />
                                        
                                   </View>
                          
@@ -314,7 +366,7 @@ render() {
                               <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.option.show()}} >
                                   <View style={styles.optionSelectNumberTrainee}>
                                       <Text style={styles.textOption}> トレーニングできる人数 </Text>
-                                      <Text style={styles.textOption}> {this.state.optionUserCare}人 </Text>
+                                      <Text style={styles.textOption}> {this.getMaxtrainingundefired()}人 </Text>
                                       <SimplePicker
                                           ref={'option'}
                                           confirmText='完了'
@@ -329,10 +381,10 @@ render() {
                                   </View>
                               </TouchableOpacity>
                             <TouchableOpacity style={{flex: 1,}}  onPress={()=> {
-                          navigate('TrainerSpecialize',{ Account: this.props.navigation.state.params.Account  });}}>
+                          navigate('ChangeSpecializes',{ Account: this.props.navigation.state.params.Account  });}}>
                                   <View style={styles.optionVersion}>
                                       <Text style={styles.textOption}> 得意分野 </Text>
-                                      <Text style={styles.textOption}> {this.props.navigation.state.params.Account.rawMySpecializes} </Text>
+                                      <Text style={styles.textOption}> {this.state.issue} </Text>
                                   </View>
                             </TouchableOpacity>
 

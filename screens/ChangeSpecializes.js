@@ -16,7 +16,7 @@ import {
 import Dimensions from 'Dimensions';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box'
-class TrainerSpecialize extends Component {
+class ChangeSpecializes extends Component {
   constructor(){
         super()
         this.state = {
@@ -71,9 +71,10 @@ fetch('http://35.185.68.16/api/v1/trainer/storeTrainerSpecializes', {
 }).then((response) => response.json())
       .then((responseJson) => {
   if(responseJson.status === true){
-        this.props.navigation.state.params.Account.mySpecializes = selectedItems;
-  this.props.navigation.navigate('SelectTrainee',{Account: this.props.navigation.state.params.Account });
 
+        this.props.navigation.state.params.Account.mySpecializes = selectedItems;
+  this.props.navigation.navigate('MenuTrainer',{Account: this.props.navigation.state.params.Account });
+  console.log("abc",selectedItems)
       }
         else{
           
@@ -120,15 +121,15 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
       .then((responseJson) => {
         // var rawData = Object.values(responseJson.trainer_specializes);
         var rawData = responseJson.trainer_specializes;
+        console.log('raw data', rawData);
 
-
-        // var data = Object.keys(responseJson.trainer_specializes).map(function(data){
-        //   // return [data,responseJson.trainer_specializes[data]];
-        //   return {
-        //     label: responseJson.trainer_specializes[data],
-        //     value: data
-        //   }
-        // });
+        var data = Object.keys(responseJson.trainer_specializes).map(function(data){
+          // return [data,responseJson.trainer_specializes[data]];
+          return {
+            label: responseJson.trainer_specializes[data],
+            value: data
+          }
+        });
         var testData = [];
          Object.keys(responseJson.trainer_specializes).forEach(function(item){
           var raw = {
@@ -136,9 +137,8 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
             id: item,
             checked:false
           }
-// console.log('ducanh raw data',raw)
+
           testData.push(raw);
-          console.log('ducanh raw data',testData)
         });
 
 
@@ -146,7 +146,7 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
         this.setState({
           Data:testData 
         })
-      // console.log('ducanh data array',this.state.Data) 
+       
       
       })
 
@@ -186,7 +186,7 @@ formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
             		           <View style={styles.nextButton}>
                 					<TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssuesTrainer}>
                 					    <Text style={{fontWeight: 'bold'}}> 
-                              NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
+                             SAVE
 
                                </Text> 
             					 	</TouchableOpacity> 
@@ -252,4 +252,4 @@ TouchableOpacity:{
 });
 
 
-export default TrainerSpecialize;
+export default ChangeSpecializes;

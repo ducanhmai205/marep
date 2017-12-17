@@ -55,7 +55,7 @@ fetch('http://35.185.68.16/api/v1/trainer/updatePR', {
          {
             Alert.alert('ok');
               dismissKeyboard();
-
+                console.log("updatepr", this.props.navigation.state.params.Account.trainer.pr_content)
             this.props.navigation.navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account  });
          }
          else{

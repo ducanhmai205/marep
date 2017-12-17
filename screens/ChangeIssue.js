@@ -14,7 +14,7 @@ import {
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box'
 
-class TraineeTreatment extends Component {
+class ChangeIssue extends Component {
   constructor(){
     super()
     this.state = {
@@ -69,7 +69,7 @@ fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
   if(responseJson.status === true){
     this.props.navigation.state.params.Account.myIssues = selectedItems;
     
-    this.props.navigation.navigate('SelectTrainer',{Account: this.props.navigation.state.params.Account});
+    this.props.navigation.navigate('MenuUser',{Account: this.props.navigation.state.params.Account});
   }
   else{
 
@@ -116,13 +116,13 @@ componentWillMount() {
          // var rawData = Object.values(responseJson.trainer_specializes);
          var rawData = responseJson.customer_issues;
 
-        //  var data = Object.keys(responseJson.customer_issues).map(function(data){
-        //   // return [data,responseJson.trainer_specializes[data]];
-        //   return {
-        //     label: responseJson.customer_issues[data],
-        //     value: data
-        //   }
-        // });
+         var data = Object.keys(responseJson.customer_issues).map(function(data){
+          // return [data,responseJson.trainer_specializes[data]];
+          return {
+            label: responseJson.customer_issues[data],
+            value: data
+          }
+        });
 
          var testData = [];
          Object.keys(responseJson.customer_issues).forEach(function(item){
@@ -131,14 +131,14 @@ componentWillMount() {
             id: item,
             checked:false
           }
-console.log('ducanh raw data',raw)
+
           testData.push(raw);
         });
 
          this.setState({
           Data:testData 
         })
-console.log('ducanh data array',this.state.Data)
+
 
        })
 
@@ -183,7 +183,7 @@ render() {
         <View style={styles.nextButton}>
         <TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssues }>
         <Text style={{fontWeight: 'bold'}}> 
-        NEXT <Ionicons  name="ios-arrow-forward-outline" size={15}  />
+        SAVE 
 
         </Text> 
         </TouchableOpacity> 
@@ -249,4 +249,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default TraineeTreatment;
+export default ChangeIssue;

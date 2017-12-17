@@ -13,7 +13,7 @@ import {
   Platform,
   Alert,
   Button,
-  Switch
+  Switch,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import { Feather , Entypo , MaterialIcons } from '@expo/vector-icons';
@@ -22,57 +22,22 @@ import { ImagePicker } from 'expo';
 import SimplePicker from 'react-native-simple-picker';
 
 
-const optionsSex = ['male', 'female'];
-const optionsHeight = ['50','60','70','80','90','100','110','120','130','140','150','160','170','180','190','200','210','220','230','240','250'];
-const optionsWeight = ['30','40','50','60','70','80','90','100','110','120','130','140','150','160','170','180','190','200'];
-// const optionsHeight = new Array(250);
-
-
-// for (var i = 5; i < optionsHeight.length; i++) {
-//    optionsHeight = (i+1) *10;
-// }
-// export  class ImagePickerExample extends React.Component {
-//   state = {
-//     image: null,
-//     size:15,
-
-//   };
-
-//   render() {
-//     const { image } = this.state;
-
-//     return (
-//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//         <TouchableOpacity style={{flex: 1,alignItems: 'center',justifyContent: 'center',}} onPress={this._pickImage} >
-//            <Entypo name="camera" size={this.state.size} color='white' />
-        
-        
-//         {image &&
-//           <Image source={{ uri: image }} style={{ flex:1,width: 80, height: 80,borderRadius: 80/2, }} resizeMode="stretch" />}
-//           </TouchableOpacity>
-//       </View>
-//     );
-//   }
-
-//   _pickImage = async () => {
-//     let result = await ImagePicker.launchImageLibraryAsync({
-//       allowsEditing: true,
-//       aspect: [4, 3],
-//       base64:true
-//     });
-
-    
-
-//     if (!result.cancelled) {
-//       this.setState({ image: result.uri, size:1});
-//       console.log("ducanhpic",this.state.image);
-//     }
-//   };
-// }
+const optionsSex = ['male', 'female']
+const labels = ['男性','女性']
+const optionsHeight = [];
+for (var i = 50; i <= 250; i++) {
+    optionsHeight.push(i.toString());
+}
+const optionsWeight = [];
+for (var i = 30; i <= 200; i++) {
+    optionsWeight.push(i.toString());
+}
 class MenuUser extends Component {
   constructor(props) {
     super(props);
-  
+    var pushStatus = `${this.props.navigation.state.params.Account.customer.push_status}`;
+    let defaultSwitch = this.getSwitchDefaultValue();
+    var sexStatus = `${this.props.navigation.state.params.Account.customer.gender}`;
     this.state = {
       sex: '性別',
       type:'',
@@ -83,8 +48,10 @@ class MenuUser extends Component {
       weightOption: `${this.props.navigation.state.params.Account.customer.customer_weight}`,
       sexOption: `${this.props.navigation.state.params.Account.customer.gender}`,
       name:  `${this.props.navigation.state.params.Account.customer.name}`,
-      issue: '',
-      SwitchOnValueHolder :  false,
+      email:  `${this.props.navigation.state.params.Account.customer.email}`,
+      issueCustomer: `${this.props.navigation.state.params.Account.rawMyIssues}`,
+     
+      SwitchOnValueHolder : defaultSwitch ,
       push:`${this.props.navigation.state.params.Account.customer.push_status}`,
       oldName:'',
       account2:'',
@@ -93,7 +60,15 @@ class MenuUser extends Component {
       
       
     };
+
   }
+
+getSwitchDefaultValue = ()=>{
+  let pushStatus = this.props.navigation.state.params.Account.customer.push_status;
+  if(pushStatus === 'on') return true;
+  return false;
+}
+
 _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -112,43 +87,17 @@ _pickImage = async () => {
   };
 
 
- ShowAlert = (push) =>{
-
-  this.setState({
- 
-    SwitchOnValueHolder: push
+ ShowAlert = (isSelected) =>{
+  this.setState({ 
+    SwitchOnValueHolder: isSelected
   })
- 
-  if(push == true)
-  {
- 
-   this.setState({ push : 'on'})
-   console.log("swtich",push)
-  }
-  else{
- 
-   
- this.setState({ push : 'off' })
-   console.log("swtich2",push)
-  }
  
 }
  
 
   logoutUser = () => {
 
-
-console.log('type',this.props.navigation.state.params.Account.type)
-  console.log('name',this.props.navigation.state.params.Account.customer.name)
-  console.log('id',this.props.navigation.state.params.Account.customer.id)
-  console.log('token',this.props.navigation.state.params.Account.customer.access_token)
-   console.log('email',this.props.navigation.state.params.Account.customer.email)
-    console.log('push',this.state.value)
-     console.log('gender', this.state.sexOption)
-     console.log('height',this.state.heightOption)
-     console.log('weight', this.state.weightOption)
-      console.log('avatar', this.state.image)
-
+console.log("ducanh account", this.props.navigation.state.params.Account)
 
      
 fetch('http://35.185.68.16/api/v1/customer/logout', {
@@ -204,7 +153,6 @@ fetch('http://35.185.68.16/api/v1/customer/logout', {
 
 componentWillMount() {
   let formdata = new FormData();
-console.log("pic",this.props.navigation.state.params.Account.customer.avatar);
   formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.customer.id);
@@ -250,20 +198,29 @@ console.log("pic",this.props.navigation.state.params.Account.customer.avatar);
 
 }
 
+getPushValue=()=>{
+    let isSwitchSelected = this.state.SwitchOnValueHolder;
+  if(isSwitchSelected) return 'on';
+  return 'off';
+}
+
 UserUpdate = () =>{
  
     
 
   let formdata = new FormData();
-let push = this.state.push;
+
+let push = this.getPushValue();
+console.log("DucNT Push Value: ",push);
 let height = this.state.heightOption;
 let weight = this.state.weightOption;
 let name = this.state.name;
+let email = this.state.email;
 let sex = this.state.sexOption;
   formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.customer.id);
-  formdata.append("email", this.props.navigation.state.params.Account.customer.email);
+  formdata.append("email", email);
   formdata.append("push_status", push);
   formdata.append("gender", this.props.navigation.state.params.Account.customer.gender);
   formdata.append("customer_height", height);
@@ -306,7 +263,7 @@ console.log("ducanh",this.props.navigation.state.params.Account);
        }
       else{
          {
-     
+             console.log("error",responseJson);
             var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
             
             Object.keys(responseJson.message)[0];
@@ -369,7 +326,22 @@ console.log("ducanh",this.props.navigation.state.params.Account);
  
   }
 
+getGenderInJapanese(){
+  let gender = this.state.sexOption;//male/female
+  if(gender === 'male') return '男性';
+  return '女性'
 
+}
+getHeightundefired(){
+  let height = this.state.heightOption;
+  if(height === 'undefined') return '0';
+  return height
+}
+getWeightundefired(){
+  let weight = this.state.weightOption;
+  if(weight === 'undefined') return '0';
+  return weight
+}
   render() {
      var base64Icon =  this.props.navigation.state.params.Account.avatar;
         const { image } = this.state;
@@ -429,7 +401,15 @@ console.log("ducanh",this.props.navigation.state.params.Account);
          <View style={styles.mainOption}>
                   <View style={styles.optionMail}>
                       <Text style={styles.textOption}> メールアドレス </Text>
-                      <Text style={styles.textOption}>{this.props.navigation.state.params.Account.customer.email}</Text>
+                       <TextInput
+                
+                                          style={styles.textOption} 
+                                          underlineColorAndroid='transparent'
+                                          returnKeyType="next"
+                                          autoCapitalize="none"
+                                          placeholder= {this.props.navigation.state.params.Account.customer.email}
+                                          onChangeText={email => this.setState({email})}
+                                    />
                   </View>
             <TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('UpdatePassword', { Account: this.props.navigation.state.params.Account  })}}>
                     <View style={styles.option}>
@@ -441,12 +421,13 @@ console.log("ducanh",this.props.navigation.state.params.Account);
             <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.sex.show()}}>
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 性別 </Text>
-                       <Text style={styles.textOption}>  {this.state.sexOption}</Text>
+                       <Text style={styles.textOption}>  {this.getGenderInJapanese()}</Text>
                       <SimplePicker
                             ref={'sex'}
                             confirmText='完了'
                             cancelText='キャンセル'
                             options={optionsSex}
+                            labels={labels}
                             onSubmit={(optionsSex) => {
                               this.setState({
                                 sexOption: optionsSex,
@@ -459,7 +440,7 @@ console.log("ducanh",this.props.navigation.state.params.Account);
             <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.height.show()}}>
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 身長 </Text>
-                       <Text style={styles.textOption}> {this.state.heightOption}cm </Text>
+                       <Text style={styles.textOption}> {this.getHeightundefired()}cm </Text>
                         <SimplePicker
                             ref={'height'}
                             confirmText='完了'
@@ -477,7 +458,7 @@ console.log("ducanh",this.props.navigation.state.params.Account);
             <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.weight.show()}}> 
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 体重 </Text>
-                      <Text style={styles.textOption}> {this.state.weightOption}kg </Text>
+                      <Text style={styles.textOption}> {this.getWeightundefired()}kg </Text>
                        <SimplePicker
                             ref={'weight'}
                             confirmText='完了'
@@ -493,7 +474,7 @@ console.log("ducanh",this.props.navigation.state.params.Account);
             </TouchableOpacity>
 
                     <TouchableOpacity style={{flex: 1,}} onPress={()=> {
-                          navigate('TraineeTreatment',{ Account: this.props.navigation.state.params.Account  });}}>
+                          navigate('ChangeIssue',{ Account: this.props.navigation.state.params.Account  });}}>
                   <View style={styles.option}>
                       <Text style={styles.textOption}> お悩み内容 </Text>
                       <Text style={styles.textOption}> {this.state.issue} </Text>
