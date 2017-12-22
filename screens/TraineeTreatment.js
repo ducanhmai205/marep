@@ -59,7 +59,6 @@ fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
     type  : this.props.navigation.state.params.Account.type,
     id  : this.props.navigation.state.params.Account.customer.id,
     access_token  : this.props.navigation.state.params.Account.customer.access_token,
-
     customer_issue: selectedItems,
     
   })
@@ -113,7 +112,7 @@ componentWillMount() {
 
   }).then((response) => response.json())
   .then((responseJson) => {
-         // var rawData = Object.values(responseJson.trainer_specializes);
+        
          var rawData = responseJson.customer_issues;
 
         //  var data = Object.keys(responseJson.customer_issues).map(function(data){
@@ -131,14 +130,14 @@ componentWillMount() {
             id: item,
             checked:false
           }
-console.log('ducanh raw data',raw)
+
           testData.push(raw);
         });
 
          this.setState({
           Data:testData 
         })
-console.log('ducanh data array',this.state.Data)
+
 
        })
 

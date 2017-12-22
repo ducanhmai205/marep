@@ -23,28 +23,25 @@ class ChangeIssue extends Component {
       Data:'',
       type:'',
       id:'',
-       value :false,
+      value :false,
       access_token:'',
       customer_issues:''
     }
     
   }
-handleOnChange(val) {
+  handleOnChange(val) {
     this.setState({ value: val })
   }
- 
+
   sendIssues = () =>{
    let items = this.state.Data;
    let selectedItems = [];
-
-
-   //Lay ra nhung id co gia tri checked = true
-
+ //Lay ra nhung id co gia tri checked = true
     items.forEach(function(item) {
-          if(item.checked) {
-            selectedItems.push(item.id);
-          }
-    });
+    if(item.checked) {
+      selectedItems.push(item.id);
+    }
+  });
 
 fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
 
@@ -141,59 +138,58 @@ componentWillMount() {
 
 
        })
-
-
 }
+
+
 render() {
   const { navigate } = this.props.navigation;
   const {goBack} = this.props.navigation;
   return (
    <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
    <View style={styles.icon}>
-   
+   <View></View>
    </View>
    <View style={styles.center}>
    <Text style={styles.text2}>あなたの悩みを教えてください </Text>
    <Text style={styles.text2}>（2つまで選択可能です）</Text>
    <View style={styles.inside}>
-  
- <FlatList
-  data={this.state.Data}
-     keyExtractor={item => item.id}
-  renderItem={({item}) => 
-  <CheckBox
-     style={{flex: 1,paddingTop:10}}
-      isChecked={item.checked}
-      onClick={()=>{
-         item.checked = !item.checked; 
-     }}
-     rightText={item.name}
+
+   <FlatList
+   data={this.state.Data}
+   keyExtractor={item => item.id}
+   renderItem={({item}) => 
+   <CheckBox
+   style={{flex: 1,paddingTop:10}}
+   isChecked={item.checked}
+   onClick={()=>{
+     item.checked = !item.checked; 
+   }}
+   rightText={item.name}
    checkedImage=  {<MaterialCommunityIcons name="checkbox-marked-circle" size={20} color="green" />}
    unCheckedImage= {<MaterialCommunityIcons name="checkbox-blank-circle" size={20} color="white" />}
+   />
+ }
  />
-}
-/>
-
-  
-     
 
 
-        </View>   
-        </View>
-        <View style={styles.nextButton}>
-        <TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssues }>
-        <Text style={{fontWeight: 'bold'}}> 
-        SAVE 
 
-        </Text> 
-        </TouchableOpacity> 
-        </View>
 
-        </ImageBackground>
-        );
+
+ </View>   
+ </View>
+ <View style={styles.nextButton}>
+ <TouchableOpacity style={styles.TouchableOpacity} onPress={ this.sendIssues }>
+ <Text style={{fontWeight: 'bold'}}> 
+ SAVE 
+
+ </Text> 
+ </TouchableOpacity> 
+ </View>
+
+ </ImageBackground>
+ );
 }
 }
-
 const styles = StyleSheet.create({
   backgroundImage:{
     flex: 1,
@@ -222,7 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor:'rgba(0,0,0,0)',
     fontSize: 15,
 
-   paddingRight:20
+    paddingRight:20
   },
   text3:{
     backgroundColor:'rgba(0,0,0,0)',

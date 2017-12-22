@@ -123,13 +123,13 @@ componentWillMount() {
                  <View style={styles.container}>
                   <View style={styles.header}>
                       <View style={styles.icon}>
-                      <TouchableOpacity onPress={ () => goBack(null)  }>
+                      <TouchableOpacity style={{flex: 1,justifyContent: 'center',}}onPress={ () => goBack(null)  }>
                           <Ionicons name="ios-arrow-back" size={20} />
                       </TouchableOpacity>
                       </View>
 
                       <View style={styles.text}>
-                          <Text style={{fontSize:20,fontWeight: 'bold'  }}> こんにちは、元気ですか </Text>
+                          <Text style={{fontSize:20,fontWeight: 'bold'  }}> {this.state.name}</Text>
 
                       </View>
 
@@ -152,25 +152,29 @@ componentWillMount() {
                                     </View>
 
                                     <View style={styles.ratingcontent}>
-                                          <View style={{flex: 1,flexDirection: 'row',justifyContent: 'space-between',}}>
-                                              <Text style={{fontSize:11,paddingTop:14}}> 元気ですか </Text>
-                                                    <StarRating
+                                          <View style={{flex: 1,flexDirection: 'row',paddingTop:10}}>
+                                              <Text style={styles.textStar}> フレンドリー </Text>
+                                                    <View style={{paddingLeft: 8,}} >
+                                                      <StarRating
+
                                                         disabled={false}
                                                         emptyStar={'ios-star-outline'}
                                                         fullStar={'ios-star'}
                                                         halfStar={'ios-star-half'}
                                                         iconSet={'Ionicons'}
                                                         maxStars={5}
-                                                        starSize={10}
+                                                        starSize={15}
                                                         starColor={'green'}
                                                         rating={this.state.starCount}
                                                         selectedStar={(rating) => this.onStarRatingPress(rating)}
                                                         
-                                                      />
+                                                       />
+                                                    </View>
                                               </View>
-                                              <View style={{flex: 1,flexDirection: 'row',justifyContent: 'space-between',}}>
+                                              <View style={{flex: 1,flexDirection: 'row'}}>
 
-                                              <Text style={{fontSize:11,paddingTop:5}}> 元気ですか </Text>
+                                              <Text  style={styles.textStar}> 減量 </Text>
+                                                <View style={{paddingLeft: 60,}} >
                                               <StarRating
                                                         disabled={false}
                                                         emptyStar={'ios-star-outline'}
@@ -178,16 +182,17 @@ componentWillMount() {
                                                         halfStar={'ios-star-half'}
                                                         iconSet={'Ionicons'}
                                                         maxStars={5}
-                                                        starSize={10}
+                                                        starSize={15}
                                                         starColor={'green'}
                                                         rating={this.state.starCount}
                                                         selectedStar={(rating) => this.onStarRatingPress(rating)}
 
                                                       />
-
+                                                      </View>
                                               </View>
-                                              <View style={{flex: 1,flexDirection: 'row',justifyContent: 'space-between',}}>
-                                              <Text style={{fontSize:11,paddingTop:3}}> 元気ですか </Text>
+                                              <View style={{flex: 1,flexDirection: 'row'}}>
+                                              <Text  style={styles.textStar}> 痛みを取る </Text>
+                                              <View style={{paddingLeft: 15,}} >
                                               <StarRating
                                                         disabled={false}
                                                         emptyStar={'ios-star-outline'}
@@ -195,18 +200,20 @@ componentWillMount() {
                                                         halfStar={'ios-star-half'}
                                                         iconSet={'Ionicons'}
                                                         maxStars={5}
-                                                        starSize={10}
+                                                        starSize={15}
                                                         starColor={'green'}
                                                         rating={this.state.starCount}
                                                         selectedStar={(rating) => this.onStarRatingPress(rating)}
 
                                                       />
+                                                      </View>
                                               </View>
                                     </View>
                                  </View>
                                   <View
                                     style={{
-                                      borderBottomColor: 'green',
+                                      paddingTop:10,
+                                      borderBottomColor: '#24DFA8',
                                       borderBottomWidth: 2,
                                     }}
                                   />
@@ -322,6 +329,7 @@ maincontent:{
 },
 namecontent:{
 flex: 1,
+
 },
 textName:{
 flex: 1.2,
@@ -329,10 +337,14 @@ flex: 1.2,
 },
 ratingcontent:{
   flex: 2,
- paddingRight: 15
+ paddingRight: 15,
+
+},
+textStart:{
+  fontSize: 11,
 },
 infocontent:{
-flex: 2,
+flex: 1.7,
 paddingTop: 15
 },
 circle: {

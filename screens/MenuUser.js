@@ -20,17 +20,42 @@ import { Feather , Entypo , MaterialIcons } from '@expo/vector-icons';
 // import { Switch } from 'react-native-switch';
 import { ImagePicker } from 'expo';
 import SimplePicker from 'react-native-simple-picker';
+import ModalFilterPicker from 'react-native-modal-filter-picker'
+
+const optionsSex = [
+ {
+        key: 'male',
+        label: '男性',
+      },
+      {
+        key: 'female',
+        label: '女性',
+      },
+];
 
 
-const optionsSex = ['male', 'female']
-const labels = ['男性','女性']
-const optionsHeight = [];
-for (var i = 50; i <= 250; i++) {
-    optionsHeight.push(i.toString());
+var optionsHeight = [];
+
+for (var i = 50; i <=250; i++) {
+    optionsHeight.push({
+        key: i,
+        label: i,
+    });
+}
+var optionsYear = [];
+
+for (var i = 1950; i <=2017; i++) {
+    optionsYear.push({
+        key: i,
+        label: i,
+    });
 }
 const optionsWeight = [];
 for (var i = 30; i <= 200; i++) {
-    optionsWeight.push(i.toString());
+    optionsWeight.push({
+        key: i,
+        label: i,
+    });
 }
 class MenuUser extends Component {
   constructor(props) {
@@ -44,9 +69,10 @@ class MenuUser extends Component {
       id:'',
       access_token:'',
       Data:'',
-      heightOption: `${this.props.navigation.state.params.Account.customer.customer_height}`,
-      weightOption: `${this.props.navigation.state.params.Account.customer.customer_weight}`,
-      sexOption: `${this.props.navigation.state.params.Account.customer.gender}`,
+      pickedHeight: `${this.props.navigation.state.params.Account.customer.customer_height}`,
+      pickedWeight: `${this.props.navigation.state.params.Account.customer.customer_weight}`,
+      pickedYear: `${this.props.navigation.state.params.Account.customer.birth_year}`,
+      pickedSex: `${this.props.navigation.state.params.Account.customer.gender}`,
       name:  `${this.props.navigation.state.params.Account.customer.name}`,
       email:  `${this.props.navigation.state.params.Account.customer.email}`,
       issueCustomer: `${this.props.navigation.state.params.Account.rawMyIssues}`,
@@ -57,6 +83,10 @@ class MenuUser extends Component {
       account2:'',
       image: `${this.props.navigation.state.params.Account.avatar}`,
        size:15,
+         visibleHeight: false,
+         visibleWeight:false,
+         visibleSex:false,
+        visibleYear:false,
       
       
     };
@@ -211,18 +241,19 @@ UserUpdate = () =>{
   let formdata = new FormData();
 
 let push = this.getPushValue();
-console.log("DucNT Push Value: ",push);
-let height = this.state.heightOption;
-let weight = this.state.weightOption;
+let height = this.state.pickedHeight;
+let weight = this.state.pickedWeight;
+let year = this.state.pickedYear;
 let name = this.state.name;
 let email = this.state.email;
-let sex = this.state.sexOption;
+let sex = this.state.pickedSex;
   formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.customer.id);
   formdata.append("email", email);
+  formdata.append("birth_year", year);
   formdata.append("push_status", push);
-  formdata.append("gender", this.props.navigation.state.params.Account.customer.gender);
+  formdata.append("gender", sex);
   formdata.append("customer_height", height);
   formdata.append("customer_weight",  weight);
   formdata.append("name",  name);
@@ -233,7 +264,7 @@ fetch('http://35.185.68.16/api/v1/customer/updateProfile', {
 
   method: 'POST',
   headers: {
-        'Content-Type': 'multipart/form-data',
+    'Content-Type': 'multipart/form-data',
     'Accept': 'application/json',
 
   },
@@ -243,18 +274,7 @@ fetch('http://35.185.68.16/api/v1/customer/updateProfile', {
  
 }).then((response) => response.json())
       .then((responseJson) => {
-         
-        
-  //        console.log('type',this.props.navigation.state.params.Account.type);
-  // console.log('name',this.state.name);
-  // console.log('id',this.props.navigation.state.params.Account.customer.id);
-  // console.log('token',this.props.navigation.state.params.Account.customer.access_token);
-  //  console.log('email',this.props.navigation.state.params.Account.customer.email);
-  //   console.log('push',this.props.navigation.state.params.Account.customer.push_status);
-     console.log('gender', this.props.navigation.state.params.Account.customer.gender);
-     console.log('height',this.props.navigation.state.params.Account.customer.customer_height);
-     console.log('weight',this.props.navigation.state.params.Account.customer.customer_weight);
-  //     console.log('avatar', this.state.image);
+
        if(responseJson.status === true){
 console.log("ducanh",this.props.navigation.state.params.Account);
  console.log("data",responseJson);
@@ -327,29 +347,115 @@ console.log("ducanh",this.props.navigation.state.params.Account);
   }
 
 getGenderInJapanese(){
-  let gender = this.state.sexOption;//male/female
+  let gender = this.state.pickedSex;//male/female
   if(gender === 'male') return '男性';
   return '女性'
 
 }
 getHeightundefired(){
-  let height = this.state.heightOption;
+  let height = this.state.pickedHeight;
   if(height === 'undefined') return '0';
+  if(height === 'null') return '0';
   return height
 }
+getYeartundefired(){
+  let year = this.state.pickedYear;
+  if(year === 'undefined') return '0';
+  if(year === 'null') return '0';
+  return year
+}
 getWeightundefired(){
-  let weight = this.state.weightOption;
+  let weight = this.state.pickedWeight;
   if(weight === 'undefined') return '0';
+  if(weight === 'null') return '0';
   return weight
 }
+getEmailundefired(){
+  let email = this.state.email;
+  if(email === 'undefined') return 'example@gmail.com';
+  if(email === 'null') return 'example@gmail.com';
+  return email
+}
+ onShowHeight = () => {
+    this.setState({ visibleHeight: true });
+  }
+
+  onSelectHeight = (pickedHeight) => {
+    
+    this.setState({
+      pickedHeight: pickedHeight,
+      visibleHeight: false
+    })
+  }
+
+  onCancelHeight = () => {
+    this.setState({
+      visibleHeight: false
+    });
+  }
+ onShowWeight = () => {
+    this.setState({ visibleWeight: true });
+  }
+
+  onSelectWeight = (pickedWeight) => {
+    
+    this.setState({
+      pickedWeight: pickedWeight,
+      visibleWeight: false
+    })
+  }
+
+  onCancelWeight = () => {
+    this.setState({
+      visibleWeight: false
+    });
+  }
+
+
+ onShowSex = () => {
+    this.setState({ visibleSex: true });
+  }
+
+  onSelectSex = (pickedSex) => {
+    
+    this.setState({
+      pickedSex: pickedSex,
+      visibleSex: false
+    })
+  }
+
+  onCancelSex = () => {
+    this.setState({
+      visibleSex: false
+    });
+  }
+
+ onShowYear = () => {
+    this.setState({ visibleYear: true });
+  }
+
+  onSelectYear = (pickedYear) => {
+    
+    this.setState({
+      pickedYear: pickedYear,
+      visibleYear: false
+    })
+  }
+
+  onCancelYear = () => {
+    this.setState({
+      visibleYear: false
+    });
+  }
   render() {
      var base64Icon =  this.props.navigation.state.params.Account.avatar;
         const { image } = this.state;
         const { name } = this.state;
+         const { visibleHeight,visibleWeight,pickedHeight,pickedWeight,visibleSex,pickedSex,visibleYear,pickedYear  } = this.state;
     const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
     return (
-      <Image style={styles.backgroundImage} source={require('../img/user/menu_userbg.png')}>
+      <Image style={styles.backgroundImage} source={require('../img/user/menu_userbgn.png')}>
            <StatusBar hidden={true} />
            <View style={styles.containerUp}>
               
@@ -382,7 +488,7 @@ getWeightundefired(){
             
                     <TextInput
                 
-                                          style={{flex:1,fontSize: 15,paddingTop:10,color:'#665586'}} 
+                                          style={{flex:1,fontSize: 15,paddingTop:10,color:'#665586',textAlign: 'center'}} 
                                           underlineColorAndroid='transparent'
                                           returnKeyType="next"
                                           autoCapitalize="none"
@@ -407,10 +513,23 @@ getWeightundefired(){
                                           underlineColorAndroid='transparent'
                                           returnKeyType="next"
                                           autoCapitalize="none"
-                                          placeholder= {this.props.navigation.state.params.Account.customer.email}
+                                          placeholder= {this.getEmailundefired()}
                                           onChangeText={email => this.setState({email})}
                                     />
                   </View>
+                <TouchableOpacity style={{flex: 1,}}  onPress={this.onShowYear}>
+                  <View style={styles.option}>
+                      <Text style={styles.textOption}> 生年 </Text>
+                       <Text style={styles.textOption}>{this.getYeartundefired()} </Text>
+                         <ModalFilterPicker
+                                        showFilter={false}
+                                        visible={visibleYear}
+                                        onSelect={this.onSelectYear}
+                                        onCancel={this.onCancelYear}
+                                        options={optionsYear}
+                                      />     
+                  </View>
+            </TouchableOpacity>
             <TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('UpdatePassword', { Account: this.props.navigation.state.params.Account  })}}>
                     <View style={styles.option}>
                     
@@ -418,64 +537,52 @@ getWeightundefired(){
                     <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
                      </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.sex.show()}}>
+            <TouchableOpacity style={{flex: 1,}} onPress={this.onShowSex} >
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 性別 </Text>
-                       <Text style={styles.textOption}>  {this.getGenderInJapanese()}</Text>
-                      <SimplePicker
-                            ref={'sex'}
-                            confirmText='完了'
-                            cancelText='キャンセル'
-                            options={optionsSex}
-                            labels={labels}
-                            onSubmit={(optionsSex) => {
-                              this.setState({
-                                sexOption: optionsSex,
-                              });
-                            }}
-                          />        
+                       <Text style={styles.textOption}> {this.getGenderInJapanese()}</Text>
+                         <ModalFilterPicker
+                                        showFilter={false}
+                                        visible={visibleSex}
+                                        onSelect={this.onSelectSex}
+                                        onCancel={this.onCancelSex}
+                                        options={optionsSex}
+                                      />     
+                                      
                   </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.height.show()}}>
+            <TouchableOpacity style={{flex: 1,}}  onPress={this.onShowHeight}>
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 身長 </Text>
                        <Text style={styles.textOption}> {this.getHeightundefired()}cm </Text>
-                        <SimplePicker
-                            ref={'height'}
-                            confirmText='完了'
-                            cancelText='キャンセル'
-                            options={optionsHeight}
-                            onSubmit={(optionsHeight) => {
-                              this.setState({
-                                heightOption: optionsHeight,
-                              });
-                            }}
-                          />     
+                         <ModalFilterPicker
+                                        showFilter={false}
+                                        visible={visibleHeight}
+                                        onSelect={this.onSelectHeight}
+                                        onCancel={this.onCancelHeight}
+                                        options={optionsHeight}
+                                      />     
                   </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{flex: 1,}}  onPress={() => {this.refs.weight.show()}}> 
+            <TouchableOpacity style={{flex: 1,}}  onPress={this.onShowWeight}> 
                   <View style={styles.option}>
                       <Text style={styles.textOption}> 体重 </Text>
-                      <Text style={styles.textOption}> {this.getWeightundefired()}kg </Text>
-                       <SimplePicker
-                            ref={'weight'}
-                            confirmText='完了'
-                            cancelText='キャンセル'
-                            options={optionsWeight}
-                            onSubmit={(optionsWeight) => {
-                              this.setState({
-                                weightOption: optionsWeight,
-                              });
-                            }}
-                          />     
+                      <Text style={styles.textOption}>  {this.getWeightundefired()}kg </Text>
+                         <ModalFilterPicker
+                                        showFilter={false}
+                                        visible={visibleWeight}
+                                        onSelect={this.onSelectWeight}
+                                        onCancel={this.onCancelWeight}
+                                        options={optionsWeight}
+                                      />     
                   </View>
             </TouchableOpacity>
 
                     <TouchableOpacity style={{flex: 1,}} onPress={()=> {
                           navigate('ChangeIssue',{ Account: this.props.navigation.state.params.Account  });}}>
-                  <View style={styles.option}>
+                  <View style={styles.optionIssue}>
                       <Text style={styles.textOption}> お悩み内容 </Text>
                       <Text style={styles.textOption}> {this.state.issue} </Text>
                   </View>
@@ -539,6 +646,7 @@ backgroundImage: {
 },
 containerUp:{
     flex: 1,
+
 },
 leftSpace:{
   flex: 1,
@@ -546,28 +654,31 @@ leftSpace:{
 avatarPicker:{
     flex: 0.45,
    flexDirection: 'row',
-    marginBottom: 5,
+   paddingTop:10,
+   marginLeft:10,
       justifyContent: 'center',
      alignItems: 'stretch',
+    
 },
 xButton:{
-  flex: 1,justifyContent: 'space-around',alignItems: 'flex-end',paddingBottom: 40,paddingRight:10
+  flex: 1,justifyContent: 'space-around',alignItems: 'flex-end',paddingBottom: 20,marginRight:20,
 },
 circle:{
 
     width: (Platform.OS === 'ios') ? 82 : 75,
     height: (Platform.OS === 'ios') ? 82 : 75 ,
-    borderRadius: 100/2,
+    borderRadius: 82/2,
     backgroundColor: '#999',
     justifyContent: 'center',
     alignItems: 'center',
-
+ 
 },
 textName:{
     flex: 0.15,
- 
+   
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 5
     
 },
 pushButton:{
@@ -592,9 +703,18 @@ marginTop:9,
 alignItems: 'center',
 justifyContent:  'space-between' ,
 flexDirection: 'row' ,
-
+borderBottomWidth: 0.7,
+borderBottomColor: '#78C0A8'
 },
 option:{
+flex: 1,
+alignItems: 'center',
+justifyContent:  'space-between' ,
+flexDirection: 'row' ,
+borderBottomWidth: 0.7,
+borderBottomColor: '#78C0A8'
+},
+optionIssue:{
 flex: 1,
 alignItems: 'center',
 justifyContent:  'space-between' ,

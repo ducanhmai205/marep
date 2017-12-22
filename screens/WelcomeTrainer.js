@@ -10,15 +10,74 @@ import {
   Image,
   ImageBackground
 } from 'react-native';
-
+import {Constants, Permissions, Notifications} from 'expo';
+  const PUSH_ENDPOINT = 'http://35.185.68.16/api/v1/pushNotify/setDeviceToken';
 class WelcomeTrainer extends Component {
   constructor(props) {
     super(props);
   
     this.state = {
        image: `${this.props.navigation.state.params.Account.avatar}`,
+        accountId : `${this.props.navigation.state.params.Account.trainer.id}`,
+        access_token: `${this.props.navigation.state.params.Account.trainer.access_token}`,
+        type: `${this.props.navigation.state.params.Account.type}`,
     };
   }
+
+  componentDidMount() {
+
+
+          this.registerForPushNotificationsAsync();
+
+          //Đăng ký lắng nghe sự kiện push
+          Notifications.addListener((receivedNotification) => {
+             //Neu app ios dang chay thi phải tạo view hiển thị local Notification
+
+              this.setState({
+                  receivedNotification,
+                  lastNotificationId: receivedNotification.notificationId,
+              });
+          });
+      }
+
+      registerForPushNotificationsAsync = async () => {
+          let {status} = await Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS);
+
+          // Stop here if the user did not grant permissions
+          if (status !== 'granted') {
+              return;
+          }
+
+          let token = await Notifications.getExpoPushTokenAsync();
+      
+         let res = token.substring(18, 40);
+          console.log("ducanh token",token)
+   
+
+         this.guiTokenLenServerMinh(res);
+      };
+
+      guiTokenLenServerMinh = async (res)=>{
+          // Gui Push token lên server của mình
+         console.log("trainer",res)
+          console.log("trainer",this.state.type)
+          console.log("trainer",this.state.access_token)
+         console.log("trainer",this.state.accountId)
+          return fetch(PUSH_ENDPOINT, {
+              method: 'POST',
+              headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                
+                      device_token: res,
+                      id : this.state.accountId,
+                      access_token: this.state.access_token,
+                      type: this.state.type            
+              }),
+          });
+      };
   render() {
     const { image } = this.state;
     const { navigate } = this.props.navigation;
