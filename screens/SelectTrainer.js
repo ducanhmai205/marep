@@ -52,6 +52,7 @@
       var rawdata = responseJson;
     
       let trainers = responseJson.trainers;
+      console.log("trainer data",trainers);
       var arrayData = [];
       Object.keys(trainers).forEach(function(key){
         let name =  trainers[key].trainer.name;
@@ -73,6 +74,7 @@
       this.setState({
         data : arrayData,
       })
+      
       if(responseJson.trainers === null){
         Alert.alert("You need chose issue")
       }
