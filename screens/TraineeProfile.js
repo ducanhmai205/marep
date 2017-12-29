@@ -240,7 +240,8 @@ class TraineeProfile extends Component {
            data={this.state.data}
            horizontal={true}
            style={styles.flat}
-           keyExtractor={item => item.key}
+           // keyExtractor={item => item.key}
+           keyExtractor = {(item, index) => index}
            renderItem={({item}) => 
 
            <View style={styles.flatListContainer}>

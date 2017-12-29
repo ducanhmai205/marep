@@ -9,102 +9,51 @@
     Text,
     TouchableOpacity,
     Platform,
-    FlatList
+    FlatList,
+    Alert
 
   } from 'react-native';
   import Dimensions from 'Dimensions';
   import { LinearGradient } from 'expo';
-
-    import { Entypo, Ionicons } from '@expo/vector-icons';
+  import { Entypo, Ionicons } from '@expo/vector-icons';
   import Icon from 'react-native-vector-icons/FontAwesome';
   import {Constants, Permissions, Notifications} from 'expo';
+  import ModalFilterPicker from 'react-native-modal-filter-picker'
     const PUSH_ENDPOINT = 'http://35.185.68.16/api/v1/pushNotify/setDeviceToken';
+    var options = [];
+      for (var i = 1; i <=100; i++) {
+        options.push({
+          key: i,
+          label: i,
+        });
+      }
     class TrainerProfile extends Component {
      constructor(props){
       super(props);
+      console.log("data khi truyen tu menu",this.props.navigation.state.params.Account);
       this.state={
          pressIcon: true,
-          hidePassword: true,
+ 
+          changeBusy: '',
           image: `${this.props.navigation.state.params.Account.avatar}`,
-            accountId : `${this.props.navigation.state.params.Account.trainer.id}`,
+          accountId : `${this.props.navigation.state.params.Account.trainer.id}`,
           access_token: `${this.props.navigation.state.params.Account.trainer.access_token}`,
           type: `${this.props.navigation.state.params.Account.type}`,
           receivedNotification: null,
-            lastNotificationId: null,
-            mang:[
-        {key:'0',hoten:" 1"},
-        {key:'1',hoten:" 2"},
-        {key:'2',hoten:" 3"},
-        {key:'3',hoten:" 4"},
-        {key:'4',hoten:" 5"},
-        {key:'5',hoten:" 6"},
-        {key:'6',hoten:" 7"},
-        {key:'7',hoten:" 8"},
-        {key:'8',hoten:" 9"},
-        {key:'9',hoten:" 1"},
-        {key:'10',hoten:" 2"},
-        {key:'11',hoten:" 3"},
-        {key:'12',hoten:" 4"},
-        {key:'13',hoten:" 5"},
-        {key:'14',hoten:" 6"},
-        {key:'15',hoten:" 7"},
-        {key:'16',hoten:" 8"},
-        {key:'17',hoten:" 9"},
-        {key:'18',hoten:" 1"},
-        {key:'19',hoten:" 2"},
-        {key:'20',hoten:" 3"},
-        {key:'21',hoten:" 4"},
-        {key:'22',hoten:" 5"},
-        {key:'23',hoten:" 6"},
-        {key:'24',hoten:" 7"},
-        {key:'25',hoten:" 8"},
-        {key:'26',hoten:" 9"},
-        {key:'27',hoten:" 1"},
-        {key:'28',hoten:" 2"},
-        {key:'29',hoten:" 3"},
-        {key:'30',hoten:" 4"},
-        {key:'31',hoten:" 5"},
-        {key:'32',hoten:" 6"},
-        {key:'33',hoten:" 7"},
-        {key:'34',hoten:" 8"},
-        {key:'35',hoten:" 9"},
-        {key:'36',hoten:" 1"},
-        {key:'37',hoten:" 2"},
-        {key:'38',hoten:" 3"},
-        {key:'39',hoten:" 4"},
-        {key:'40',hoten:" 5"},
-        {key:'41',hoten:" 6"},
-        {key:'42',hoten:" 7"},
-        {key:'43',hoten:" 8"},
-        {key:'44',hoten:" 9"},
-        {key:'45',hoten:" 1"},
-        {key:'46',hoten:" 2"},
-        {key:'47',hoten:" 3"},
-        {key:'48',hoten:" 4"},
-        {key:'49',hoten:" 5"},
-        {key:'50',hoten:" 6"},
-        {key:'51',hoten:" 7"},
-        {key:'52',hoten:" 8"},
-        {key:'53',hoten:" 9"},
-        {key:'54',hoten:" 1"},
-        {key:'56',hoten:" 2"},
+          lastNotificationId: null,
+          visible: false,
+          startColor:'pink',
+          endColor:'pink',
+          busy:0,
         
-      
-
-
-        ]
+            
           }
         }
      static navigationOptions = {
       drawerLabel: 'TrainerProfile',
 
     };
-     pressIcon = () =>
-    {
-       this.setState({ pressIcon: !this.state.pressIcon });
-       
-    }
-
+ 
   componentDidMount() {
    this.registerForPushNotificationsAsync();
             //Đăng ký lắng nghe sự kiện push
@@ -134,11 +83,7 @@
         };
 
         guiTokenLenServerMinh = async (res)=>{
-            // Gui Push token lên server của mình
-           console.log("trainer",res)
-            console.log("trainer",this.state.type)
-            console.log("trainer",this.state.access_token)
-           console.log("trainer",this.state.accountId)
+         
             return fetch(PUSH_ENDPOINT, {
                 method: 'POST',
                 headers: {
@@ -154,20 +99,241 @@
                 }),
             });
         };
-  render() {
-       const { navigate } = this.props.navigation;
+
+  
+  onShow = () => {
+    this.setState({ visible: true });
+  }
+onSelect = (optionCustomerTraining) => {
+    
+     let formdata = new FormData();
+
+        formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+        formdata.append("type", this.props.navigation.state.params.Account.type);
+        formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+        formdata.append("max_customer_training", optionCustomerTraining);
+        console.log("trainer max",formdata)
+        fetch('http://35.185.68.16/api/v1/trainer/setMaxTraining', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formdata
+
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          console.log("ok",responseJson);
+            if(responseJson.result === true){
+              this.setState({
+                max_customer_training: optionCustomerTraining,
+                visible: false
+              })            
+            }else{
+             if(typeof(responseJson.message) === 'string'){
+                   
+                     Alert.alert(responseJson.message);
+                     
+             } else{
+                var error_messMax = '';
+            
+                if (responseJson.message.max_customer_training) {
+                 for (var i = 0, len = responseJson.message.max_customer_training.length; i < len; i++) {
+                        error_messMax += responseJson.message.max_customer_training[i] + '!'
+                      }
+                }
+
+              
+                    
+                Alert.alert(error_messMax);
+
+                
+              }
+            }
+
+        })
+
+      
+  
+  }
+  
+
+onCancel = () => {
+    this.setState({
+      visible: false
+    });
+  }
+ 
+
+componentWillMount() {
+        let formdata = new FormData();
+
+        formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+        formdata.append("type", this.props.navigation.state.params.Account.type);
+        formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+
+        fetch('http://35.185.68.16/api/v1/trainer/getMainProfileInfo', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formdata
+
+        }).then((response) => response.json())
+        .then((responseJson) => {
+
+          var rawdata = responseJson;
+          
+          let dataFlatlist = rawdata.data.data;
+
+          var arrayData = [];
+          Object.keys(dataFlatlist).forEach(function(key){
+            let unread =  dataFlatlist[key].unread;
+            let avatar = dataFlatlist[key].avatar;
+            let type = dataFlatlist[key].type;
+            let status = dataFlatlist[key].status;
+            var raw = {
+              unread: unread,
+              type : type,
+              avatar :avatar,
+              status : status,         
+            }
+            arrayData.push(raw);
+          
+          });
+
+          this.setState({
+            unread : rawdata.data.total_unread,
+            points: rawdata.data.points,
+            max_customer_training: rawdata.data.max_customer_training,
+            customer_connected: rawdata.data.customer_connected,
+            status:  rawdata.data.status,
+            data : arrayData,
+
+          })
+          var statusOnpress = this.state.status;
+          if(this.state.status === 'busy'){
+            this.setState({
+              startColor : '#99FFA6',
+              endColor : '#31c4b8',
+              status: true,
+              isBusy: 0
+              
+            })
+          }else{
+            this.setState({
+             startColor: '#515056',
+              endColor : '#515056',
+              status: false,
+              isBusy:1
+           
+             
+
+            })
+           
+          }
+        })
+
+      }
+renderUnread(unreadMsg){
+        if (unreadMsg > 0 ){
+          return (
+            <View style={{width: 18,height: 18,borderRadius:18/2,backgroundColor: '#FF4275',position: 'absolute' ,right:-10,top:5, }} >
+            <Text style={{backgroundColor: 'transparent',color:'white',flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+            {unreadMsg}                                          
+            </Text>
+            </View>
+            );                                          
+        }
+      }
+
+renderStatus(statusTrainer){
+        if (statusTrainer === "busy" ){
+          return (
+            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+
+           </Image>
+            );  
+        }
+         if (statusTrainer === "online" ){
+          return (
+            <Image  resizeMode="contain" source={require('../img/user/online.png')} style={{flex: 1}}>
+
+           </Image>
+            );                                                      
+        }
+         if (statusTrainer === "offline" ){
+          return (
+            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+
+           </Image>
+            );                                                      
+        }
+      }
+
+
+ manageBusyButton = () =>{
+ 
+     this.setState({ status: !this.state.status });
+     
+      if(this.state.status === false){
+        this.setState({
+           startColor : '#99FFA6',
+              endColor : '#31c4b8',
+              isBusy: 0,
+              status: true
+        })
+      }else{
+        this.setState({
+              startColor: '#515056',
+              endColor : '#515056',
+              isBusy: 1,
+              status: false
+        })
+     
+      }
+
+      
+
+  let formdata = new FormData();
+
+        formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+        formdata.append("type", this.props.navigation.state.params.Account.type);
+        formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+        formdata.append("is_busy",this.state.isBusy);
+console.log("changeBusy setState manageBusyButton",formdata);
+        console.log("ducanh status busy",formdata);
+        fetch('http://35.185.68.16/api/v1/trainer/setBusyStatus', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formdata
+
+        }).then((response) => response.json())
+        .then((responseJson) => {
+         console.log("ducanh status busy",responseJson)
+       
+        })
+ 
+   }
+
+
+
+
+render() {
+  const { navigate } = this.props.navigation;
   const {goBack} = this.props.navigation;
-  const { image } = this.state;
+  const { visible,picked,image } = this.state;
   return (
 
-    <Image  source={require('../img/profile/enter_trainer.png')} style={styles.backgroundImage}>
+    <Image  source={require('../img/user/newenter_trainer.png')} style={styles.backgroundImage}>
     <View style={styles.backgroundContainer}>
 
     <View style={styles.header}>
     <View style={styles.iconrightHeader}>
     <TouchableOpacity style={{flex: 1,marginTop:28, marginLeft:6,}}
                                     onPress={()=> {
-                            navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account  });}}>
+                            navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account , max_customer_training: this.state.max_customer_training });}}>
                             
                             <Entypo name="menu" size={34} color="#00CA8F" />
 
@@ -200,7 +366,7 @@
                             <View style={styles.avatarImage}>
 
                                  {image &&
-                                  <Image source={{ uri: this.state.image }} style={{ width: 90, height:90,borderRadius: 90/2, }} resizeMode="stretch" />}
+                                  <Image source={{ uri: this.state.image }} style={{ width: 80, height:80,borderRadius: 80/2, }} resizeMode="stretch" />}
 
                             </View>
                             </View>
@@ -208,33 +374,79 @@
                             <View style={styles.textName}>
 
                             <View style={styles.Name}>
-                                  <Text> {this.props.navigation.state.params.Account.trainer.name} </Text>
-                                    <Text> {this.props.navigation.state.params.Account.rawMySpecializes} </Text>
+                                  <Text style={{paddingTop: 5,fontSize: 20}}> {this.props.navigation.state.params.Account.trainer.name} </Text>
+                                    <Text style={{paddingTop: 5,fontSize: 11}}> {this.props.navigation.state.params.Account.rawMySpecializes} <Text style={{fontSize: 8}}>さん</Text></Text>
                             </View>
                             <View style={styles.busyButton} >
-                            <TouchableOpacity style={{flex:1,justifyContent: 'center',alignItems: 'center',}}>
-                            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 0.8,}}>
-
-                            </Image>
-                            </TouchableOpacity>   
+                                <TouchableOpacity style={{flex:0.2,}} onPress = {this.manageBusyButton}>
+                            
+                                     <LinearGradient
+                                          // colors={this.renderColor(this.state.status)}
+                                            colors={[this.state.startColor,this.state.endColor]}
+                                           start={{x: 1, y: 0.5}} end={{x: 0.0, y: 0.5}}
+                                          style={{ flex:0.8,borderColor:'white',overflow:'hidden',borderRadius: 25,borderWidth:2,alignItems: 'center',justifyContent: 'center', }}>
+                                          <Text
+                                            style={{
+                                              fontSize: 10,                               
+                                              backgroundColor: 'transparent',            
+                                              color: '#fff',
+                                              justifyContent: 'center',
+                                              alignItems: 'center',
+                                            }}>
+                                                 BUSY
+                                          </Text>
+                                        </LinearGradient>
+          
+  
+                                </TouchableOpacity>   
                             </View>
                             </View>
 
                             <View style={styles.selectShow}>
-                            <View style={styles.dropDownMenu}>
+                                <View style={styles.dropDownMenu}>
+                                    <TouchableOpacity style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',paddingBottom: 5,   backgroundColor:'rgba(0,0,0,0)',  }}
+                                    onPress={this.onShow}>
+                                         <Text>後</Text>
+                                         <Text
+                                            style={{
+                                              fontSize: 35,
+                                              fontWeight: 'bold' ,                               
+                                              backgroundColor: 'transparent',            
+                                              color: '#00DEB1',
+                                              paddingBottom: 10,
+                                              marginHorizontal: 5,
+                                              justifyContent: 'center',
+                                              alignItems: 'center',
+                                            }}>
+                                            {this.state.max_customer_training}
+                                               
+                                             </Text>
+                                                <ModalFilterPicker
+                                              showFilter={false}
+                                              visible={visible}
+                                              onSelect={this.onSelect}
+                                              onCancel={this.onCancel}
+                                              options={options}
+                                              />
+                                               <Text>人</Text>
+                                        <Ionicons name="ios-arrow-down-outline" style={{paddingTop:5, paddingLeft:5}} size={15} color="black" />
+                                    </TouchableOpacity>
+                                </View>
 
-                            </View>
+                                <View style={styles.textContact}>
+
+                                </View>
                             </View>
 
                             <View style={styles.flatlistHorizontal}>
                             <View style={{justifyContent: 'center',}}>
                             <Ionicons name="ios-arrow-back-outline" size={20} />
                             </View>
-                            <FlatList
-                            data={this.state.mang}
+                          <FlatList
+                            data={this.state.data}
                             horizontal={true}
                             style={styles.flat}
-                            keyExtractor={item => item.key}
+                            keyExtractor = {(item, index) => index}
                             renderItem={({item}) => 
 
 
@@ -242,39 +454,39 @@
 
 
                             <View style={styles.flatListContainer}>
-                            <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}>
-                            <View style={styles.circleOutside}>
-                            <View style={styles.circleInside}>
-                            <Image source={require('../img/1.png')} style={styles.image}>
-                            </Image>
-                            <View style={{width: 18,height: 18,borderRadius:18/2,backgroundColor: '#FF4275',position: 'absolute' ,right:-10,top:5, }} >
-                            <Text style={{backgroundColor: 'transparent',color:'white',flex: 1,justifyContent: 'center',alignItems: 'center',}}>
-                            {item.hoten}                                          
-                            </Text>
-                            </View>
-                            </View>
-                            </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{flex: 1,marginRight:-20}} onPress = { this.pressIcon }>
-                            <View style={styles.circleOutside2}>
-                            <View style={styles.circleInside2}>
+                                      
+                         <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}>
+           <View style={styles.avatarFlatlist}>
+           <View style={styles.circleInside}>
+           <Image  source={{uri:item.avatar}} style={styles.image}>
+           </Image>
 
-                            <Icon name="handshake-o" size={20} color={( this.state.pressIcon ) ? 'green':'red'} />
+           {this.renderUnread(item.unread)}
 
-                            </View>
+           </View>
+           </View>
+           </TouchableOpacity>
+           <View style={{flex: 1,marginRight:-20}}>
+           <View style={styles.handshakeFlatlist}>
+           <View style={styles.circleInside2}>
 
-                            </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{flex: 0.7,marginTop:40,marginRight:-21, justifyContent: 'center',alignItems: 'center',}} >
-                            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+           <Icon name="handshake-o" size={20} color={ item.type == 'connected' ? 'green' : 'black' } />
 
-                            </Image>
-                            </TouchableOpacity>
+           </View>
+
+           </View>
+           </View>
+           <View style={{flex: 0.5,marginTop:20,marginRight:-20, justifyContent: 'center',alignItems: 'center',}} >
+                 {this.renderStatus(item.status)}
+          
+           </View>
+                  
+
 
                             </View>
 
                           }
-                          />
+                        />
                           <View style={{justifyContent: 'center',}}>
                           <Ionicons name="ios-arrow-forward" size={20} />
                           </View>
@@ -285,7 +497,11 @@
                           </View>
 
                           <View style={styles.textInfo}>
+                            <Text style={{fontSize: 10,color: '#554C73'}}> {this.state.unread}件の新規メッセージがあります </Text>
 
+                            <Text style={{paddingTop:15,color: '#554C73'}}> 契約中のUser/{this.state.customer_connected}人 </Text>
+
+                            <Text style={{fontSize: 10,color: '#554C73'}}> 使ってもらった/{this.state.points}pt </Text>
                           </View>
                           </View>
                           </Image>
@@ -366,17 +582,22 @@
       alignItems: 'center',
     },
     busyButton:{
-      flex: 0.4,
-
-
+      flex: 0.3,
+      flexDirection: 'row' ,
+      justifyContent: 'center',
+      alignItems: 'center',
 
     },
 
     selectShow:{
-      flex: 0.5,
-      marginBottom: 20,
+      flex: 0.6,
+   
 
 
+    },
+    textContact:{
+      flex: 0.4,
+     
     },
     dropDownMenu:{
       flex: 1,
@@ -388,10 +609,12 @@
 
   marginHorizontal: 30,
   flexDirection: 'row' ,
-   backgroundColor:'rgba(0,0,0,0)',
+  
 
     },
-      flatListContainer:{
+
+
+  flatListContainer:{
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -402,8 +625,8 @@
  
 
   },
-  circleOutside: {
-   
+  avatarFlatlist: {
+
     width: 40,
     height: 40,
     borderRadius: 40/2,
@@ -418,7 +641,7 @@ circleInside:{
     borderRadius: 48/2,
     backgroundColor: '#DCDCDC'
 },
-circleOutside2: {
+handshakeFlatlist: {
 
     width: 40,
     height: 40,
@@ -451,6 +674,10 @@ circleInside2:{
     },
     textInfo:{
       flex: (Platform.OS === 'ios') ? 1.8 : 1.6 ,
+       backgroundColor:'rgba(0,0,0,0)',
+       justifyContent: 'center',
+       alignItems: 'center',
+       paddingBottom: 20,
 
     },
   });

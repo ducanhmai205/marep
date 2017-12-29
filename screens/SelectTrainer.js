@@ -52,19 +52,23 @@
       var rawdata = responseJson;
     
       let trainers = responseJson.trainers;
-      console.log("trainer data",trainers);
+   
       var arrayData = [];
       Object.keys(trainers).forEach(function(key){
         let name =  trainers[key].trainer.name;
         let avatar = trainers[key].avatar;
         let issue = trainers[key].rawMySpecializes;
         let id = trainers[key].trainer.id;
+        let relation_status = trainers[key].relation_status;
+        let relation_number= trainers[key].relation_number;
         var raw = {
           key: key,
           name : name,
           avatar :avatar,
           issue : issue,
-          id : id
+          id : id,
+          relation_status: relation_status,
+          relation_number: relation_number,
 
         }
         arrayData.push(raw);
@@ -80,6 +84,14 @@
       }
     })
 
+
+  }
+  renderColor(relationStatus){
+    if(relationStatus === "not_connected"){
+      return '#DBDBDB';
+    }else{  
+      return  '#00E6BE';
+    }
 
   }
     render() {
@@ -133,13 +145,20 @@
                                               </TouchableOpacity>
                                             </View>
                                   
-                                            <View style={styles.icon}>                                  
-                                                <FontAwesome name="handshake-o" size={25} style={{ color: '#00E4BA',paddingRight:5 }} />                                        
-                                                <Foundation name="heart" size={25} style={{ color: '#00E4BA',paddingTop:5}} />
+                                            <View style={styles.icon}>   
+                                            <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>                            
+                                                <FontAwesome name="handshake-o" size={20} color={this.renderColor(item.relation_status)} style={{ paddingRight:5 }} /> 
+                                                <Text style={{fontSize: 10,paddingRight:5}}>{item.relation_number}</Text>  
+                                            </View>
+                                            <View style={{flex: 1,}}>                                     
+                                                <Foundation name="heart" size={20} style={{ color: '#00E4BA',paddingTop:6}} />
+                                                <Text></Text>  
+                                              </View>
                                             </View>
                                             <View style={styles.arrow}>
                                             <TouchableOpacity style={{}}  onPress={ ()=> {navigate('DetailTrainer',{Account: this.props.navigation.state.params.Account,id: item.id})}}>
-                                                <Ionicons name="ios-arrow-forward" size={25} style={{ color: '#00E4BA',}} />
+                                                <Ionicons name="ios-arrow-forward" size={22} style={{ color: '#00E4BA',paddingBottom: 5}} />
+                                                <Text></Text>  
                                             </TouchableOpacity>
 
                                             </View>
@@ -251,7 +270,7 @@
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  paddingTop:10,
+
 
   flexDirection: 'row' ,
 

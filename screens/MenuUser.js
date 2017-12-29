@@ -75,19 +75,17 @@ class MenuUser extends Component {
       pickedSex: `${this.props.navigation.state.params.Account.customer.gender}`,
       name:  `${this.props.navigation.state.params.Account.customer.name}`,
       email:  `${this.props.navigation.state.params.Account.customer.email}`,
-      issueCustomer: `${this.props.navigation.state.params.Account.rawMyIssues}`,
-     
+      issueCustomer: `${this.props.navigation.state.params.Account.rawMyIssues}`,     
       SwitchOnValueHolder : defaultSwitch ,
       push:`${this.props.navigation.state.params.Account.customer.push_status}`,
       oldName:'',
       account2:'',
       image: `${this.props.navigation.state.params.Account.avatar}`,
-       size:15,
-         visibleHeight: false,
-         visibleWeight:false,
-         visibleSex:false,
-        visibleYear:false,
-      
+      size:15,
+      visibleHeight: false,
+      visibleWeight:false,
+      visibleSex:false,
+      visibleYear:false,
       
     };
 
@@ -186,9 +184,7 @@ componentWillMount() {
   formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.customer.id);
-// console.log('new2',this.props.navigation.state.params.Account.type)
-//   console.log('id2',this.props.navigation.state.params.Account.customer.id)
-//   console.log('token2',this.props.navigation.state.params.Account.customer.access_token)
+
   fetch('http://35.185.68.16/api/v1/customer/getProfile', {
     method: 'post',
     headers: {
@@ -197,15 +193,8 @@ componentWillMount() {
     body: formdata
 
   }).then((response) => response.json())
-  .then((responseJson) => {
-    // var data = Object.keys(responseJson).map(function(data){
-    //   if (data === 'account') {
-    //     return {account : responseJson[data]};
-    //   }
-    // });
-    var oldname = this.props.navigation.state.params.Account.customer.name
-
-  
+  .then((responseJson) => {  
+    var oldname = this.props.navigation.state.params.Account.customer.name  
     var issue = responseJson.account.rawMyIssues;
     var account = responseJson.account.customer;
     var height = responseJson.account.customer.customer_height;
@@ -234,10 +223,7 @@ getPushValue=()=>{
   return 'off';
 }
 
-UserUpdate = () =>{
- 
-    
-
+UserUpdate = () =>{     
   let formdata = new FormData();
 
 let push = this.getPushValue();
@@ -277,9 +263,9 @@ fetch('http://35.185.68.16/api/v1/customer/updateProfile', {
 
        if(responseJson.status === true){
 console.log("ducanh",this.props.navigation.state.params.Account);
- console.log("data",responseJson);
+ console.log("data",responseJson.account);
         
-             this.props.navigation.navigate('TraineeProfile',{Account: responseJson.account});
+             this.props.navigation.navigate('TraineeProfile',{Account: responseJson.account});//go screen traineeprofile when update success
        }
       else{
          {
@@ -296,7 +282,7 @@ console.log("ducanh",this.props.navigation.state.params.Account);
            
               
 
-              if (responseJson.message.name) {
+              if (responseJson.message.name) { //show error name, gender, weight, height, pushstatus,email
                for (var i = 0, len = responseJson.message.name.length; i < len; i++) {
                       error_messname += responseJson.message.name[i] + '!'
                     }

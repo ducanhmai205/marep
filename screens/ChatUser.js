@@ -15,35 +15,25 @@ FlatList
 import Dimensions from 'Dimensions';
 import {LinearGradient} from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-
-  var response;
 class ChatUser extends Component {
-
 constructor(props) {
   super(props);
 
   this.state = {
-    // trainerId: `${this.props.navigation.state.params.trainerId}`,
-    // id :`${this.props.navigation.state.params.Account.customer.id}`,
-    // type: `${this.props.navigation.state.params.Account.type}`,
-    // access_token :`${this.props.navigation.state.params.Account.customer.access_token}`,
-    canChat: true,
-      trainerId: 77,
-    id :171,
-    type: 'customer',
-    access_token :'iD8BzNeTBdkbm7BQpHWYFNKXK0QVhFDz65ywRZFWuZWDxDNAwTZCSMBzzCie',
-    point:'',
-    name:'',
-    json:'',
-    dataOld: [
-    {id: '1',send:'nanananananan',retrive:'abc',hoten:'user'},
-     
-    ],
-    mang:[]
+    trainerId: `${this.props.navigation.state.params.trainerId}`,
+    id :`${this.props.navigation.state.params.Account.customer.id}`,
+    type: `${this.props.navigation.state.params.Account.type}`,
+    access_token :`${this.props.navigation.state.params.Account.customer.access_token}`,
+    data: [
+    {id: '1',send:'nananananananananananananananananananananananananananananananananananana nanananana',retrive:'abc'},
+    ]
   };
 }
 componentWillMount() {
- 
+    console.log("access_token", this.state.access_token);
+    console.log("type",this.state.type);
+    console.log("id",this.state.id);
+    console.log("trainerId",this.state.trainerId);
 
     let formdata = new FormData();
     formdata.append("access_token", this.state.access_token);
@@ -61,73 +51,70 @@ componentWillMount() {
 
     }).then((response) => response.json())
     .then((responseJson) => {
-
-       response = responseJson;
-       let confirm = response.data.confirm;
-     
-      var data = responseJson.data.data;
-      var Data = [];
-      //data: Duyet object 12/9, 13/9,....
-         Object.keys(data).forEach(function(item){
-          //item: "12/9"
-
-          //messages= data[item]: Mang message ung voi 12/9
-          let messages = data[item];
-          //Duyet cac phan tu cua mang 12/9 , 13/9...
-  
-          messages.forEach(function(message){
-          //Day tat ca message vao mang minh dung de hien thi tren flatlist    
-          Data.push(message);
-
-          })
-        });
-      if(confirm===false){
-        let itemConfirm ={
-          showConfirmView:true
-        }
-        Data.push(itemConfirm);
-      }
-  
-      var point = responseJson.data.point;
-      var name = responseJson.data.trainer.name;
-      var canChat = responseJson.data.can_chat;
-      var json = responseJson;
       
-     this.setState({
-      point:point,
-      name:name,
-      canChat: canChat,
-      json : json,
-      Data:Data
-    
+      console.log("json ",responseJson);
+     
 
-     })
+
+
+
     })
+
+
   }
 
+render() {
+   const { navigate } = this.props.navigation;
+    const {goBack} = this.props.navigation;
+  return (
+    <Image  source={require('../img/user/chat.png')} style={styles.backgroundImage}>
+    <View style={styles.container}>
+    <View style={styles.headerContent}>
 
-// renderItem= ({item}) => {
-//  if(item.showConfirmView === true){
-//     return this.getConfirmView(item);
-//   }else if(item.sender ==='customer'){
-//     return this.getCustomerView(item);
-//   }else {
-//     return this.getTrainerView(item);
-//   }
-// }
-// renderItem= ({item}) => {
-//  console.log("showconfirm",item.showConfirmView);
-//   if(item.showConfirmView === false){
-//     return this.getConfirmView(item);
-//   }
-// }
+    <TouchableOpacity style={styles.icon} onPress={ () => goBack(null)  }  >
+    <Ionicons name="ios-arrow-back" size={20} />
+    </TouchableOpacity>
 
-renderItem= ({item}) => {
- console.log("showconfirm",item.showConfirmView);
-  if(item.showConfirmView === "false"){
-    return (
-       <View style={styles.container}>
-          <View style={styles.acceptChat}>
+
+    <View style={styles.text}>
+    <Text numberOfLines={1} style={{flex:1,paddingHorizontal: 40,justifyContent: 'center', alignItems: 'center',}}> ssssssssssssssssssssss</Text>
+
+    </View>
+
+    </View>
+
+    <View style={styles.mainContent}>
+    <View style={styles.date}>
+    <View  style={{ flex:0.2,borderColor:'white',overflow:'hidden',borderRadius: 25,borderWidth:1,alignItems: 'center',justifyContent: 'center',backgroundColor: 'white' }}>
+    <Text
+    style={{
+      backgroundColor: 'transparent',                                      
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+    30/4
+    </Text>
+    </View>
+    </View>
+
+
+    <View style={styles.chatContent}>
+    <FlatList
+    data={this.state.data}
+    style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',}}
+    keyExtractor = {(item, index) => index}
+    renderItem={({item}) => 
+    <View style={styles.container}>
+    <View style={styles.retrive}>
+    <View style={styles.avatar}>
+
+    </View>
+    <View style={styles.bubleChat}>
+    <Text style={{margin:10}} >{item.send}</Text>
+    </View>
+    </View> 
+
+    <View style={styles.acceptChat}>
     <View style={styles.buttonAccept}>
     <TouchableOpacity style={{flex:1}}>
     <LinearGradient
@@ -171,45 +158,54 @@ renderItem= ({item}) => {
     </TouchableOpacity>
     </View>
     </View>
-   </View>
-   )
-  
-}
-}
+    <View  style={styles.sticker}>
+     <Image  source={require('../img/user/stickernew.png')} style={styles.stickerImage}>
+        <View style={{flexDirection: 'row' }}>
+        <Text numberOfLines={1} style={styles.textSticker}>dwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdw</Text>
+        <Text style={styles.textSticker}>さん </Text>
+        </View>
+        <Text style={styles.textSticker}> がPersonal trainerに </Text>
+        <Text style={styles.textSticker}>なりました！</Text>
+     </Image>
+     </View>
+    <View style={styles.sendMess}>
+        <View style={styles.bubleChatSend}>
+<Text style={{margin:10}} >{item.send}</Text>
 
+        </View>
 
-render() {
-   const { navigate } = this.props.navigation;
-    const {goBack} = this.props.navigation;
-  return (
-    <Image  source={require('../img/user/chat.png')} style={styles.backgroundImage}>
-    <View style={styles.container}>
-    <View style={styles.headerContent}>
+    </View>
+    <View style={styles.askBuyPoint}>
 
-    <TouchableOpacity style={styles.icon} onPress={ () => goBack(null)  }  >
-    <Ionicons name="ios-arrow-back" size={20} />
+    <View style={styles.buttonaskBuyPoint}>
+    <TouchableOpacity style={{flex:1}}>
+    <LinearGradient
+    colors={['#FF437A','#FF00B2']}
+    start={{x: 1, y: 0.5}} end={{x: 0.0, y: 0.5}}
+    style={{ flex:1,borderColor:'white',overflow:'hidden',borderRadius: 25,borderWidth:2,alignItems: 'center',justifyContent: 'center', }}>
+    <Text  style={{
+      backgroundColor: 'transparent',            
+      color: '#fff',
+      fontSize:11,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    }}>
+    Pointが足りません 購入しますか？
+    </Text>
+    </LinearGradient>
+
     </TouchableOpacity>
+    </View>
+    </View>
 
-
-    <View style={styles.text}>
-    <Text numberOfLines={1} style={{flex:1,paddingHorizontal: 40,justifyContent: 'center', alignItems: 'center',}}> {this.state.name}</Text>
 
     </View>
 
-    </View>
 
-    <View style={styles.mainContent}>
-    
 
-    <View style={styles.chatContent}>
-   <FlatList
-    data={this.state.Data}
-    style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',}}
-    keyExtractor = {(item, index) => index}
-   renderItem={this.renderItem}
+  }
   />
-
- 
 
 
 
@@ -220,7 +216,7 @@ render() {
 
   <KeyboardAvoidingView style={styles.bottomContent}      behavior="padding">
   <View style={styles.showPoint}>
-  <Text> {this.state.point}</Text>
+  <Text> POINT/10000</Text>
   <Text style={{fontSize: 10,alignItems: 'flex-end'  }}>pt </Text>
   </View>
 
@@ -229,7 +225,7 @@ render() {
 
   <View style={{flex: 0.5,backgroundColor: '#DCDCDC',borderRadius: 50,flexDirection: 'row'  }}>
   <TextInput
-  editable={this.state.canChat}
+
   style={{flex: 0.9,backgroundColor: '#DCDCDC',borderRadius: 50,paddingLeft:20}}
   underlineColorAndroid='transparent'      
   autoCapitalize="none"
@@ -306,7 +302,7 @@ date:{
 
 },
 chatContent:{
-  flex: 15.7,
+  flex: 15,
 
 },
 bottomContent:{
@@ -340,7 +336,9 @@ buttonMedia:{
   alignItems: 'center',
   paddingRight:15
 },
-
+container:{
+  flex: 1,
+},
 retrive:{
   flex: 1                                                                                                                                                                       ,
   flexDirection: 'row' ,

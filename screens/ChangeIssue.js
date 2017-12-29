@@ -96,7 +96,7 @@ fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
 
 componentWillMount() {
   let formdata = new FormData();
-
+console.log("data changeissue",this.props.navigation.state.params.Account);
   formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
   formdata.append("id", this.props.navigation.state.params.Account.customer.id);

@@ -36,7 +36,7 @@ handleOnChange(val) {
   sendIssues = () =>{
    let items = this.state.Data;
    let selectedItems = [];
-
+   console.log("ducanh data",items);
 
    //Lay ra nhung id co gia tri checked = true
 
@@ -44,6 +44,7 @@ handleOnChange(val) {
           if(item.checked) {
             selectedItems.push(item.id);
           }
+           console.log("ducanh data",selectedItems);
     });
 
 fetch('http://35.185.68.16/api/v1/customer/storeCustomerIssues', {
@@ -115,14 +116,7 @@ componentWillMount() {
         
          var rawData = responseJson.customer_issues;
 
-        //  var data = Object.keys(responseJson.customer_issues).map(function(data){
-        //   // return [data,responseJson.trainer_specializes[data]];
-        //   return {
-        //     label: responseJson.customer_issues[data],
-        //     value: data
-        //   }
-        // });
-
+       
          var testData = [];
          Object.keys(responseJson.customer_issues).forEach(function(item){
           var raw = {

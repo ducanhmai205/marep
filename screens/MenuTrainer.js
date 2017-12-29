@@ -20,7 +20,7 @@
       import ModalFilterPicker from 'react-native-modal-filter-picker'
 
       var options = [];
-      for (var i = 1; i <=8; i++) {
+      for (var i = 1; i <=100; i++) {
         options.push({
           key: i,
           label: i,
@@ -31,12 +31,12 @@
       class MenuTrainer extends Component {
         constructor(props) {
           super(props);
-          console.log("DucNT",options);
+          console.log("data khi truyen tu profile",this.props.navigation.state.params.max_customer_training);
           var pushStatus = `${this.props.navigation.state.params.Account.trainer.push_status}`;
           let defaultSwitch = this.getSwitchDefaultValue();
 
           this.state = {
-           picked:`${this.props.navigation.state.params.Account.trainer.max_customer_training}`,
+           picked:`${this.props.navigation.state.params.max_customer_training}`,
            value:'',
            image: `${this.props.navigation.state.params.Account.avatar}`,
            size:15,
@@ -152,14 +152,7 @@
       let name = this.state.name;
       let email = this.state.email;
 
-      console.log("token ducanh",this.props.navigation.state.params.Account.trainer.access_token);
-      console.log("type ducanh",this.props.navigation.state.params.Account.type);
-      console.log("id ducanh",this.props.navigation.state.params.Account.trainer.id);
-      console.log("email ducanh",email);
-      console.log("push_status ducanh",push);
-      console.log("max_customer_training ducanh",training);
-      console.log("name ducanh",name);
-      console.log("avatar ducanh",{uri: this.state.image, name: 'selfie.jpg', type: 'image/jpg'});
+    
 
       formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
       formdata.append("type", this.props.navigation.state.params.Account.type);
@@ -169,7 +162,7 @@
       formdata.append("max_customer_training", training);
       formdata.append("name",  name);
       formdata.append('avatar', {uri: this.state.image, name: 'selfie.jpg', type: 'image/jpg'});
-
+console.log("ducanh",formdata);
 
       fetch('http://35.185.68.16/api/v1/trainer/updateProfile', {
 
@@ -332,7 +325,7 @@
       <View style={styles.circle}>
 
       {image &&
-        <Image source={{ uri: this.state.image }} style={{ flex:1,width: 70, height: 70,borderRadius: 70/2, }} resizeMode="stretch" />}
+        <Image source={{ uri: this.state.image }} style={{ flex:1,width: 80, height: 80,borderRadius: 80/2, }} resizeMode="stretch" />}
         </View>
         </TouchableOpacity>
         <View style={styles.header}>

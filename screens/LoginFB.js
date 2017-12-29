@@ -56,12 +56,7 @@
             break;
           }      
       
-        default: {
-          Alert.alert(
-            'Oops!',
-            'Login failed!',
-            );
-        }
+       
       }
     } catch (e) {
       Alert.alert(

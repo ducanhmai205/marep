@@ -53,7 +53,7 @@
 
            if(responseJson.status === true)
            {
-              Alert.alert('ok');
+              Alert.alert('PR情報は変更されました');
                 dismissKeyboard();
                   console.log("updatepr", this.props.navigation.state.params.Account.trainer.pr_content)
               this.props.navigation.navigate('MenuTrainer',{ Account: this.props.navigation.state.params.Account  });

@@ -349,6 +349,7 @@ Alert.alert(error_object[0] );
             flex: 1.3,
 
           },
+         
           nameInput:{
             flex: 0.9,
             paddingHorizontal:23,

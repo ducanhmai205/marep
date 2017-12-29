@@ -28,6 +28,9 @@ import UpdatePassTrainer from '../screens/UpdatePassTrainer';
 import UpdatePr from '../screens/UpdatePr';
 import ChangeIssue from '../screens/ChangeIssue';
 import ChangeSpecializes from '../screens/ChangeSpecializes';
+import RatingScreen from '../screens/RatingScreen';
+import ChatUser from '../screens/ChatUser';
+import ChatTrainer from '../screens/ChatTrainer';
 
 const RootNavigation = StackNavigator(
 {	
@@ -56,6 +59,9 @@ const RootNavigation = StackNavigator(
  	ChangeIssue : { screen: ChangeIssue},
  	ChangeSpecializes : { screen: ChangeSpecializes},
  	DetailUser : { screen: DetailUser},
+ 	RatingScreen : { screen: RatingScreen},
+ 	ChatUser : { screen: ChatUser},
+ 	ChatTrainer : { screen: ChatTrainer},
 
  
  
