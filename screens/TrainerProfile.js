@@ -30,7 +30,6 @@
     class TrainerProfile extends Component {
      constructor(props){
       super(props);
-      console.log("data khi truyen tu menu",this.props.navigation.state.params.Account);
       this.state={
          pressIcon: true,
  
@@ -77,7 +76,6 @@
 
             let token = await Notifications.getExpoPushTokenAsync();
               let res = token.substring(18, 40);
-            console.log("ducanh token",token)
 
            this.guiTokenLenServerMinh(res);
         };
@@ -112,7 +110,6 @@ onSelect = (optionCustomerTraining) => {
         formdata.append("type", this.props.navigation.state.params.Account.type);
         formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
         formdata.append("max_customer_training", optionCustomerTraining);
-        console.log("trainer max",formdata)
         fetch('http://35.185.68.16/api/v1/trainer/setMaxTraining', {
           method: 'post',
           headers: {
@@ -122,7 +119,6 @@ onSelect = (optionCustomerTraining) => {
 
         }).then((response) => response.json())
         .then((responseJson) => {
-          console.log("ok",responseJson);
             if(responseJson.result === true){
               this.setState({
                 max_customer_training: optionCustomerTraining,
@@ -191,11 +187,13 @@ componentWillMount() {
             let avatar = dataFlatlist[key].avatar;
             let type = dataFlatlist[key].type;
             let status = dataFlatlist[key].status;
+            let id = [key];
             var raw = {
               unread: unread,
               type : type,
               avatar :avatar,
-              status : status,         
+              status : status,     
+              id : id,    
             }
             arrayData.push(raw);
           
@@ -263,7 +261,7 @@ renderStatus(statusTrainer){
         }
          if (statusTrainer === "offline" ){
           return (
-            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+            <Image  resizeMode="contain" source={require('../img/user/offlinebuttonl.png')} style={{flex: 1}}>
 
            </Image>
             );                                                      
@@ -300,8 +298,6 @@ renderStatus(statusTrainer){
         formdata.append("type", this.props.navigation.state.params.Account.type);
         formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
         formdata.append("is_busy",this.state.isBusy);
-console.log("changeBusy setState manageBusyButton",formdata);
-        console.log("ducanh status busy",formdata);
         fetch('http://35.185.68.16/api/v1/trainer/setBusyStatus', {
           method: 'post',
           headers: {
@@ -311,7 +307,6 @@ console.log("changeBusy setState manageBusyButton",formdata);
 
         }).then((response) => response.json())
         .then((responseJson) => {
-         console.log("ducanh status busy",responseJson)
        
         })
  
@@ -348,7 +343,6 @@ render() {
                                                         let mySpecializes = account.mySpecializes;
                                                  
                                                         if(mySpecializes.length === 0 ){
-                                                        console.log("ducnt TraineeTreatment");
                                                         navigate('TrainerSpecialize',{ Account:account  });
                                                        }else {
                                                   
@@ -449,13 +443,11 @@ render() {
                             keyExtractor = {(item, index) => index}
                             renderItem={({item}) => 
 
-
-
-
-
                             <View style={styles.flatListContainer}>
                                       
-                         <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}>
+                         <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}
+                          onPress={ ()=> {
+        navigate('ChatTrainer',{Account: this.props.navigation.state.params.Account ,customerId: item.id});}}>
            <View style={styles.avatarFlatlist}>
            <View style={styles.circleInside}>
            <Image  source={{uri:item.avatar}} style={styles.image}>

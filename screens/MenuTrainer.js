@@ -398,7 +398,7 @@ console.log("ducanh",formdata);
         </View>
         </TouchableOpacity>
         <TouchableOpacity style={{flex: 1,}}  onPress={()=> {
-          navigate('ChangeSpecializes',{ Account: this.props.navigation.state.params.Account  });}}>
+          navigate('ChangeSpecializes',{ Account: this.props.navigation.state.params.Account,max_customer_training: this.state.picked});}}>
           <View style={styles.optionVersion}>
           <Text style={styles.textOption}> 得意分野 </Text>
           <Text style={styles.textOption}> {this.state.issue} </Text>
@@ -424,27 +424,27 @@ console.log("ducanh",formdata);
             </View>
             <View style={styles.bottomSelect}>
 
-            <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('InfomationVersion')}}>
+            <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('InfomationVersionTrainer',{Account: this.props.navigation.state.params.Account})}}>
             <View style={styles.option}>
             <Text style={styles.textOption}> バージョン情報 </Text>
             <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
 
             </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('Policy')}}>
+            <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('PolicyTrainer',{Account: this.props.navigation.state.params.Account})}}>
             <View style={styles.option}>
             <Text style={styles.textOption}> 使用規約 </Text>
             <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
             </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('Term')}}>
+            <TouchableOpacity style={{flex: 1,}}  onPress={ ()=> {navigate('TermTrainer',{Account: this.props.navigation.state.params.Account})}}>
             <View style={styles.option}>
             <Text style={styles.textOption}> プライバシーポリシー </Text>
             <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
             </View>
             </TouchableOpacity>
             <View style={styles.option}>
-            <Text style={styles.textOption}> バージョン情報 </Text>
+            <Text style={styles.textOption}> お問い合わせ </Text>
             <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
             </View>
             <TouchableOpacity style={{flex: 1,}} onPress={this.confirm}>

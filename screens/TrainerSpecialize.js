@@ -169,7 +169,7 @@
                             keyExtractor={item => item.id}
                             renderItem={({item}) => 
                                   <CheckBox
-                                        style={{flex: 1,paddingTop:10}}
+                                        style={{flex: 1,paddingTop:10, paddingLeft:90,}}
                                         isChecked={item.checked}
                                         onClick={()=>{
                                         item.checked = !item.checked; 
@@ -212,7 +212,8 @@
   center:{
     flex: 1,
   paddingTop: 40,
-   paddingLeft:100
+
+
   },
   inside:{
     paddingTop:30,
@@ -220,20 +221,14 @@
     backgroundColor:'rgba(0,0,0,0)',
   },
   text2:{
+    flex:0.3,
     backgroundColor:'rgba(0,0,0,0)',
     fontSize: 15,
-    
-     paddingRight:20,
-   justifyContent: 'center',
-   alignItems: 'center',
+    paddingLeft:35,
+fontWeight: 'bold',
+   
   },
-  text3:{
-    backgroundColor:'rgba(0,0,0,0)',
-    
-    color: 'black',
-   justifyContent: 'center',
-   alignItems: 'center',
-  },
+  
   nextButton:{
      flex: 1,
      flexDirection: 'row' , 

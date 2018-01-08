@@ -22,6 +22,7 @@
            text: '',
            id:'',
            data:'',
+           page:0
           
         }
         this.onSelect = this.onSelect.bind(this)
@@ -39,6 +40,7 @@
     formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
     formdata.append("type", this.props.navigation.state.params.Account.type);
     formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+     formdata.append("page", this.state.page);
 
     fetch('http://35.185.68.16/api/v1/customer/listTrainer', {
       method: 'post',
@@ -86,6 +88,66 @@
 
 
   }
+
+    _onEndReached(){
+    let formdata = new FormData();
+ this.setState({
+      page: this.state.page+1,
+    })
+    formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+    formdata.append("type", this.props.navigation.state.params.Account.type);
+    formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+     formdata.append("page", this.state.page);
+
+    fetch('http://35.185.68.16/api/v1/customer/listTrainer', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formdata
+
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      var rawdata = responseJson;
+    
+      let trainers = responseJson.trainers;
+   
+      var arrayData = [];
+      Object.keys(trainers).forEach(function(key){
+        let name =  trainers[key].trainer.name;
+        let avatar = trainers[key].avatar;
+        let issue = trainers[key].rawMySpecializes;
+        let id = trainers[key].trainer.id;
+        let relation_status = trainers[key].relation_status;
+        let relation_number= trainers[key].relation_number;
+        var raw = {
+          key: key,
+          name : name,
+          avatar :avatar,
+          issue : issue,
+          id : id,
+          relation_status: relation_status,
+          relation_number: relation_number,
+
+        }
+        arrayData.push(raw);
+
+      });
+
+       arrayData = arrayData.concat(arrayData)
+      this.setState({
+        data : arrayData,
+        page: this.state.page
+      })
+      
+      if(responseJson.trainers === null){
+        Alert.alert("You need chose issue")
+      }
+    })
+
+   }
+  
+
   renderColor(relationStatus){
     if(relationStatus === "not_connected"){
       return '#DBDBDB';
@@ -94,6 +156,12 @@
     }
 
   }
+  getRelationMax(item){
+  let Max = item;
+  if(Max === 'max') return '最大';
+
+  return Max
+}
     render() {
   const { navigate } = this.props.navigation;
   const {goBack} = this.props.navigation;
@@ -103,11 +171,11 @@
               <View style={styles.containerImage}>
                   <View style={styles.header}>
                   
-                  <Text style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',paddingTop:15}}> お悩みを解決できそうな
+                  <Text style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',paddingTop:15}}> パーソナルトレーナーを
                   {"\n"}
                    
 
-               ユーザーを選んでください</Text>
+               選んでください</Text>
 
                  </View>
                   <View style={styles.select}>
@@ -128,6 +196,9 @@
                   <View style={styles.flatList}>
                     <FlatList
                       data={this.state.data}
+                        keyExtractor = {(item, index) => index}
+                        onEndReached={this._onEndReached.bind(this)}
+                        onEndReachedThreshold={-0.2}  
                       renderItem={({item}) =>
                                     <View style={styles.line}>
 
@@ -140,15 +211,15 @@
                                               
                                             <View style={styles.text}>
                                               <TouchableOpacity  onPress={ ()=> {navigate('DetailTrainer',{Account: this.props.navigation.state.params.Account,id: item.id})}}>
-                                              <Text>  {item.name} </Text>
-                                                <Text style={{paddingTop:5,fontSize: 9}}> {item.issue}</Text>
+                                              <Text> {item.name}</Text>
+                                                <Text style={{paddingTop:5,fontSize: 9}}>{item.issue}</Text>
                                               </TouchableOpacity>
                                             </View>
                                   
                                             <View style={styles.icon}>   
                                             <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>                            
                                                 <FontAwesome name="handshake-o" size={20} color={this.renderColor(item.relation_status)} style={{ paddingRight:5 }} /> 
-                                                <Text style={{fontSize: 10,paddingRight:5}}>{item.relation_number}</Text>  
+                                                <Text style={{fontSize: 10,paddingRight:5}}> {this.getRelationMax(item.relation_number)}</Text>  
                                             </View>
                                             <View style={{flex: 1,}}>                                     
                                                 <Foundation name="heart" size={20} style={{ color: '#00E4BA',paddingTop:6}} />
@@ -261,9 +332,9 @@
 
    },
    text:{
-  flex: 2,
+  flex: 1.8,
   paddingTop:8,
-  paddingLeft:3,
+  paddingLeft:6,
 
    },
    icon:{

@@ -68,7 +68,7 @@
 
         			<View style={styles.header}>
 
-                              <TouchableOpacity  style={{flex: 0.2,}} onPress={() => goBack()}>
+                              <TouchableOpacity  style={{flex: 0.2,paddingTop: 10}} onPress={() => goBack()}>
                                     <Image  source={require('../img/Xbutton.png')} style={styles.xButton}>
                                     </Image>
                               </TouchableOpacity>
@@ -119,6 +119,8 @@
   },
   header:{
   	flex: 1.3,
+
+      marginHorizontal: -40,
   	  flexDirection:'row',
   	  justifyContent: 'flex-end',
   },

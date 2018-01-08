@@ -65,9 +65,9 @@
     },
     body: JSON.stringify({
    
-      email: this.state.UserEmail,
+      email: this.state.UserEmail ,
    
-      password: this.state.UserPassword
+      password: 12345678
    
     })
    
@@ -270,6 +270,7 @@
   nameInput:{
   flex: 0.6,
   paddingLeft:25,
+  paddingRight:30
 
   },
   passwordInput:{

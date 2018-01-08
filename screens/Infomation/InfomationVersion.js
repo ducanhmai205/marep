@@ -7,10 +7,45 @@ import {
   View,
   StatusBar,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 class InfomationVersion extends Component {
+constructor(props) {
+  super(props);
+
+  this.state = {
+    mainContent : ''
+  };
+}
+
+
+
+
+componentWillMount() {
+
+  let formdata = new FormData();
+  formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+  formdata.append("type", this.props.navigation.state.params.Account.type);
+  formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+  console.log("info",formdata)
+  fetch('http://35.185.68.16/api/v1/content/getVersion', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data; charset=utf-8, text/plain',
+    },
+    body: formdata
+
+  }).then((response) => {
+var responseBody = response._bodyText;
+ 
+this.setState({
+  mainContent : responseBody
+})
+
+})
+}
   render() {
       const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
@@ -29,10 +64,9 @@ class InfomationVersion extends Component {
           </View>
 
           <View style={styles.mainContent}>
-              <Text style={{color:'#887F9F'}}> テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
-              テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
-              テキストテキストテキストテキストテキストテキストテキストテキストテキスト</Text>
-
+          <ScrollView>
+              <Text style={{color:'#887F9F'}}> {this.state.mainContent}</Text>
+              </ScrollView>
 
           </View>
       </View>

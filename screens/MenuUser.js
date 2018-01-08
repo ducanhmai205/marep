@@ -200,7 +200,7 @@ componentWillMount() {
     var height = responseJson.account.customer.customer_height;
     var weight = responseJson.account.customer.customer_weight;
     var sex = responseJson.account.customer.gender;
-    
+    console.log("ducanh",responseJson.account.customer.gender);
     this.setState({
      
       issue : issue,
@@ -580,7 +580,7 @@ getEmailundefired(){
 
 
            <View style={styles.containerDown}>
-              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('InfomationVersion')}}>
+              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('InfomationVersion',{Account: this.props.navigation.state.params.Account})}}>
                 <View style={styles.optionDown}>
                  
                      <Text style={styles.textOption}> バージョン情報 </Text>
@@ -589,7 +589,7 @@ getEmailundefired(){
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('Policy')}}>
+              <TouchableOpacity style={{flex: 1,}} onPress={ ()=> {navigate('Policy',{Account: this.props.navigation.state.params.Account})}}>
                 <View style={styles.optionDown}>
 
                       <Text style={styles.textOption}> 使用規約 </Text>
@@ -597,7 +597,7 @@ getEmailundefired(){
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1,}}  onPress={  ()=> {navigate('Term')}}>
+              <TouchableOpacity style={{flex: 1,}}  onPress={  ()=> {navigate('Term',{Account: this.props.navigation.state.params.Account})}}>
                 <View style={styles.optionDown}>
                       <Text style={styles.textOption}> プライバシーポリシー </Text>
                       <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
@@ -606,7 +606,7 @@ getEmailundefired(){
 
               <TouchableOpacity style={{flex: 1,}}>
                 <View style={styles.optionDown}>
-                      <Text style={styles.textOption}> バージョン情報 </Text>
+                      <Text style={styles.textOption}> お問い合わせ </Text>
                       <MaterialIcons name="keyboard-arrow-right" size={13} color='#432C71' />
                 </View>
               </TouchableOpacity>

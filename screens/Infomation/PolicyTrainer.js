@@ -11,8 +11,8 @@ import {
   ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-class Term extends Component {
-constructor(props) {
+class PolicyTrainer extends Component {
+  constructor(props) {
   super(props);
 
   this.state = {
@@ -22,11 +22,11 @@ constructor(props) {
 componentWillMount() {
 
   let formdata = new FormData();
-  formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+  formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
-  formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+  formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
   console.log("info",formdata)
-  fetch('http://35.185.68.16/api/v1/content/getTerm', {
+  fetch('http://35.185.68.16/api/v1/content/getPolicy', {
     method: 'post',
     headers: {
       'Content-Type': 'multipart/form-data; charset=utf-8, text/plain',
@@ -44,7 +44,6 @@ this.setState({
 
 
 }
-  
   render() {
       const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
@@ -57,7 +56,7 @@ this.setState({
                 <Ionicons name="ios-arrow-back" size={20} color="#493E6A" style={styles.icon} />
               </TouchableOpacity>
             <View style={styles.textHeader}>
-                    <Text style={{color:'#887F9F'}}>使用規約 </Text>
+                    <Text style={{color:'#887F9F'}}>プライバシーポリシー </Text>
 
             </View>
           </View>
@@ -105,4 +104,4 @@ mainContent:{
 });
 
 
-export default Term;
+export default PolicyTrainer;

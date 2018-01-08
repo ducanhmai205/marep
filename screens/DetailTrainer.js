@@ -9,7 +9,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -59,9 +60,6 @@ componentWillMount() {
   }).then((response) => response.json())
   .then((responseJson) => {
    
-    
-
-
     var content = responseJson;
 
      
@@ -82,12 +80,13 @@ componentWillMount() {
 
 }
  renderColor(relationStatus){
-    if(relationStatus === "not_connected"){
-      console.log("True",relationStatus);
-      return '#DBDBDB';
+  //check pending
+    if(relationStatus === "connected"){
+
+      return '#00E6BE';
     }else{
-      console.log("False",relationStatus);
-      return  '#00E6BE';
+   
+      return  '#DBDBDB';
     }
 
   }
@@ -135,14 +134,14 @@ componentWillMount() {
                                           <FlatList
                                               data={this.state.rating}
                                               horizontal={false}
-                                              // style={styles.flat}
+                                    
                                                keyExtractor = {(item, index) => index}
                                               renderItem={({item}) => 
                                               <View style={{flexDirection: 'row' ,justifyContent:  'space-between'    }}>
                                                 <Text style={{fontSize: 13}}> {item.title} </Text>
                                                  <StarRating
                                                         style={{justifyContent: 'flex-end'  }}
-                                                        disabled={false}
+                                                        disabled={true}
                                                         emptyStar={'ios-star-outline'}
                                                         fullStar={'ios-star'}
                                                         halfStar={'ios-star-half'}
@@ -155,9 +154,7 @@ componentWillMount() {
                                                         
                                                        />
                                                  <Text style={{fontSize: 10}}> {item.value} </Text>
-                                              </View>
-                                              
-          
+                                              </View>                                                        
                                             }
                                             />
                                     </TouchableOpacity>
@@ -171,8 +168,10 @@ componentWillMount() {
                                   />
 
                                  <View style={styles.infocontent}>
-                                    <View style={{flex: 2,marginBottom: 15,}}>
+                                    <View style={{flex: 1.8,marginBottom: 15,}}>
+                                    <ScrollView>
                                         <Text style={{fontSize:13}}> {this.state.prContent}</Text>
+                                        </ScrollView>
                                     </View>
 
                                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>

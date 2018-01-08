@@ -159,7 +159,7 @@
      <View style={styles.circleOutside}>
      <View style={styles.circleInside}>
      <TouchableOpacity   onPress={ ()=> {
-        navigate('ChatUser',{Account: this.props.navigation.state.params.Account });}}>
+        navigate('ChatTrainer',{Account: this.props.navigation.state.params.Account,customerId : this.state.customerId });}}>
      <Icon name="handshake-o" size={25} color={this.renderColor(this.state.relation_status)} />
      </TouchableOpacity>
      </View>

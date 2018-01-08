@@ -1,436 +1,148 @@
-'use strict';
+  'use strict';
 
-import React, { Component } from 'react';
+  import React, { Component } from 'react';
 
-import {
-StyleSheet,
-View,
-Image,
-Text,
-TouchableOpacity,
-TextInput,
-KeyboardAvoidingView,
-FlatList
-} from 'react-native';
-import Dimensions from 'Dimensions';
-import {LinearGradient} from 'expo';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+  import {
+    StyleSheet,
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    Platform
+  } from 'react-native';
+  import { LinearGradient } from 'expo';
+  import Dimensions from 'Dimensions';
+  class TopScreen extends Component {
+    render() {
+          const { navigate } = this.props.navigation;
+          const Backgrounds = {
+          background: require('../img/topbg.png'),
+          loginButton: require('../img/user/top3.png'),
+          registerButton: require('../img/buttontop.png')
 
-  var response;
-class ChatUser extends Component {
-
-constructor(props) {
-  super(props);
-
-  this.state = {
-    // trainerId: `${this.props.navigation.state.params.trainerId}`,
-    // id :`${this.props.navigation.state.params.Account.customer.id}`,
-    // type: `${this.props.navigation.state.params.Account.type}`,
-    // access_token :`${this.props.navigation.state.params.Account.customer.access_token}`,
-    canChat: true,
-      trainerId: 77,
-    id :171,
-    type: 'customer',
-    access_token :'iD8BzNeTBdkbm7BQpHWYFNKXK0QVhFDz65ywRZFWuZWDxDNAwTZCSMBzzCie',
-    point:'',
-    name:'',
-    json:'',
-    dataOld: [
-    {id: '1',send:'nanananananan',retrive:'abc',hoten:'user'},
-     
-    ],
-    mang:[]
   };
-}
-componentWillMount() {
- 
+    return (
+        
+          <Image  source={Backgrounds.background} style={styles.backgroundImage}>
+               <View style={styles.containerOne}>
+               </View> 
 
-    let formdata = new FormData();
-    formdata.append("access_token", this.state.access_token);
-    formdata.append("type", this.state.type);
-    formdata.append("id", this.state.id);
-    formdata.append("trainerId", this.state.trainerId);
+               <View style={styles.containerButton}>
 
+                  <View style={styles.loginButton}>
+                      <View style={styles.rightSpace} /> 
 
-    fetch('http://35.185.68.16/api/v1/customer/getCustomerChatHistory', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: formdata
+                              <View style={styles.mainButtonLogin}>
+                                    <TouchableOpacity onPress={ ()=> {navigate('LoginScreen')}} style={{flex: 1,}}>
+                                         <Image source={Backgrounds.loginButton} style={styles.loginImage} resizeMode="contain">
+                                         </Image>
+                                    </TouchableOpacity>
+                              </View>
 
-    }).then((response) => response.json())
-    .then((responseJson) => {
+                      <View style={styles.leftButton} /> 
+                  </View> 
 
-       response = responseJson;
-       let confirm = response.data.confirm;
-     
-      var data = responseJson.data.data;
-      var Data = [];
-      //data: Duyet object 12/9, 13/9,....
-         Object.keys(data).forEach(function(item){
-          //item: "12/9"
+                  <View style={styles.registerButton}>
+                        <View style={styles.leftRegister} />
 
-          //messages= data[item]: Mang message ung voi 12/9
-          let messages = data[item];
-          //Duyet cac phan tu cua mang 12/9 , 13/9...
-  
-          messages.forEach(function(message){
-          //Day tat ca message vao mang minh dung de hien thi tren flatlist    
-          Data.push(message);
+                              <View style={styles.mainButtonRegister}>
+                                    <TouchableOpacity onPress={ ()=> {navigate('RegisterScreen')}} style={{flex: 0.9,}}>
+                                        <Image source={Backgrounds.registerButton}  style={styles.registerImage}>
+                                        </Image>
+                                    </TouchableOpacity>
+                              </View>
 
-          })
-        });
-      if(confirm===false){
-        let itemConfirm ={
-          showConfirmView:true
-        }
-        Data.push(itemConfirm);
-      }
-  
-      var point = responseJson.data.point;
-      var name = responseJson.data.trainer.name;
-      var canChat = responseJson.data.can_chat;
-      var json = responseJson;
-      
-     this.setState({
-      point:point,
-      name:name,
-      canChat: canChat,
-      json : json,
-      Data:Data
-    
+                        <View style={styles.rightRegister} />
+                                                       
+                  </View>  
 
-     })
-    })
+              </View>
+                    <View style={styles.bottom}>
+
+                    </View> 
+
+              
+
+          </Image>
+        
+      );
+    }
   }
 
+  const styles = StyleSheet.create({
 
-// renderItem= ({item}) => {
-//  if(item.showConfirmView === true){
-//     return this.getConfirmView(item);
-//   }else if(item.sender ==='customer'){
-//     return this.getCustomerView(item);
-//   }else {
-//     return this.getTrainerView(item);
-//   }
-// }
-// renderItem= ({item}) => {
-//  console.log("showconfirm",item.showConfirmView);
-//   if(item.showConfirmView === false){
-//     return this.getConfirmView(item);
-//   }
-// }
+  backgroundImage:{
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
+  },
+  loginImage:{
+    flex:1,
+    width: null,
+    height: null,
+  },
+  registerImage:{
+    flex:1,
+    width: null,
+    height: null,
+    paddingTop: 30
+  },
+  containerOne:{
+    flex: 4,
 
-renderItem= ({item}) => {
- console.log("showconfirm",item.showConfirmView);
-  if(item.showConfirmView === "false"){
-    return (
-       <View style={styles.container}>
-          <View style={styles.acceptChat}>
-    <View style={styles.buttonAccept}>
-    <TouchableOpacity style={{flex:1}}>
-    <LinearGradient
-    colors={['#FF437A','#FF00B2']}
-    start={{x: 1, y: 0.5}} end={{x: 0.0, y: 0.5}}
-    style={{ flex:1,borderColor:'white',overflow:'hidden',borderRadius: 25,borderWidth:2,alignItems: 'center',justifyContent: 'center', }}>
-    <Text  style={{
-      backgroundColor: 'transparent',            
-      color: '#fff',
-      fontSize:12,
-      justifyContent: 'center',
-      alignItems: 'center',
+  },
+  containerButton:{
+    flex: 1.5,
+  marginTop:50
+  },
+  loginButton:{
+    flex: 0.9,
 
-    }}>
-    PersonalTrainer契約する
-    </Text>
-    </LinearGradient>
-
-    </TouchableOpacity>
-
-    </View>
-
-    <View style={styles.buttonDecline}>
-    <TouchableOpacity style={{flex:1}}>
-    <LinearGradient
-    colors={['#DCDCDC','#DCDCDC']}
-    start={{x: 1, y: 0.5}} end={{x: 0.0, y: 0.5}}
-    style={{ flex:1,borderColor:'white',overflow:'hidden',borderRadius: 25,borderWidth:2,alignItems: 'center',justifyContent: 'center', }}>
-    <Text  style={{
-      backgroundColor: 'transparent',            
-      color: '#fff',
-      fontSize:12,
-      justifyContent: 'center',
-      alignItems: 'center',
-
-    }}>
-    契約しない
-    </Text>
-    </LinearGradient>
-
-    </TouchableOpacity>
-    </View>
-    </View>
-   </View>
-   )
-  
-}
-}
-
-
-render() {
-   const { navigate } = this.props.navigation;
-    const {goBack} = this.props.navigation;
-  return (
-    <Image  source={require('../img/user/chat.png')} style={styles.backgroundImage}>
-    <View style={styles.container}>
-    <View style={styles.headerContent}>
-
-    <TouchableOpacity style={styles.icon} onPress={ () => goBack(null)  }  >
-    <Ionicons name="ios-arrow-back" size={20} />
-    </TouchableOpacity>
-
-
-    <View style={styles.text}>
-    <Text numberOfLines={1} style={{flex:1,paddingHorizontal: 40,justifyContent: 'center', alignItems: 'center',}}> {this.state.name}</Text>
-
-    </View>
-
-    </View>
-
-    <View style={styles.mainContent}>
+    flexDirection: 'row',
     
+  },
+  rightSpace:{
+    flex: 1,
 
-    <View style={styles.chatContent}>
-   <FlatList
-    data={this.state.Data}
-    style={{flex: 1,backgroundColor:'rgba(0,0,0,0)',}}
-    keyExtractor = {(item, index) => index}
-   renderItem={this.renderItem}
-  />
-
- 
-
-
-
-  </View>
+  },
+  mainButtonLogin:{
+    flex: 2.3,
+    marginBottom: (Platform.OS === 'ios') ? 10 : 0,
+    paddingRight:12,
+    marginHorizontal:3,
 
 
-  </View>
+  },
+  leftButton:{
+    flex: 0.9,
 
-  <KeyboardAvoidingView style={styles.bottomContent}      behavior="padding">
-  <View style={styles.showPoint}>
-  <Text> {this.state.point}</Text>
-  <Text style={{fontSize: 10,alignItems: 'flex-end'  }}>pt </Text>
-  </View>
+  },
+  leftRegister:{
+    flex: 1.1,
+  },
+  mainButtonRegister:{
+    flex: 2.7,
+    marginBottom: (Platform.OS === 'ios') ? 20 : 5,
+    marginTop: (Platform.OS ==='ios') ? 0 : 11,
+    marginRight:5,
 
-  <View style={styles.formSentMess}>
-  <View style={styles.formInput}>
-
-  <View style={{flex: 0.5,backgroundColor: '#DCDCDC',borderRadius: 50,flexDirection: 'row'  }}>
-  <TextInput
-  editable={this.state.canChat}
-  style={{flex: 0.9,backgroundColor: '#DCDCDC',borderRadius: 50,paddingLeft:20}}
-  underlineColorAndroid='transparent'      
-  autoCapitalize="none"
-  placeholder="メッセージ入力"
-  placeholderTextColor = "#717171"
-  returnKeyType = {"next"}
-  />
-  <TouchableOpacity style={{justifyContent: 'flex-end',alignItems: 'center',flexDirection: 'row' }}>
-  <Text style={{color: '#717171'}}> 送信</Text>
-  </TouchableOpacity>
-  </View>
+  },
+  rightRegister:{
+    flex: 1,
+  },
+  registerButton:{
+    flex: 1,
 
 
-  </View>
 
-  <View style={styles.buttonMedia}>
-  <TouchableOpacity style={{flex:1,paddingRight:10}}>
-  <FontAwesome name="video-camera" size={20} color="black"  />
-  </TouchableOpacity>
+    flexDirection: 'row',
+    
+  },
+  bottom:{
+    flex:0.9,
+  },
 
-  <TouchableOpacity  style={{flex:1,}}>
-  <FontAwesome name="camera" size={20} color="black" />
-  </TouchableOpacity>
-  </View>
-  </View>
-  </KeyboardAvoidingView>
-  </View>
-  </Image>
-  );
-}
-}
-
-const styles = StyleSheet.create({
-backgroundImage:{
-  flex: 1,
-  width: Dimensions.get('window').width,
-  height: Dimensions.get('window').height,
-},
-container:{
-  flex: 1,
-
-},
-headerContent:{
-  flex: 0.7,
-  flexDirection: 'row' ,
-  backgroundColor:'rgba(0,0,0,0)',
-  marginTop:15,
-  justifyContent: 'center',
-  alignItems: 'center',
-
-},
-icon:{
-  flex:0.2,
-  justifyContent: 'center',
-  alignItems: 'center',
-
-},
-text:{
-  flex: 1,
-
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-mainContent:{
-  flex: 7.7,
-  marginHorizontal: 20,
-},
-date:{
-  flex: 0.7,
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'row' ,
-
-},
-chatContent:{
-  flex: 15.7,
-
-},
-bottomContent:{
-  flex: 1.3,
-
-},
-showPoint:{
-  flex:0.7,
-  flexDirection:  'row' ,
-  backgroundColor:'#DCDCDC',
-  justifyContent: 'flex-end',
-  alignItems: 'center',
-  paddingRight:15
-},
-formSentMess:{
-  flex:2,
-  backgroundColor: 'white',
-  flexDirection: 'row' ,
-},
-formInput:{
-  flex: 7.6,
-  justifyContent: 'center',
-  paddingHorizontal: 20
+  });
 
 
-},
-buttonMedia:{
-  flex: 2.4,
-  flexDirection: 'row' ,
-  justifyContent: 'center',
-  alignItems: 'center',
-  paddingRight:15
-},
-
-retrive:{
-  flex: 1                                                                                                                                                                       ,
-  flexDirection: 'row' ,
-
-},
-avatar:{
-
-  width: 35,
-  height: 35,
-  borderRadius: 35/2,
-  backgroundColor: 'white',
-
-},
-bubleChat:{
-  flex: 0.8,
-  backgroundColor: 'white',
-  borderRadius: 15,
-  overflow:'hidden',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin:10
-},
-acceptChat:{
-  flex: 1,
-  flexDirection: 'row' ,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-buttonAccept:{
-  width: 170,
-  height: 40,
-
-},
-buttonDecline:{
-  width: 100,
-  height: 40,
-  paddingLeft:20
-},
-sticker:{
-flex: 1,
-margin:20,
-
-justifyContent: 'center',
-alignItems: 'center',
-},
-stickerImage:{
-width: 230,
-height: 130,
-padding:50,
-justifyContent: 'center',
-alignItems: 'center',
-},
-textSticker:{
-fontSize: 12,
-color:'#FF317F'
-},
-sendMess:{
-flex: 1,
-flexDirection: 'row-reverse' 
-},
-bubleChatSend:{
- flex: 0.8,
-  backgroundColor: '#78FBD4',
-  borderRadius: 15,
-  overflow:'hidden',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin:10
-},
-askBuyPoint:{
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  paddingTop: 20
-
-},
-buttonaskBuyPoint:{
-  width: 200,
-  height: 40,
-},
-circleOutside: {
-
-  width: 40,
-  height: 40,
-  borderRadius: 40/2,
-  backgroundColor: 'white',
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-});
-
-
-export default ChatUser;
+  export default TopScreen;

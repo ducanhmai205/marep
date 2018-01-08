@@ -21,7 +21,7 @@
         hidePassword: true,
         id:'',
         data:'',
-        page:'',
+        page:0,
         colorIcon:'',
 
 
@@ -95,10 +95,12 @@ if(responseJson.customers === null){
     }
 
     _onEndReached(){
+  
      let formdata = new FormData();
      this.setState({
       page: this.state.page+1,
     })
+     console.log("page", this.state.page);
      formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
      formdata.append("type", this.props.navigation.state.params.Account.type);
      formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
@@ -143,7 +145,7 @@ if(responseJson.customers === null){
       arrayData = arrayData.concat(arrayData)
       this.setState({
         data : arrayData,
-        page: this.state.page+1
+        page: this.state.page
       })
 
       if(responseJson.customers === null){

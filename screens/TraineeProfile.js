@@ -45,9 +45,8 @@ class TraineeProfile extends Component {
 
     this.registerForPushNotificationsAsync();
 
-        //Đăng ký lắng nghe sự kiện push
+       
         Notifications.addListener((receivedNotification) => {
-           //Neu app ios dang chay thi phải tạo view hiển thị local Notification
 
            this.setState({
             receivedNotification,
@@ -59,24 +58,20 @@ class TraineeProfile extends Component {
       registerForPushNotificationsAsync = async () => {
         let {status} = await Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS);
 
-        // Stop here if the user did not grant permissions
         if (status !== 'granted') {
           return;
         }
 
         let token = await Notifications.getExpoPushTokenAsync();
         let res = token.substring(18, 40);
-        console.log("ducanh token",token)
+       
 
 
         this.guiTokenLenServerMinh(res);
       };
 
       guiTokenLenServerMinh = async (res)=>{
-        // Gui Push token lên server của mình
-        console.log("user",res)
-        console.log("user",this.state.type)
-        console.log("user",this.state.access_token)
+    
         return fetch(PUSH_ENDPOINT, {
           method: 'POST',
           headers: {
@@ -119,22 +114,22 @@ class TraineeProfile extends Component {
             let avatar = dataFlatlist[key].avatar;
             let type = dataFlatlist[key].type;
             let status = dataFlatlist[key].status;
+            let id = [key];
             var raw = {
               unread: unread,
               type : type,
               avatar :avatar,
-              status : status,         
+              status : status,  
+              id : id,       
             }
             arrayData.push(raw);
-            console.log("arraydata",arrayData.type)
           });
-
+         
           this.setState({
             unread : rawdata.data.total_unread,
             points: rawdata.data.points,
             data : arrayData
           })
-          console.log("arraydata",this.state.data)
         })
 
       }
@@ -167,7 +162,7 @@ class TraineeProfile extends Component {
         }
          if (statusTrainer === "offline" ){
           return (
-            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+            <Image  resizeMode="contain" source={require('../img/user/offlinebuttonl.png')} style={{flex: 1}}>
 
            </Image>
             );                                                      
@@ -179,7 +174,7 @@ class TraineeProfile extends Component {
         const { navigate } = this.props.navigation;
         const {goBack} = this.props.navigation;
         return (
-         <Image  source={require('../img/profile/enter_user.png')} style={styles.backgroundImage}>
+         <Image  source={require('../img/user/last.png')} style={styles.backgroundImage}>
          <View style={styles.container}>
          <View style={styles.header}>
          <View style={styles.iconrightHeader}>
@@ -197,12 +192,12 @@ class TraineeProfile extends Component {
           <TouchableOpacity style={{flex:1}} onPress= { ()=>{
             let account = this.props.navigation.state.params.Account;
             let myIssues = account.myIssues;
-            console.log("DucNT",myIssues.length);
+
             if(myIssues.length === 0 ){
-              console.log("ducnt TraineeTreatment");
+             
               navigate('TraineeTreatment',{ Account:account  });
             }else {
-              console.log("DucNT SelectTrainer" );
+       
               navigate('SelectTrainer',{ Account:account  });
             }
           }}>
@@ -240,12 +235,15 @@ class TraineeProfile extends Component {
            data={this.state.data}
            horizontal={true}
            style={styles.flat}
-           // keyExtractor={item => item.key}
+        
            keyExtractor = {(item, index) => index}
            renderItem={({item}) => 
 
            <View style={styles.flatListContainer}>
-           <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}>
+           <TouchableOpacity style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginRight:-20}}
+           onPress={ ()=> {
+        navigate('ChatUser',{Account: this.props.navigation.state.params.Account ,trainerId: item.id});}}
+           >
            <View style={styles.circleOutside}>
            <View style={styles.circleInside}>
            <Image  source={{uri:item.avatar}} style={styles.image}>

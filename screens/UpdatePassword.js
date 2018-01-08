@@ -147,30 +147,38 @@
 
                                 <View style={styles.oldPass}>
                                       <TextInput
+                                            ref='oldPass'
                                             style={{flex: 1,paddingLeft: 40,fontSize: 15}}
                                             underlineColorAndroid='transparent'
-                                            returnKeyType="next"
+                                                    returnKeyType = {"next"}
+                                     
                                             autoCapitalize="none"
-                                          
-                                                        placeholder="旧パスワード"
-                                                        placeholderTextColor = "#47E5B3"
+                                            placeholder="旧パスワード"
+                                            placeholderTextColor = "#47E5B3"
                                             onChangeText={oldPass => this.setState({oldPass})}
+                                            onSubmitEditing={(event) => { 
+                this.refs.NewPass.focus(); 
+              }}
                                       />
 
                                 </View>
 
                                       <View style={styles.newPass}>
                                          <TextInput
+                                              ref='NewPass'
                                                       style={{flex: 1,paddingLeft: 5,fontSize: 15}}
                                                       underlineColorAndroid='transparent'
                                                       placeholder="新パスワード"
                                                       returnKeyType="next"
+                                                   
                                                       autoCapitalize="none"
                                                     autoCorrect={false} 
                                                       clearTextOnFocus={false}
                                                       placeholderTextColor = "#47E5B3"
                                                       onChangeText={newPass => this.setState({newPass})}
-                                                     
+                                                      onSubmitEditing={(event) => { 
+                this.refs.newPassConfirm.focus(); 
+              }}
                                                                    />
 
                                                                
@@ -180,6 +188,7 @@
 
                                           <View style={styles.newPassConfirm}>
                                               <TextInput
+                                                      ref='newPassConfirm'
                                                       style={{flex: 1,paddingLeft: 5,fontSize: 15}}
                                                       underlineColorAndroid='transparent'
                                                       placeholder="新パスワード（確認）"

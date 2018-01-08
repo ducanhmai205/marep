@@ -11,7 +11,7 @@ import {
   ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-class Term extends Component {
+class TermTrainer extends Component {
 constructor(props) {
   super(props);
 
@@ -22,9 +22,9 @@ constructor(props) {
 componentWillMount() {
 
   let formdata = new FormData();
-  formdata.append("access_token", this.props.navigation.state.params.Account.customer.access_token);
+  formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
   formdata.append("type", this.props.navigation.state.params.Account.type);
-  formdata.append("id", this.props.navigation.state.params.Account.customer.id);
+  formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
   console.log("info",formdata)
   fetch('http://35.185.68.16/api/v1/content/getTerm', {
     method: 'post',
@@ -105,4 +105,4 @@ mainContent:{
 });
 
 
-export default Term;
+export default TermTrainer;
