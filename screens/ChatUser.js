@@ -39,6 +39,7 @@ class ChatUser extends Component {
       goSticker:'',
       chatInput:'',
       newMsg: '',
+      showButton: true,
       
     };
    
@@ -73,30 +74,30 @@ connectSocketIo(sender){
           }
            this.state.Data.push(msgObj);
         
-        console.log("data",this.state.Data);
           var DataArr = this.state.Data;
           var chatCan = this.state.canChat;
           var First = this.state.isFirst;
           var relation = this.state.relation;
        if(relation === 'not_connected'){
+
         if(First === true){
+          chatCan = false;
             DataArr.forEach(function(item){
-              console.log("sender",item.sender);
                 if(item.sender === "trainer"){
                       let itemConfirm ={
                        showConfirmView:true
                       }    
 
                     First = false;
-                    console.log("DucNT","Vao mot lan");
+                   
                     DataArr.push(itemConfirm);                   
                 }
                
             }) 
               
         }
-       this.setState({isFirst:First});
-     
+       this.setState({isFirst:First,canChat:chatCan});
+       console.log("ducanh",this.state.canChat);
       }
 
    }
@@ -136,7 +137,7 @@ connectSocketIo(sender){
 
   }else if (relation === 'pending'){
      Object.keys(data).forEach(function(item){
-    
+
           Data.push(data[item]);       
     })
      }else if(relation === 'connected'){
@@ -150,7 +151,6 @@ connectSocketIo(sender){
 
       }
        Data.push(itemData);
-       console.log("date data",Data);
     }
                      
           messages.forEach(function(message){      
@@ -187,7 +187,6 @@ connectSocketIo(sender){
 
     })
 
-    console.log("ducanh rela",this.state.relation);
      this.connectSocketIo(this.state.sender);
   })
   }
@@ -203,7 +202,6 @@ connectSocketIo(sender){
 
 
   getStickerView(){
-
     return (
      <View style={styles.container}>
      <View  style={styles.sticker}>
@@ -243,6 +241,7 @@ connectSocketIo(sender){
 
   Accept = () =>{
     const Data = this.state.Data;
+   
     let formdata = new FormData();
 
     formdata.append("access_token", this.state.access_token);
@@ -261,13 +260,19 @@ connectSocketIo(sender){
     .then((responseJson) => {
 
      if(responseJson.result === true){
-
+               Object.keys(Data).forEach(function(item){
+                  if(Data[item].showConfirmView === true){
+             Data[item].showConfirmView = false;
+                 
+                  }
+              })
        let itemSticker ={
         showStickerView:true
       }
       Data.push(itemSticker);
       this.setState({
-        canChat : true
+        canChat : true,
+        
       })          
     }else{
       console.log("error");
@@ -276,6 +281,7 @@ connectSocketIo(sender){
 
   }
   Decline = () =>{
+
     let formdata = new FormData();
 
     formdata.append("access_token", this.state.access_token);
@@ -283,6 +289,7 @@ connectSocketIo(sender){
     formdata.append("id", this.state.id);
     formdata.append("trainerId",this.state.trainerId);
     formdata.append("result", this.state.decline ); 
+    console.log("ducanh form",formdata);
     fetch('http://35.185.68.16/api/v1/customer/confirmTrainer', {
       method: 'post',
       headers: {
@@ -348,7 +355,9 @@ connectSocketIo(sender){
     </View>
     </View>
     </View>
+
     )
+    
   }
 
   getTrainerView(item){
@@ -409,7 +418,7 @@ connectSocketIo(sender){
       }
 
       renderItem= ({item}) => {
-        console.log("item",item.content);
+     
         if(item.showConfirmView === true){
 
           return this.getConfirmView();

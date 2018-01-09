@@ -34,7 +34,8 @@ class ChatTrainer extends React.PureComponent {
       json:'',
       chatInput:'',
       date:'',
-      
+      senderFirst:true,
+      lockChat:false,
       messageJson:''
     };
   }
@@ -56,40 +57,64 @@ class ChatTrainer extends React.PureComponent {
   this.socket.on(this.channel, this.onReceivedMessage);
 }
 
-onReceivedMessage = (response)=>{      
+
+
+onReceivedMessage = (response)=>{  
+
+
   let msgObj = {
     sender:response.sender,
     content:response.message
   }
-  this.state.Data.push(msgObj);    
+  this.state.Data.push(msgObj);
+  var lockChat = this.state.lockChat;
   var DataArr = this.state.Data;
+  var chatCan = this.state.canChat;
   var First = this.state.isFirst;
   var relation = this.state.relation;
-   if(relation === 'not_connected'){
-    console.log("DucNT",relation);
+  var senderFirst = this.state.senderFirst;
+  var customer= response.sender;
+  console.log("ducanh sender",response.sender);
+ 
+  if(relation === 'not_connected' ){
+    
+   if(First=== true && response.sender === "trainer" ){
+            this.setRelation();
+          }
     if(First === true){
-     
-      DataArr.forEach(function(item){
-        if(item.sender === "trainer"){
+
+        if(response.sender === "trainer" &&  response.content !== ""){
+           if(senderFirst === true){
           let itemMess ={
             showMessView:true
-          } 
-          
+          }   
           First = false;
-          console.log("DucNT","Vao mot lan");
-          DataArr.push(itemMess); 
-          
-        }
+
+          DataArr.push(itemMess);  
+            senderFirst = false;
+          }
+
+          }   
+
         
-      }) 
-      this.setRelation();  
+
+      
     }
     this.setState({isFirst:First});
-    
-    console.log("DucNT First Moi:",this.state.isFirst);
+
+
+
+
+
+  }
+ if (lockChat === true && customer === "customer"){
+  console.log("da an");
+    this.setState({
+      canChat: true,
+      lockChat:false
+    })
   }
 }
-
 componentDidMount() {
 
 
@@ -182,9 +207,8 @@ componentDidMount() {
 }
 
 
-setRelation =() =>{
-//call api
-
+setRelation(){
+console.log("vao setrala");
 let formdata = new FormData();
 
 formdata.append("access_token", this.state.access_token);
@@ -203,13 +227,13 @@ fetch('http://35.185.68.16/api/v1/trainer/connectCustomer', {
 
 }).then((response) => response.json())
 .then((responseJson) => {
- console.log("ducanh",responseJson);
  this.setState({
-  messageJson : responseJson.result
+  messageJson : responseJson.result,
+  canChat:false,
+  lockChat: true,
 })
+ 
 })
-
-
 
 }
 sendChat = () =>{
@@ -266,10 +290,7 @@ getMessageView(item){
 
    </View>
    )
-this.setState({
-  canChat:false
-})
-console.log("canchat",this.state.canChat);
+
 }
 getCustomerView(item){
   return (
@@ -312,9 +333,9 @@ renderItem= ({item}) => {
   return this.getDateView(item);
 }else if(item.showDataView === true ){
   return this.getDateView(item);}
-  else if(item.sender ==='trainer'){
+  else if(item.sender ==='trainer' &&  item.content !== ""){
     return this.getTrainerView(item);
-  }else if(item.sender ==='customer'){
+  }else if(item.sender ==='customer' &&  item.content !== ""){
     return this.getCustomerView(item);
   }
 }
