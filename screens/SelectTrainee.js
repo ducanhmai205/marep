@@ -154,10 +154,12 @@ if(responseJson.customers === null){
     })
    }
    renderColor(relationStatus){
-    if(relationStatus === "not_connected"){
-      return '#DBDBDB';
+    if(relationStatus === "connected"){
+      return  '#00E6BE';    
+    }else if(relationStatus === "pending"){
+      return  '#DBDBDB';    
     }else{  
-      return  '#00E6BE';
+      return '#DBDBDB';
     }
 
   }
@@ -214,7 +216,7 @@ if(responseJson.customers === null){
 
         <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>
         
-        <Foundation name="heart" size={18} style={{ color: 'green',paddingTop: 4}} />
+        <Foundation name="heart" size={18} style={{ color: '#00E4BA',paddingTop: 4}} />
         
         
 

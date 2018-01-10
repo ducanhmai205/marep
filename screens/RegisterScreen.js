@@ -217,7 +217,7 @@ Alert.alert(error_object[0] );
               ref='Name'
               style={{flex: 1,paddingHorizontal: 40}}
               underlineColorAndroid='transparent'
-              returnKeyType="next"
+             
               autoCapitalize="none"
               placeholder="Name"
               placeholderTextColor = "#47E5B3"

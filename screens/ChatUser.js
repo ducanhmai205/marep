@@ -96,7 +96,7 @@ connectSocketIo(sender){
             }) 
               
         }
-       this.setState({isFirst:First,canChat:chatCan});
+       this.setState({isFirst:First,});
        console.log("ducanh",this.state.canChat);
       }
 
@@ -104,7 +104,7 @@ connectSocketIo(sender){
    
 
 
-  componentDidMount() {
+  componentWillMount() {
 
 
     let formdata = new FormData();

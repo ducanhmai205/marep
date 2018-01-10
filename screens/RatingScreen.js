@@ -30,7 +30,7 @@ class RatingScreen extends Component {
       data: '',
       dataSource: dataSource.cloneWithRows([]),
       pressIcon: true,
-      issue : '',
+   
       Count:'',
       id :`${this.props.navigation.state.params.Account.customer.id}`,
       type: `${this.props.navigation.state.params.Account.type}`,
@@ -427,11 +427,7 @@ infocontent:{
   flex: 1.7,
   paddingTop: 15
 },
-infocontent:{
-  flex: 1.7,
-  paddingTop: 15,
 
-},
 nextButton:{
  flex: 1,
  flexDirection: 'row' , 

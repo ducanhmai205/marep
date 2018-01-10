@@ -32,7 +32,7 @@
       super(props);
       this.state={
          pressIcon: true,
- 
+          
           changeBusy: '',
           image: `${this.props.navigation.state.params.Account.avatar}`,
           accountId : `${this.props.navigation.state.params.Account.trainer.id}`,
@@ -41,8 +41,8 @@
           receivedNotification: null,
           lastNotificationId: null,
           visible: false,
-          startColor:'pink',
-          endColor:'pink',
+          startColor:'#DBDBDB',
+          endColor:'#DBDBDB',
           busy:0,
         
             
@@ -433,7 +433,7 @@ render() {
                             </View>
 
                             <View style={styles.flatlistHorizontal}>
-                            <View style={{justifyContent: 'center',}}>
+                            <View style={{justifyContent: 'center', backgroundColor:'rgba(0,0,0,0)',}}>
                             <Ionicons name="ios-arrow-back-outline" size={20} />
                             </View>
                           <FlatList
@@ -479,7 +479,7 @@ render() {
 
                           }
                         />
-                          <View style={{justifyContent: 'center',}}>
+                          <View style={{justifyContent: 'center', backgroundColor:'rgba(0,0,0,0)',}}>
                           <Ionicons name="ios-arrow-forward" size={20} />
                           </View>
                           </View>

@@ -148,17 +148,21 @@
    }
   
 
-  renderColor(relationStatus){
-    if(relationStatus === "not_connected"){
-      return '#DBDBDB';
+ renderColor(relationStatus){
+
+    if(relationStatus === "connected"){
+      return  '#00E6BE';    
+    }else if(relationStatus === "pending"){
+      return  '#DBDBDB';    
     }else{  
-      return  '#00E6BE';
+      return '#DBDBDB';
     }
 
   }
+
   getRelationMax(item){
   let Max = item;
-  if(Max === 'max') return '最大';
+  if(Max === 'max') return '満員';
 
   return Max
 }
@@ -219,7 +223,7 @@
                                             <View style={styles.icon}>   
                                             <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',}}>                            
                                                 <FontAwesome name="handshake-o" size={20} color={this.renderColor(item.relation_status)} style={{ paddingRight:5 }} /> 
-                                                <Text style={{fontSize: 10,paddingRight:5}}> {this.getRelationMax(item.relation_number)}</Text>  
+                                                <Text style={{fontSize: 10,paddingRight:5,color:'#00E4BA'}}> {this.getRelationMax(item.relation_number)}</Text>  
                                             </View>
                                             <View style={{flex: 1,}}>                                     
                                                 <Foundation name="heart" size={20} style={{ color: '#00E4BA',paddingTop:6}} />

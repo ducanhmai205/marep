@@ -102,10 +102,6 @@ onReceivedMessage = (response)=>{
     }
     this.setState({isFirst:First});
 
-
-
-
-
   }
  if (lockChat === true && customer === "customer"){
   console.log("da an");
@@ -115,7 +111,39 @@ onReceivedMessage = (response)=>{
     })
   }
 }
-componentDidMount() {
+
+
+setRelation(){
+console.log("vao setrala");
+let formdata = new FormData();
+
+formdata.append("access_token", this.state.access_token);
+formdata.append("type", this.state.type);
+formdata.append("id", this.state.id);
+formdata.append("customerId", this.state.customerId);
+formdata.append("trainerId", this.state.id);
+
+
+fetch('http://35.185.68.16/api/v1/trainer/connectCustomer', {
+  method: 'post',
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+  body: formdata
+
+}).then((response) => response.json())
+.then((responseJson) => {
+  console.log("ducanh responese",responseJson);
+ this.setState({
+  messageJson : responseJson.result,
+  canChat:false,
+  lockChat: true,
+})
+ 
+})
+
+}
+componentWillMount() {
 
 
   let formdata = new FormData();
@@ -177,12 +205,12 @@ componentDidMount() {
 
 
 
- var point = responseJson.data.point;
- var name = responseJson.data.customer.name;
- var canChat = responseJson.data.can_chat;
- var json = responseJson;
- var relation = responseJson.data.relation;
- 
+ let point = responseJson.data.point;
+ let name = responseJson.data.customer.name;
+ let canChat = responseJson.data.can_chat;
+ let json = responseJson;
+
+ let sender = responseJson.data.sender;
  
  
  
@@ -200,57 +228,17 @@ componentDidMount() {
 })
  
 
- let sender = responseJson.data.sender;
+ 
  this.connectSocketIo(sender);
 
 })
 }
 
 
-setRelation(){
-console.log("vao setrala");
-let formdata = new FormData();
 
-formdata.append("access_token", this.state.access_token);
-formdata.append("type", this.state.type);
-formdata.append("id", this.state.id);
-formdata.append("customerId", this.state.customerId);
-formdata.append("trainerId", this.state.id);
-
-
-fetch('http://35.185.68.16/api/v1/trainer/connectCustomer', {
-  method: 'post',
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-  body: formdata
-
-}).then((response) => response.json())
-.then((responseJson) => {
- this.setState({
-  messageJson : responseJson.result,
-  canChat:false,
-  lockChat: true,
-})
- 
-})
-
-}
 sendChat = () =>{
-  if(this.state.relation === "not_connected"){
-  //goi api 
-  
   this.socket.emit(this.channel,this.state.chatInput);
-
-
-}else{
-  this.socket.emit(this.channel,this.state.chatInput);
-}
-
-
-
 this.setState({chatInput:''});
-
 }
 
 

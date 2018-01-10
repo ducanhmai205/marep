@@ -406,7 +406,7 @@ flatListContainer:{
 flex: 1,
 justifyContent: 'center',
 alignItems: 'center',
-marginHorizontal: -50,
+marginRight: -50,
 marginLeft:-45,
 paddingRight:20,
 marginBottom: 20,
