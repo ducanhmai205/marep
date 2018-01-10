@@ -84,9 +84,9 @@ class WelcomeTrainer extends Component {
     return (
       <View style={styles.container}>
               
-          <ImageBackground  source={require('../img/signin02.png')} style={styles.backgroundImage}>
+          <ImageBackground  source={require('../img/bg/signin02.png')} style={styles.backgroundImage}>
               <View style={styles.imageAvatar}>
-                       <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
+                       <Image  source={require('../img/bg/avt.png')} style={styles.avtImage} resizeMode="contain">
                         {image &&
                           <Image source={{ uri: this.state.image }} style={{ width: 90, height: 90,borderRadius: 90/2, }} resizeMode="stretch" />}
                        </Image>

@@ -63,13 +63,13 @@
     	const { navigate } = this.props.navigation;
       const {goBack} = this.props.navigation;
       return (
-        <Image  source={require('../img/user/forgotpass.png')} style={styles.backgroundImage}>
+        <Image  source={require('../img/bg/forgotpass.png')} style={styles.backgroundImage}>
         	<View style={styles.container}>
 
         			<View style={styles.header}>
 
                               <TouchableOpacity  style={{flex: 0.2,paddingTop: 10}} onPress={() => goBack()}>
-                                    <Image  source={require('../img/Xbutton.png')} style={styles.xButton}>
+                                    <Image  source={require('../img/bg/Xbutton.png')} style={styles.xButton}>
                                     </Image>
                               </TouchableOpacity>
         			</View>
@@ -93,7 +93,7 @@
 
         			<View style={styles.buttonConfirm}>
         					<TouchableOpacity  style={{flex: 1,}} onPress={this.UserForgot} >
-                                      <Image  source={require('../img/user/button.png')} style={{flex: 1,width:null,height:null}}>
+                                      <Image  source={require('../img/bg/button.png')} style={{flex: 1,width:null,height:null}}>
                                       </Image>
                                 </TouchableOpacity>
         			</View>

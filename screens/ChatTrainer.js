@@ -333,7 +333,7 @@ render() {
  const { navigate } = this.props.navigation;
  const {goBack} = this.props.navigation;
  return (
-  <Image  source={require('../img/user/chat.png')} style={styles.backgroundImage}>
+  <Image  source={require('../img/bg/chat.png')} style={styles.backgroundImage}>
   <View style={styles.container}>
   <View style={styles.headerContent}>
 

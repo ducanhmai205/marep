@@ -205,7 +205,7 @@ connectSocketIo(sender){
     return (
      <View style={styles.container}>
      <View  style={styles.sticker}>
-     <Image  source={require('../img/user/stickernew.png')} style={styles.stickerImage}>
+     <Image  source={require('../img/bg/stickernew.png')} style={styles.stickerImage}>
      <View style={{flexDirection: 'row' }}>
      <Text numberOfLines={1} style={styles.textSticker}>{response.data.trainer.name}</Text>
      <Text style={styles.textSticker}>さん </Text>
@@ -440,7 +440,7 @@ connectSocketIo(sender){
        const { navigate } = this.props.navigation;
        const {goBack} = this.props.navigation;
        return (
-        <Image  source={require('../img/user/chat.png')} style={styles.backgroundImage}>
+        <Image  source={require('../img/bg/chat.png')} style={styles.backgroundImage}>
         <View style={styles.container}>
         <View style={styles.headerContent}>
 

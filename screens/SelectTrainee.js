@@ -169,7 +169,7 @@ if(responseJson.customers === null){
     const {goBack} = this.props.navigation;
     return (
       <View style={styles.container}>
-      <ImageBackground  source={require('../img/signin04_trainerscreen.png')} style={styles.backgroundImage}>
+      <ImageBackground  source={require('../img/bg/signin04_trainerscreen.png')} style={styles.backgroundImage}>
       <View style={styles.containerImage}>
       <View style={styles.header}>
 

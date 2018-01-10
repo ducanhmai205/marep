@@ -21,14 +21,13 @@ class WelcomeTrainee extends Component {
         accountId : `${this.props.navigation.state.params.Account.customer.id}`,
         access_token: `${this.props.navigation.state.params.Account.customer.access_token}`,
         type: `${this.props.navigation.state.params.Account.type}`,
-       image: `${this.props.navigation.state.params.Account.avatar}`,
-          receivedNotification: null,
-          lastNotificationId: null,
+        image: `${this.props.navigation.state.params.Account.avatar}`,
+        receivedNotification: null,
+        lastNotificationId: null,
     };
   
   }
 componentDidMount() {
-
 
           this.registerForPushNotificationsAsync();
 
@@ -62,9 +61,7 @@ componentDidMount() {
 
       guiTokenLenServerMinh = async (res)=>{
           // Gui Push token lên server của mình
-         console.log("user",res)
-          console.log("user",this.state.type)
-          console.log("user",this.state.access_token)
+    
           return fetch(PUSH_ENDPOINT, {
               method: 'POST',
               headers: {
@@ -86,9 +83,9 @@ componentDidMount() {
     return (
       <View style={styles.container}>
               
-          <ImageBackground  source={require('../img/signin02.png')} style={styles.backgroundImage}>
+          <ImageBackground  source={require('../img/bg/signin02.png')} style={styles.backgroundImage}>
               <View style={styles.imageAvatar}>
-                       <Image  source={require('../img/user/avt.png')} style={styles.avtImage} resizeMode="contain">
+                       <Image  source={require('../img/bg/avt.png')} style={styles.avtImage} resizeMode="contain">
                           {image &&
                           <Image source={{ uri: this.state.image }} style={{ width: 90, height: 90,borderRadius: 90/2, }} resizeMode="stretch" />}
                        </Image>

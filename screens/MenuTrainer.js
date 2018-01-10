@@ -310,7 +310,7 @@ console.log("ducanh",formdata);
 
     return (
 
-      <Image style={styles.backgroundImage} source={require('../img/user/menu_trainerbg.png')}>
+      <Image style={styles.backgroundImage} source={require('../img/bg/menu_trainerbg.png')}>
       <StatusBar hidden={true} />
       <View style={styles.upcontainer}>
 

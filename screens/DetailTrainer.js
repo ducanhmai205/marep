@@ -96,7 +96,7 @@ componentWillMount() {
     const  image  = this.state;
     return (
       
-           <ImageBackground  source={require('../img/trainer_detailscreen.png')} style={styles.backgroundImage}>
+           <ImageBackground  source={require('../img/bg/trainer_detailscreen.png')} style={styles.backgroundImage}>
                  <View style={styles.container}>
                   <View style={styles.header}>
                       <View style={styles.icon}>

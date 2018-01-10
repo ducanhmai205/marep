@@ -148,21 +148,21 @@ class TraineeProfile extends Component {
  renderStatus(statusTrainer){
         if (statusTrainer === "busy" ){
           return (
-            <Image  resizeMode="contain" source={require('../img/user/busy.png')} style={{flex: 1}}>
+            <Image  resizeMode="contain" source={require('../img/bg/busy.png')} style={{flex: 1}}>
 
            </Image>
             );  
         }
          if (statusTrainer === "online" ){
           return (
-            <Image  resizeMode="contain" source={require('../img/user/online.png')} style={{flex: 1}}>
+            <Image  resizeMode="contain" source={require('../img/bg/online.png')} style={{flex: 1}}>
 
            </Image>
             );                                                      
         }
          if (statusTrainer === "offline" ){
           return (
-            <Image  resizeMode="contain" source={require('../img/user/offlinebuttonl.png')} style={{flex: 1}}>
+            <Image  resizeMode="contain" source={require('../img/bg/offlinebuttonl.png')} style={{flex: 1}}>
 
            </Image>
             );                                                      
@@ -174,7 +174,7 @@ class TraineeProfile extends Component {
         const { navigate } = this.props.navigation;
         const {goBack} = this.props.navigation;
         return (
-         <Image  source={require('../img/user/last.png')} style={styles.backgroundImage}>
+         <Image  source={require('../img/bg/last.png')} style={styles.backgroundImage}>
          <View style={styles.container}>
          <View style={styles.header}>
          <View style={styles.iconrightHeader}>
@@ -201,7 +201,7 @@ class TraineeProfile extends Component {
               navigate('SelectTrainer',{ Account:account  });
             }
           }}>
-          <Image  source={require('../img/user/grp.png')} style={styles.round} />
+          <Image  source={require('../img/bg/grp.png')} style={styles.round} />
           </TouchableOpacity>                                        
 
 
@@ -212,7 +212,7 @@ class TraineeProfile extends Component {
 
           <View style={styles.avatar}>
           <View style={styles.avatarImage}>
-          <Image   resizeMode="cover" source={require('../img/profile/circle.png')} style={styles.picIcon}>
+          <Image   resizeMode="cover" source={require('../img/bg/circle.png')} style={styles.picIcon}>
 
           {image &&
            <Image source={{ uri: this.state.image }} style={styles.picture} resizeMode="stretch" />}

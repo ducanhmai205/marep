@@ -141,7 +141,7 @@ render() {
   const { navigate } = this.props.navigation;
   const {goBack} = this.props.navigation;
   return (
-   <ImageBackground  source={require('../img/signin03bg.png')} style={styles.backgroundImage}>
+   <ImageBackground  source={require('../img/bg/signin03bg.png')} style={styles.backgroundImage}>
    <View style={styles.icon}>
    
    </View>

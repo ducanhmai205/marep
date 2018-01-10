@@ -441,7 +441,7 @@ getEmailundefired(){
     const { navigate } = this.props.navigation;
     const {goBack} = this.props.navigation;
     return (
-      <Image style={styles.backgroundImage} source={require('../img/user/menu_userbgn.png')}>
+      <Image style={styles.backgroundImage} source={require('../img/bg/menu_userbgn.png')}>
            <StatusBar hidden={true} />
            <View style={styles.containerUp}>
               

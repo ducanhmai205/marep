@@ -34,9 +34,6 @@
 
 
   onNavigate(data){
-        console.log('name',data);
-
-   
               if(data.type === 'customer'){      
                 navigation.navigate('WelcomeTrainee', { Account: data  });
                 }
@@ -50,13 +47,12 @@
    }
 
 
-  managePasswordVisibility = () =>
+  managePasswordVisibility = () => 
     {
       this.setState({ hidePassword: !this.state.hidePassword });
     }
 
   UserLoginFunction = () =>{
-    console.log("device",this.state.Data)
    fetch('http://35.185.68.16/api/v1/customer/login', {
     method: 'POST',
     headers: {
@@ -80,11 +76,11 @@
            {
               if(responseJson.account.type === 'trainer'){
                 this.props.navigation.navigate('TrainerProfile', { Account: responseJson.account  });
-                console.log('2',responseJson.account)
+               
                 }
               if(responseJson.account.type === 'customer'){
                 this.props.navigation.navigate('TraineeProfile', { Account: responseJson.account  });
-                console.log('1',responseJson.account)
+               
                 }
            }
            else{
@@ -124,9 +120,9 @@
           const {goBack} = this.props.navigation;
           const { navigate } = this.props.navigation;
           const Backgrounds = {
-          background: require('../img/user/loginbgg.png'),
-          xButton: require('../img//Xbutton.png'),
-          loginButton: require('../img/buttonlogin.png')
+          background: require('../img/bg/loginbgg.png'),
+          xButton: require('../img/bg/Xbutton.png'),
+          loginButton: require('../img/bg/buttonlogin.png')
   };
 
       return (

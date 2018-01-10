@@ -134,7 +134,7 @@
         <View style={styles.container}>
 
         <TouchableOpacity  style={styles.one} onPress={this._handleFacebookLogin}>
-        <Image  source={require('../img/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
+        <Image  source={require('../img/bg/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
         </Image>
         </TouchableOpacity>
         </View>

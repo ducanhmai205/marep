@@ -119,12 +119,12 @@
       const {goBack} = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Image  source={require('../img/update/updatepassbg.png')} style={styles.backgroundImage}>
+          <Image  source={require('../img/bg/updatepassbg.png')} style={styles.backgroundImage}>
             <View style={styles.containerImage}>
                 <View style={styles.textHeader}>
                 
                               <TouchableOpacity  style={{flex: 0.2,}}   onPress={ () => goBack(null)  }>
-                                    <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
+                                    <Image  source={require('../img/bg/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
                                
                                     </Image>
                               </TouchableOpacity>
@@ -203,7 +203,7 @@
 
                                                 <View style={styles.submitButton}>
                                                       <TouchableOpacity  style={{flex: 1,}} onPress={this.trainerUpdatePass}>
-                                                            <Image  source={require('../img/update/updatepassbutton.png')} style={{flex: 1,width:null,height:null,}}>
+                                                            <Image  source={require('../img/bg/updatepassbutton.png')} style={{flex: 1,width:null,height:null,}}>
                                                             </Image>
                                                       </TouchableOpacity>
                                                 </View>

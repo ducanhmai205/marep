@@ -69,24 +69,21 @@
      }
    }
 
-   managePasswordVisibility = () =>
+   managePasswordVisibility = () => 
    {
      this.setState({ hidePassword: !this.state.hidePassword });
 
    }
+
+
    onSelect(index,value){
-    console.log("value",value)
-
     this.setState({
-
       jobID: `${value}`
-      
-
+    
     })
   }
 
   UserRegistrationFunction = () =>{
-
 
    const { UserName }  = this.state ;
    const { UserEmail }  = this.state ;
@@ -136,7 +133,7 @@
 
        Alert.alert(responseJson.message);
      }
-     else{
+     else{ //show error
 
       var error_object =  responseJson.message[Object.keys(responseJson.message)[0]];
 
@@ -189,13 +186,13 @@ Alert.alert(error_object[0] );
           const {goBack} = this.props.navigation;
           return (
             <View style={styles.container}>
-            <Image  source={require('../img/signinbg.png')} style={styles.backgroundImage}>
+            <Image  source={require('../img/bg/signinbg.png')} style={styles.backgroundImage}>
             <View style={styles.containerImage}>
             <View style={styles.textHeader}>
 
             <TouchableOpacity  style={{flex: 0.2,}}  onPress={()=> {
-              navigate('TopScreen');}}>
-              <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
+            navigate('TopScreen');}}> 
+              <Image  source={require('../img/bg/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
 
               </Image>
               </TouchableOpacity>
@@ -217,7 +214,6 @@ Alert.alert(error_object[0] );
               ref='Name'
               style={{flex: 1,paddingHorizontal: 40}}
               underlineColorAndroid='transparent'
-             
               autoCapitalize="none"
               placeholder="Name"
               placeholderTextColor = "#47E5B3"
@@ -298,7 +294,7 @@ Alert.alert(error_object[0] );
 
               <View style={styles.registerButton}>
               <TouchableOpacity  style={{flex: 1,}} onPress={this.UserRegistrationFunction}>
-              <Image  source={require('../img/signinbutton.png')} style={{flex: 1,width:null,height:null}}>
+              <Image  source={require('../img/bg/signinbutton.png')} style={{flex: 1,width:null,height:null}}>
               </Image>
               </TouchableOpacity>
               </View>

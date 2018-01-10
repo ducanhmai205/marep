@@ -16,9 +16,9 @@
     render() {
           const { navigate } = this.props.navigation;
           const Backgrounds = {
-          background: require('../img/topbg.png'),
-          loginButton: require('../img/user/top3.png'),
-          registerButton: require('../img/buttontop.png')
+          background: require('../img/bg/topbg.png'),
+          loginButton: require('../img/bg/top3.png'),
+          registerButton: require('../img/bg/buttontop.png')
 
   };
     return (
@@ -45,7 +45,7 @@
                   <View style={styles.registerButton}>
                         <View style={styles.leftRegister} />
 
-                              <View style={styles.mainButtonRegister}>
+                              <View style={styles.mainButtonRegister}> 
                                     <TouchableOpacity onPress={ ()=> {navigate('RegisterScreen')}} style={{flex: 0.9,}}>
                                         <Image source={Backgrounds.registerButton}  style={styles.registerImage}>
                                         </Image>
@@ -89,33 +89,26 @@
   },
   containerOne:{
     flex: 4,
-
   },
   containerButton:{
-    flex: 1.5,
+  flex: 1.5,
   marginTop:50
   },
   loginButton:{
     flex: 0.9,
-
     flexDirection: 'row',
-    
   },
   rightSpace:{
     flex: 1,
-
   },
   mainButtonLogin:{
     flex: 2.3,
     marginBottom: (Platform.OS === 'ios') ? 10 : 0,
     paddingRight:12,
     marginHorizontal:3,
-
-
   },
   leftButton:{
     flex: 0.9,
-
   },
   leftRegister:{
     flex: 1.1,
@@ -125,18 +118,13 @@
     marginBottom: (Platform.OS === 'ios') ? 20 : 5,
     marginTop: (Platform.OS ==='ios') ? 0 : 11,
     marginRight:5,
-
   },
   rightRegister:{
     flex: 1,
   },
   registerButton:{
     flex: 1,
-
-
-
     flexDirection: 'row',
-    
   },
   bottom:{
     flex:0.9,
