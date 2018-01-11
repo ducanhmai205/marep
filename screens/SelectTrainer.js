@@ -134,9 +134,11 @@
 
       });
 
-       arrayData = arrayData.concat(arrayData)
+      var DataOld = this.state.data;
+
+      var arrayDataNew = DataOld.concat(arrayData)
       this.setState({
-        data : arrayData,
+        data : arrayDataNew,
         page: this.state.page
       })
       

@@ -74,13 +74,7 @@
           arrayData.push(raw);
 
         });
-//       let selectedItems = [];
-// arrayData.forEach(function(item) {
-//           if(arrayData.relation_status) {
-//             selectedItems.push(arrayData.relation_status);
-//           }
-//            console.log("ducanh data",selectedItems);
-//     });
+
 this.setState({
   data : arrayData,
 })
@@ -141,10 +135,11 @@ if(responseJson.customers === null){
         arrayData.push(raw);
         
       });
+      var DataOld = this.state.data;
 
-      arrayData = arrayData.concat(arrayData)
+      var arrayDataNew = DataOld.concat(arrayData)
       this.setState({
-        data : arrayData,
+        data : arrayDataNew,
         page: this.state.page
       })
 

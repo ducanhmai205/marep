@@ -1,4 +1,6 @@
-'use strict';
+
+
+
 
 import React, { Component } from 'react';
 import io from 'socket.io-client';
@@ -10,12 +12,15 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
-  FlatList
+  FlatList,
+  Platform
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import {LinearGradient} from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-
+import { ImagePicker } from 'expo';
+      import SimplePicker from 'react-native-simple-picker';
+      import ModalFilterPicker from 'react-native-modal-filter-picker'
 var response;
 class ChatTrainer extends React.PureComponent {
 
@@ -27,6 +32,8 @@ class ChatTrainer extends React.PureComponent {
       id :`${this.props.navigation.state.params.Account.trainer.id}`,
       type: `${this.props.navigation.state.params.Account.type}`,
       access_token :`${this.props.navigation.state.params.Account.trainer.access_token}`,
+      imageSend:'',
+     
       canChat: true,
       isFirst:true,
       point:'',
@@ -52,7 +59,7 @@ class ChatTrainer extends React.PureComponent {
   };
 
   let json = JSON.stringify(socketData);
-  this.socket  = io ("http://192.168.1.11:3000?data=" + json, { transports: ['websocket'] });
+  this.socket  = io ("http://192.168.1.111:3000?data=" + json, { transports: ['websocket'] });
   this.channel = 'message_' + socketData.customer.id + '_' + socketData.trainer.id;
   this.socket.on(this.channel, this.onReceivedMessage);
 }
@@ -313,11 +320,89 @@ getTrainerView(item){
 
 }
 
+getImagePickerView(item){
+console.log("da vao image view",item);
+  return (
+   <View style={styles.sendMess}>
+   <View style={styles.bubleChatSendImage}>
+   
+        
+        <Image source={{ uri: item.imageView }} style={{ flex:1,height:(Platform.OS === 'ios') ? 205 : 140,width:(Platform.OS === 'ios') ? 190 : 170}} resizeMode="contain" />
+  
+   </View>
+
+   </View>
+   )
+
+}
+_pickImage = async () => {
+  let Data = this.state.Data;
+  let result = await ImagePicker.launchImageLibraryAsync({
+    allowsEditing: true,
+    aspect: [4, 3],
+    base64:true
+  });
+  if (!result.cancelled) {
+    var itemImage = true;
+    if(itemImage=true){
+       this.setState({ imageSend: result.uri, }); 
+      let itemImagePicker ={
+        showImageView:true,
+        imageView: result.uri,
+       }    
+       Data.push(itemImagePicker);   
+      
+    }
+    let formdata = new FormData();
+    // formdata.append("access_token", this.props.navigation.state.params.Account.trainer.access_token);
+    // formdata.append("type", this.props.navigation.state.params.Account.type);
+    // formdata.append("id", this.props.navigation.state.params.Account.trainer.id);
+    // formdata.append("trainerId", this.props.navigation.state.params.Account.trainer.id);
+    // formdata.append("customerId", this.props.navigation.state.params.customerId);
+    // formdata.append("sender", this.props.navigation.state.params.Account.type);
+
+
+    formdata.append("access_token", this.state.access_token);
+    formdata.append("type", this.state.type);
+    formdata.append("id", this.state.id);
+    formdata.append("trainerId", this.state.id);
+    formdata.append("customerId", this.state.customerId);
+    formdata.append("sender", this.state.type);
+    formdata.append('file', {uri: this.state.imageSend, name: 'selfie.jpg'});
+    console.log("form data",formdata)
+    fetch('http://35.185.68.16/api/v1/chat/upload', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
+    
+      },
+       body: formdata,
+    
+    
+     
+    }).then((response) => response.json())
+          .then((responseJson) => {
+            console.log("respon ducanh",responseJson);
+            
+     
+          }).catch((error) => {
+            console.error(error);
+          });
+     
+     
+      }
+   
+  }
+
 
 renderItem= ({item}) => {
   if(item.showMessView === true ){
    return this.getMessageView(item);
- }else if(item.showDataView ===true){
+ }else if(item.showImageView ===true){
+  return this.getImagePickerView(item);
+}else if(item.showDataView ===true){
   return this.getDateView(item);
 }else if(item.showDataView === true ){
   return this.getDateView(item);}
@@ -326,7 +411,8 @@ renderItem= ({item}) => {
   }else if(item.sender ==='customer' &&  item.content !== ""){
     return this.getCustomerView(item);
   }
-}
+};
+
 
 
 render() {
@@ -410,7 +496,7 @@ render() {
   </TouchableOpacity>
 
   <TouchableOpacity  style={{flex:1,}}>
-  <FontAwesome name="camera" size={20} color="black" />
+  <FontAwesome name="camera" size={20} color="black" onPress={this._pickImage}/>
   </TouchableOpacity>
   </View>
   </View>
@@ -558,7 +644,8 @@ const styles = StyleSheet.create({
   },
   sendMess:{
     flex: 1,
-    flexDirection: 'row-reverse' 
+    flexDirection: 'row-reverse' ,
+    paddingTop:20
   },
   bubleChatSend:{
    flex: 0.8,
@@ -569,6 +656,15 @@ const styles = StyleSheet.create({
    alignItems: 'center',
    margin:10
  },
+ bubleChatSendImage:{
+  flex: 0.8,
+  backgroundColor: '#78FBD4',
+  borderRadius: 8,
+  marginHorizontal: (Platform.OS === 'ios') ? 40 : 45,
+  justifyContent: 'center',
+  alignItems: 'center',
+
+},
  askBuyPoint:{
   flex: 1,
   justifyContent: 'center',

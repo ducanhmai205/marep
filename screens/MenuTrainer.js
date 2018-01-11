@@ -135,8 +135,9 @@
         base64:true
       });
       if (!result.cancelled) {
+        
         this.setState({ image: result.uri, });
-
+        console.log('image da upload',this.state.image);
       }else {
 
       }

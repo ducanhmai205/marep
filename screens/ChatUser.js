@@ -59,7 +59,7 @@ connectSocketIo(sender){
     };
 
     let json = JSON.stringify(socketData);
-    this.socket  = io ("http://192.168.1.11:3000?data=" + json, { transports: ['websocket'] });
+    this.socket  = io ("http://192.168.1.111:3000?data=" + json, { transports: ['websocket'] });
     this.channel = 'message_' + socketData.customer.id + '_' + socketData.trainer.id;
      this.socket.on(this.channel, this.onReceivedMessage);
 }
